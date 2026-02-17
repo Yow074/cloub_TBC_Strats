@@ -162,7 +162,7 @@
   <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
 </footer>
 <script>
-const VERSION = "1.0.22";
+const VERSION = "1.0.23";
 let currentLang = localStorage.getItem('lang') || 'en';
 const UI = {
   en: { filterRole: "Filter by role:", all: "All", tank: "Tank", heal: "Heal", melee: "Melee DPS", ranged: "Ranged DPS", boss: "BOSS", bosses: "bosses", video: "Video", coming: "Strategies for", comingSoon: "coming soon!", abilities: "Abilities" },
@@ -646,7 +646,16 @@ karazhan:{name:"Karazhan",bosses:[
 ]}
 ]},
 gruul:{name:"Gruul's Lair",bosses:[
-{name:"High King Maulgar",img:IMG["High King Maulgar"],icon:"👑",vi:1,sections:[
+{name:"High King Maulgar",img:IMG["High King Maulgar"],icon:"👑",vi:1,abilities:[
+{name:"Arcing Smash",category:"damage",desc:{en:"Frontal cone cleave. Only tank in front, melee stay behind.",fr:"Cleave en cône frontal. Seul le tank devant, melee restent derrière."}},
+{name:"Whirlwind",category:"aoe",desc:{en:"15 sec AoE around boss. All melee must move 15+ yards away immediately.",fr:"AoE 15 sec autour du boss. Tous les melee doivent s'éloigner de 15+ yards immédiatement."}},
+{name:"Mighty Blow",category:"damage",desc:{en:"Knockback on tank. Position with back to wall to avoid being thrown.",fr:"Knockback sur le tank. Positionnez dos au mur pour éviter d'être projeté."}},
+{name:"Intimidating Roar",category:"debuff",desc:{en:"Stuns tank + fears nearby players 4 sec. Pre-HoT tank before it lands.",fr:"Stun le tank + fear joueurs proches 4 sec. Pré-HoT le tank avant qu'il arrive."}},
+{name:"Flurry",category:"buff",desc:{en:"At 50%: +200% attack speed and damage. Heavy healing required on tank.",fr:"À 50% : +200% vitesse d'attaque et dégâts. Heal intense requis sur le tank."}},
+{name:"Spell Shield",category:"buff",desc:{en:"Krosh Firehand's shield. Mage tank must Spellsteal to survive Blast Wave.",fr:"Bouclier de Krosh. Le tank Mage doit Spellsteal pour survivre à Blast Wave."}},
+{name:"Dark Decay",category:"debuff",desc:{en:"Olm's stacking DoT. Tank swap at 4 stacks to let debuff fall off.",fr:"DoT stackable d'Olm. Swap tank à 4 stacks pour laisser le debuff tomber."}},
+{name:"Greater Polymorph",category:"debuff",desc:{en:"Kiggler's polymorph. Feral Druid tank immune via shapeshift.",fr:"Polymorph de Kiggler. Tank Druide Feral immunisé via changement de forme."}}
+],sections:[
 {title:{en:"Council — Kill Order and Adds",fr:"Conseil — Kill Order et Adds"},tips:[
 {en:`The recommended kill order is ${M("Blindeye the Seer")} → ${M("Olm the Summoner")} → ${M("Kiggler the Crazed")} → ${M("Krosh Firehand")} → ${M("High King Maulgar")}. Following this order minimizes healing pressure and dangerous abilities.`,fr:`L'ordre de kill recommandé est ${M("Blindeye the Seer")} → ${M("Olm the Summoner")} → ${M("Kiggler the Crazed")} → ${M("Krosh Firehand")} → ${M("High King Maulgar")}. Suivre cet ordre minimise la pression de heal et les abilities dangereuses.`},
 {en:`${M("Blindeye the Seer")} is the absolute priority target because he casts ${S("Prayer of Healing")} which heals all council members. Melee must interrupt ${S("Prayer of Healing")} on every cast or the fight becomes unwinnable.`,fr:`${M("Blindeye the Seer")} est la cible prioritaire absolue car il lance ${S("Prayer of Healing")} qui soigne tous les membres du conseil. Les melee doivent interrompre ${S("Prayer of Healing")} à chaque cast sous peine de rendre le combat impossible.`,role:"melee"},
@@ -674,7 +683,15 @@ gruul:{name:"Gruul's Lair",bosses:[
 {en:`<b>Common Wipe Point</b>: The pull itself is the most dangerous moment. If tanks die early, reset immediately rather than wasting time on a doomed attempt.`,fr:`<b>Point de wipe courant</b> : Le pull lui-même est le moment le plus dangereux. Si des tanks meurent tôt, reset immédiatement plutôt que de perdre du temps sur une tentative condamnée.`}
 ]}
 ]},
-{name:"Gruul the Dragonkiller",img:IMG["Gruul the Dragonkiller"],icon:"🐉",vi:2,sections:[
+{name:"Gruul the Dragonkiller",img:IMG["Gruul the Dragonkiller"],icon:"🐉",vi:2,abilities:[
+{name:"Growth",category:"buff",desc:{en:"Every 30 sec: +15% damage, stacks to 30. DPS race to kill before 15-20 stacks.",fr:"Toutes les 30 sec : +15% dégâts, stack jusqu'à 30. Course DPS pour tuer avant 15-20 stacks."}},
+{name:"Hurtful Strike",category:"damage",desc:{en:"Hits 2nd threat in melee range. OT must stay in melee and hold 2nd threat.",fr:"Frappe la 2e menace en melee. OT doit rester en melee et maintenir 2e menace."}},
+{name:"Ground Slam",category:"aoe",desc:{en:"Raid-wide knockback every ~70 sec. Launches players in random directions.",fr:"Knockback raid-wide toutes les ~70 sec. Projette les joueurs dans des directions aléatoires."}},
+{name:"Gronn Lord's Grasp",category:"debuff",desc:{en:"After Ground Slam: progressive slow until petrified. Spread during knockback.",fr:"Après Ground Slam : ralentissement progressif jusqu'à pétrification. Spreadez pendant le knockback."}},
+{name:"Shatter",category:"aoe",desc:{en:"Detonates petrified players. Damage based on proximity: 1-4.5k per nearby player. Spread far apart.",fr:"Détonne les joueurs pétrifiés. Dégâts basés sur proximité : 1-4.5k par joueur proche. Spreadez loin."}},
+{name:"Reverberation",category:"debuff",desc:{en:"4-sec raid-wide silence. Pre-HoT tank before silence lands.",fr:"Silence raid-wide de 4 sec. Pré-HoT le tank avant le silence."}},
+{name:"Cave In",category:"aoe",desc:{en:"Random AoE zones, damage scales with Growth stacks (up to 9k+). Move out immediately.",fr:"Zones AoE aléatoires, dégâts augmentent avec stacks de Growth (jusqu'à 9k+). Sortez immédiatement."}}
+],sections:[
 {title:{en:"Core Mechanics",fr:"Mécaniques Principales"},tips:[
 {en:`${S("Growth")} is the defining mechanic of this encounter. Every 30 seconds, Gruul gains a stack that increases his damage by 15%. This creates a hard DPS check: if your raid cannot kill him before he reaches 15-20 stacks, the tank will inevitably die.`,fr:`${S("Growth")} est la mécanique définissant cette rencontre. Toutes les 30 secondes, Gruul gagne un stack qui augmente ses dégâts de 15%. Cela crée un DPS check strict : si votre raid ne peut pas le tuer avant qu'il atteigne 15-20 stacks, le tank mourra inévitablement.`},
 {en:`${S("Hurtful Strike")} targets the second-highest player on the threat table within melee range. An off-tank must always stay in melee range and maintain second threat to absorb these hits, otherwise Gruul will one-shot a DPS.`,fr:`${S("Hurtful Strike")} cible le deuxième joueur le plus haut sur la table de menace en range melee. Un off-tank doit toujours rester en range melee et maintenir la seconde menace pour absorber ces coups, sinon Gruul va one-shot un DPS.`,role:"tank"},
@@ -704,11 +721,13 @@ gruul:{name:"Gruul's Lair",bosses:[
 
 magtheridon:{name:"Magtheridon's Lair",bosses:[
 {name:"Magtheridon",img:IMG["Magtheridon"],icon:"😈",vi:0,abilities:[
-{name:"Blast Nova",category:"aoe",desc:{en:"2-sec cast. Raid wipe if not interrupted by 5 cube clickers.",fr:"Cast de 2 sec. Wipe le raid si non interrompu par 5 clickers de cubes."}},
-{name:"Cleave",category:"damage",desc:{en:"Frontal cone attack. Tank must face boss away from raid.",fr:"Attaque en cône frontal. Le tank doit orienter le boss dos au raid."}},
-{name:"Conflagration",category:"debuff",desc:{en:"Fire DoT on random player. Spread to minimize damage.",fr:"DoT feu sur joueur aléatoire. Spreadez pour minimiser les dégâts."}},
-{name:"Quake",category:"aoe",desc:{en:"At 30% HP: 5-7k damage + 2 sec stun. Back against wall to avoid knockback.",fr:"À 30% HP : 5-7k dégâts + stun 2 sec. Dos au mur pour éviter le knockback."}},
-{name:"Mind Exhaustion",category:"debuff",desc:{en:"30-sec debuff after cube click. Prevents using cubes again. One group of 5 covers entire fight.",fr:"Debuff de 30 sec après clic sur cube. Empêche de réutiliser les cubes. Un groupe de 5 couvre tout le combat."}}
+{name:"Blast Nova",category:"aoe",desc:{en:"2-sec cast, ~2.5k/tick for 10 sec. Wipe if not interrupted by 5 cubes. 60-sec CD.",fr:"Cast de 2 sec, ~2.5k/tick pendant 10 sec. Wipe si non interrompu par 5 cubes. CD 60 sec."}},
+{name:"Cleave",category:"damage",desc:{en:"180° frontal cleave, 8-9k damage. Tank faces boss to wall.",fr:"Cleave frontal 180°, 8-9k dégâts. Tank oriente le boss face au mur."}},
+{name:"Quake",category:"aoe",desc:{en:"At 30%: knockback every sec for 7 sec + 5-7k damage. 50-sec CD. Back to wall.",fr:"À 30% : knockback chaque sec pendant 7 sec + 5-7k dégâts. CD 50 sec. Dos au mur."}},
+{name:"Cave In",category:"aoe",desc:{en:"Final phase: 90-113k damage in random zones after wall collapse. Move out immediately.",fr:"Phase finale : 90-113k dégâts dans des zones aléatoires après effondrement. Sortez immédiatement."}},
+{name:"Mind Exhaustion",category:"debuff",desc:{en:"30-sec debuff after cube click. One group of 5 handles entire fight.",fr:"Debuff de 30 sec après clic cube. Un groupe de 5 gère tout le combat."}},
+{name:"Dark Mending",category:"buff",desc:{en:"Channelers heal 20% HP below 50%. Must interrupt. +30% damage per dead channeler.",fr:"Channelers soignent 20% HP sous 50%. Interrompre. +30% dégâts par channeler mort."}},
+{name:"Shadow Bolt Volley",category:"aoe",desc:{en:"Channelers cast ~2k shadow AoE. Spread healers to avoid stacking.",fr:"Channelers castent ~2k shadow AoE. Spreadez les healers pour éviter de stacker."}}
 ],sections:[
 {title:{en:"Phase 1 — Channelers (2 min)",fr:"Phase 1 — Channelers (2 min)"},tips:[
 {en:`The fight begins with five ${M("Hellfire Channelers")} keeping Magtheridon banished. You have exactly two minutes to kill at least three of them before the boss breaks free and activates.`,fr:`Le combat commence avec cinq ${M("Hellfire Channelers")} qui maintiennent Magtheridon banni. Vous avez exactement deux minutes pour en tuer au moins trois avant que le boss ne se libère et s'active.`},
