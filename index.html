@@ -185,7 +185,7 @@
   <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
 </footer>
 <script>
-const VERSION = "1.1.1";
+const VERSION = "1.1.2";
 let currentLang = localStorage.getItem('lang') || 'en';
 const UI = {
   en: { filterRole: "Filter by role:", all: "All", tank: "Tank", heal: "Heal", melee: "Melee DPS", ranged: "Ranged DPS", boss: "BOSS", bosses: "bosses", video: "Video", coming: "Strategies for", comingSoon: "coming soon!", abilities: "Abilities", combatFlow: "Combat Flow", tankSection: "Tank", healSection: "Healers", meleeSection: "Melee DPS", rangedSection: "Ranged DPS", rlTakeaway: "RL Takeaway", showRL: "Show RL Tips", notes: "Notes", tip: "tip", tips: "tips" },
@@ -208,19 +208,37 @@ function groupAbilitiesByCategory(abilities) {
   return result;
 }
 const SPELL_IDS={
-// Karazhan
-"Shadow Cleave":29832,"Intangible Presence":29833,"Berserker Charge":26561,"Spell Reflection":33961,"Disarm":27581,
-"Gouge":29425,"Blind":34654,"Garrote":37066,"Greater Heal":29564,"Mana Burn":29405,
+// Karazhan - Attumen & Midnight
+"Shadow Cleave":29832,"Intangible Presence":29833,"Berserker Charge":26561,"Knockdown":29711,
+// Karazhan - Moroes
+"Gouge":29425,"Blind":34654,"Garrote":37066,"Enrage":37023,"Mortal Strike":29572,
+// Karazhan - Maiden
 "Holy Wrath":32445,"Holy Fire":29522,"Holy Ground":29512,"Repentance":29511,
+// Karazhan - Opera: Big Bad Wolf
 "Little Red Riding Hood":30768,"Terrifying Howl":30752,"Wide Swipe":30761,
-"Vanish":29448,"Eternal Affection":30878,"Devotion":30887,"Daring":30841,
-"Hateful Bolt":30383,"Evocation":30254,"Sacrifice":30115,"Broken Pact":30065,
-"Counterspell":29961,"Fireball":29953,"Frostbolt":29954,"Arcane Missiles":29955,
-"Flame Wreath":29946,"Circular Blizzard":29951,"Magnetic Pull":29979,"Arcane Explosion":29973,
-"Polymorph":29963,"Pyroblast":29978,"Nether Exhaustion":44032,"Void Zone":30533,"Netherbreath":38523,
+// Karazhan - Opera: Wizard of Oz
+"Water Bolt":31012,"Frightened Scream":31013,"Annoying Yipping":31015,"Burning Straw":31075,"Brain Bash":31046,"Rust":31086,"Cyclone":29538,"Chain Lightning":32337,
+// Karazhan - Opera: Romulo & Julianne
+"Eternal Affection":30878,"Devotion":30887,"Daring":30841,"Backward Lunge":30815,"Deadly Swathe":30817,"Poisoned Thrust":30822,"Powerful Attraction":30889,"Blinding Passion":30890,
+// Karazhan - Curator
+"Hateful Bolt":30383,"Evocation":30254,"Arcing Sear":30235,"Berserk":26662,
+// Karazhan - Terestian Illhoof
+"Sacrifice":30115,"Demon Chains":30115,"Broken Pact":30065,"Fiendish Portal":30171,"Amplify Flames":30053,"Firebolt":30050,
+// Karazhan - Shade of Aran
+"Counterspell":29961,"Fireball":29953,"Frostbolt":29954,"Arcane Missiles":29955,"Chains of Ice":29991,
+"Flame Wreath":29946,"Circular Blizzard":29951,"Magnetic Pull":29979,"Arcane Explosion":29973,"Mass Slow":30035,
+"Polymorph":29963,"Pyroblast":29978,"Summon Water Elementals":29962,"Waterbolt":31707,"Dragon's Breath":31661,
+// Karazhan - Netherspite
+"Nether Exhaustion":44032,"Void Zone":30533,"Netherbreath":38523,"Nether Burn":30522,
+"Perseverance":30421,"Serenity":30422,"Dominance":30423,"Empowerment":38549,
+// Karazhan - Prince Malchezaar
 "Shadow Nova":30852,"Enfeeble":30843,"Shadow Word: Pain":15654,"Thrash":3391,"Sunder Armor":27991,
-"Amplify Damage":39095,"Smoldering Breath":30210,"Tail Sweep":25653,"Bellowing Roar":36922,
-"Charred Earth":30129,"Distracting Ash":30130,"Rain of Bones":37098,"Smoking Blast":37057,
+"Amplify Damage":39095,"Summon Infernal":37277,"Hellfire":30859,"Summon Axes":30891,
+// Karazhan - Nightbane
+"Smoldering Breath":30210,"Tail Sweep":25653,"Bellowing Roar":36922,
+"Charred Earth":30129,"Distracting Ash":30130,"Rain of Bones":37098,"Smoking Blast":37057,"Fireball Barrage":30282,
+// Karazhan - Common
+"Vanish":29448,"Spell Reflection":33961,"Disarm":27581,"Greater Heal":29564,"Mana Burn":29405,
 // Gruul
 "Growth":36300,"Ground Slam":33525,"Gronn Lord's Grasp":33572,"Shatter":33654,"Hurtful Strike":33813,
 "Reverberation":36297,"Dark Mending":33685,"Dark Decay":33129,"Spell Shield":33054,
@@ -357,7 +375,13 @@ const IMG={
 
 const RAIDS={
 karazhan:{name:"Karazhan",bosses:[
-{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",vi:2,sections:[
+{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"🐴",vi:2,abilities:[
+{name:"Shadow Cleave",category:"damage",desc:{en:"Frontal cone dealing weapon damage + shadow. 6-sec CD. Both mobs have it. Only tank in front."}},
+{name:"Intangible Presence",category:"debuff",desc:{en:"AoE curse reducing hit chance by 50% for 12 sec. Decurse tank immediately. Reflectable."}},
+{name:"Knockdown",category:"damage",desc:{en:"Midnight stuns current target for 3 sec. Minor damage. Cannot be avoided."}},
+{name:"Berserker Charge",category:"damage",desc:{en:"Phase 3 only: charges player 8-40 yards away, knockback + ~300 damage. Stay in melee to avoid."}},
+{name:"Mount",category:"phase",desc:{en:"At 25% HP on either: Attumen mounts Midnight. Combined HP = higher of the two. Aggro resets."}}
+],sections:[
 {title:{en:"Phase 1 — Midnight Alone",fr:"Phase 1 — Midnight seul"},tips:[
 {en:`The fight starts against ${M("Midnight")}, Attumen's horse. This is a simple tank and spank phase where the raid positions behind the horse to avoid frontal damage.`,fr:`Le combat commence contre ${M("Midnight")}, le cheval d'Attumen. C'est une phase simple de tank and spank où le raid se positionne derrière le cheval pour éviter les dégâts frontaux.`}
 ]},
@@ -387,7 +411,13 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: The P2→P3 transition with aggro reset. Make sure the MT is ready to taunt immediately after the merge.`,fr:`<b>Point de wipe courant</b> : La transition P2→P3 avec l'aggro reset. Assurez-vous que le MT est prêt à taunt immédiatement après la fusion.`}
 ]}
 ]},
-{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",vi:3,sections:[
+{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",vi:3,abilities:[
+{name:"Garrote",category:"debuff",desc:{en:"Inflicts 107,500 Physical damage over 5 min. Applied after Vanish. Removable by Stoneform, Divine Shield, BoP, Ice Block."}},
+{name:"Gouge",category:"debuff",desc:{en:"Stuns main tank for 6 sec, forcing Moroes to next threat target."}},
+{name:"Blind",category:"debuff",desc:{en:"Poison: target wanders confused for 10 sec. Dispellable."}},
+{name:"Vanish",category:"phase",desc:{en:"Stealth for 12 sec, then Garrote on random target."}},
+{name:"Enrage",category:"buff",desc:{en:"At 30% HP: +20% physical damage. Cannot be removed."}}
+],sections:[
 {title:{en:"Preparation and Kill Order",fr:"Préparation et Kill Order"},tips:[
 {en:`Moroes is accompanied by 4 random adds from a pool of 6. Recommended kill order: ${M("Lady Catriona Von'Indi")} and ${M("Lady Keira Berrybuck")} first since they can heal, then ${M("Baroness Dorothea Millstipe")} who uses Mana Burn on your healers, followed by ${M("Baron Rafe Dreuger")} who stuns, then ${M("Lord Robin Daris")}, and finally ${M("Moroes")} himself. ${M("Lord Crispin Ference")} can be kept CC'd throughout the fight.`,fr:`Moroes est accompagné de 4 adds aléatoires parmi 6 possibles. L'ordre de kill recommandé est : ${M("Lady Catriona Von'Indi")} et ${M("Lady Keira Berrybuck")} en priorité absolue car elles peuvent heal, puis ${M("Baroness Dorothea Millstipe")} qui utilise Mana Burn sur vos healers, ensuite ${M("Baron Rafe Dreuger")} qui stun, puis ${M("Lord Robin Daris")}, et enfin ${M("Moroes")} lui-même. ${M("Lord Crispin Ference")} peut être gardé CC pendant tout le combat.`}
 ]},
@@ -412,7 +442,13 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: Gouge on MT without OT ready. Remind the OT to always stay second on threat.`,fr:`<b>Point de wipe courant</b> : Le Gouge sur le MT sans OT prêt. Rappelez à l'OT de toujours rester second en threat.`}
 ]}
 ]},
-{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",vi:4,sections:[
+{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",vi:4,abilities:[
+{name:"Repentance",category:"debuff",desc:{en:"Stuns entire raid for 12 sec, dealing 1,800-2,400 Holy damage over time. 30-35 sec cooldown."}},
+{name:"Holy Fire",category:"debuff",desc:{en:"Burns a target for 3,238-3,762 Holy damage, then 1,750 every 2 sec for 12 sec. Dispellable."}},
+{name:"Holy Wrath",category:"damage",desc:{en:"Chains between targets within 10 yards. 2,000 initial + 2,000 per jump. Spread to avoid."}},
+{name:"Holy Ground",category:"aoe",desc:{en:"Consecration dealing 240 Holy damage/sec to melee. Cannot be avoided by tanks."}},
+{name:"Blessing of Sacrifice",category:"buff",desc:{en:"Removes Repentance stun from one player when she damages the BoSac target."}}
+],sections:[
 {title:{en:"Main Strategy",fr:"Stratégie principale"},tips:[
 {en:`The tank positions ${M("Maiden")} at the exact center of the circular room. This positioning is crucial as it allows the raid to spread evenly around her.`,fr:`Le tank positionne ${M("Maiden")} au centre exact de la salle circulaire. Ce positionnement est crucial car il permet au raid de se spreader uniformément autour d'elle.`,role:"tank"},
 {en:`Healers and ranged DPS must spread around the room maintaining at least 10 yards between each player. This prevents ${S("Holy Wrath")} from chaining between multiple people and causing massive damage.`,fr:`Les healers et les ranged DPS doivent se répartir autour de la salle en maintenant une distance d'au moins 10 yards entre chaque joueur. Cela évite que ${S("Holy Wrath")} ne chain entre plusieurs personnes et cause des dégâts massifs.`,role:"ranged"},
@@ -432,7 +468,12 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: Tank dies during Repentance because all healers are stunned. Solution: one healer always stays in Holy Ground, or use HoTs before Repentance.`,fr:`<b>Point de wipe courant</b> : Le tank meurt pendant Repentance car les healers sont tous stun. Solution : un healer reste toujours dans Holy Ground, ou utilisez des HoTs avant Repentance.`}
 ]}
 ]},
-{name:"Opera — Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:5,sections:[
+{name:"Opera — Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:5,abilities:[
+{name:"Little Red Riding Hood",category:"debuff",desc:{en:"Transforms random player into Red Riding Hood for 20 sec. 100% pacify, 50% reduced armor, +35% movement speed."}},
+{name:"Terrifying Howl",category:"debuff",desc:{en:"Fears all enemies within 10 yards for 3 sec. Used when targeting Red Riding Hood."}},
+{name:"Wide Swipe",category:"damage",desc:{en:"Frontal cone attack dealing 8,788-10,212 Physical damage with knockback. Face boss away."}},
+{name:"Enrage",category:"buff",desc:{en:"Soft enrage at low HP: +40% attack speed. Burn quickly at the end."}}
+],sections:[
 {title:{en:"Main Strategy",fr:"Stratégie principale"},tips:[
 {en:`The Big Bad Wolf periodically transforms a random player into ${S("Little Red Riding Hood")}. This player loses all abilities and must immediately run along the room edges to kite the boss chasing them. One hit from the Wolf on Little Red = instant death.`,fr:`Le Big Bad Wolf transforme périodiquement un joueur aléatoire en ${S("Little Red Riding Hood")} (Petit Chaperon Rouge). Ce joueur perd toutes ses abilities et doit immédiatement courir le long des bords de la salle pour kiter le boss qui le poursuit. Un seul coup du Wolf sur le Chaperon = mort instantanée.`},
 {en:`Outside this mechanic, the fight is a simple tank and spank. The tank must watch for ${S("Terrifying Howl")} which fears the entire raid and ${S("Wide Swipe")} which hits in a frontal cone.`,fr:`En dehors de cette mécanique, le combat est un simple tank and spank. Le tank doit cependant faire attention à ${S("Terrifying Howl")} qui fear tout le raid et ${S("Wide Swipe")} qui frappe en cône frontal.`,role:"tank"},
@@ -450,7 +491,15 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: Main healer gets transformed and no one heals the tank. Solution: always have 2+ active healers.`,fr:`<b>Point de wipe courant</b> : Le healer principal est transformé et personne ne heal le tank. Solution : toujours avoir 2+ healers actifs.`}
 ]}
 ]},
-{name:"Opera — Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:7,sections:[
+{name:"Opera — Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:7,abilities:[
+{name:"Brain Bash",category:"debuff",desc:{en:"Strawman's disorient on random target for 4 sec. Can be broken by fire damage."}},
+{name:"Rust",category:"debuff",desc:{en:"Tinhead's attack slow debuff. Stacks and slows him down over time (beneficial)."}},
+{name:"Cleave",category:"damage",desc:{en:"Tinhead's frontal cleave. Position him away from raid."}},
+{name:"Frightened Scream",category:"debuff",desc:{en:"Roar's AoE fear within 10 yards. Keep him tanked away from the raid."}},
+{name:"Mangle",category:"debuff",desc:{en:"Roar's bleed. Deals Physical damage over time on tank."}},
+{name:"Summon Cyclone",category:"add",desc:{en:"Crone summons a moving cyclone that tosses players into the air. Avoid it."}},
+{name:"Chain Lightning",category:"damage",desc:{en:"Crone's spell that chains between players. Spread out to minimize bounces."}}
+],sections:[
 {title:{en:"Phase 1 — The 4 Characters",fr:"Phase 1 — Les 4 personnages"},tips:[
 {en:`This fight features 4 Wizard of Oz characters that must be managed simultaneously. Start by killing ${M("Dorothee")} as she has no aggro table and attacks randomly. Important: don't kill ${M("Tito")} (her dog) before her, or she enrages and wipes the raid.`,fr:`Ce combat met en scène 4 personnages du Magicien d'Oz qui doivent être gérés simultanément. Commencez par tuer ${M("Dorothee")} car elle n'a pas de table d'aggro et attaque aléatoirement. Important : ne tuez pas ${M("Tito")} (son chien) avant elle, sinon elle enrage et wipe le raid.`},
 {en:`Next, eliminate ${M("Roar")} the lion. The off-tank keeps him away while the raid finishes Dorothee, then everyone switches to him.`,fr:`Ensuite, éliminez ${M("Roar")} le lion. L'off-tank le maintient à l'écart pendant que le raid finit Dorothee, puis tout le monde switch sur lui.`,role:"tank"},
@@ -471,7 +520,16 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: Tito dies before Dorothee from accidental AoE. Solution: keep Tito away from the group, assign someone to watch him.`,fr:`<b>Point de wipe courant</b> : Tito meurt avant Dorothee par AoE accidentelle. Solution : gardez Tito loin du groupe, assignez quelqu'un pour le surveiller.`}
 ]}
 ]},
-{name:"Opera — Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:6,sections:[
+{name:"Opera — Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:6,abilities:[
+{name:"Blinding Passion",category:"debuff",desc:{en:"Julianne disorients a target for 6 sec. Dispellable (magic)."}},
+{name:"Devotion",category:"buff",desc:{en:"Julianne heals herself for 31,250-46,250. Must be interrupted."}},
+{name:"Eternal Affection",category:"buff",desc:{en:"Julianne resurrects Romulo with 50% HP if he dies first."}},
+{name:"Powerful Attraction",category:"debuff",desc:{en:"Julianne stuns a target for 6 sec. Dispellable (magic)."}},
+{name:"Backward Lunge",category:"damage",desc:{en:"Romulo's knockback. Tank with back to wall."}},
+{name:"Daring",category:"buff",desc:{en:"Romulo's self-buff: +35% Physical damage, +50% attack speed for 8 sec."}},
+{name:"Deadly Swathe",category:"damage",desc:{en:"Romulo's frontal cleave dealing 2,625-3,375 damage. Face away from raid."}},
+{name:"Undying Love",category:"buff",desc:{en:"Romulo resurrects Julianne with 50% HP if she dies first."}}
+],sections:[
 {title:{en:"Phase 1 — Julianne Alone",fr:"Phase 1 — Julianne seule"},tips:[
 {en:`The fight starts against ${M("Julianne")} alone. She's a caster and must be interrupted constantly. Her absolute interrupt priority is ${S("Eternal Affection")}, a massive heal that can reset all your progress.`,fr:`Le combat commence contre ${M("Julianne")} seule. Elle est une caster et doit être interrompue constamment. Sa priorité d'interrupt absolue est ${S("Eternal Affection")}, un heal massif qui peut reset tout votre progrès.`,role:"melee"},
 {en:`She buffs herself with ${S("Devotion")} which increases her cast speed. Healers/Priests should dispel this buff, or better yet, Mages can ${S("Spellsteal")} it for a significant personal boost.`,fr:`Elle se buff avec ${S("Devotion")} qui augmente sa vitesse de cast. Les healers/Priests doivent dispel ce buff, ou mieux encore, les Mages peuvent le ${S("Spellsteal")} pour un boost personnel significatif.`,role:"heal"}
@@ -495,7 +553,14 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: One dies too early and resurrects the other. Solution: stop DPS on the low target and balance.`,fr:`<b>Point de wipe courant</b> : Un des deux meurt trop tôt et ressuscite l'autre. Solution : arrêtez le DPS sur la cible basse et équilibrez.`}
 ]}
 ]},
-{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",vi:8,sections:[
+{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",vi:8,abilities:[
+{name:"Hateful Bolt",category:"damage",desc:{en:"Hits 2nd highest threat target for 4,275-4,725 Arcane damage. Must have soaker."}},
+{name:"Summon Astral Flare",category:"add",desc:{en:"Spawns Astral Flare every 10 sec. Flares deal Arcane damage to nearby players if not killed."}},
+{name:"Astral Armor",category:"phase",desc:{en:"Reduces damage taken while above 0 mana. Becomes vulnerable during Evocation."}},
+{name:"Evocation",category:"phase",desc:{en:"At 0 mana: stops spawning Flares, takes +200% damage for 20 sec. Burn phase."}},
+{name:"Arcane Infusion",category:"buff",desc:{en:"Below 15% HP: +20% damage, double attack speed. Cannot evocate anymore. Burn quickly."}},
+{name:"Berserk",category:"buff",desc:{en:"After 12 min, enrages and wipes the raid."}}
+],sections:[
 {title:{en:"Flare Phase — Add Management",fr:"Phase Flares — Gestion des adds"},tips:[
 {en:`The Curator summons an ${M("Astral Flare")} every 10 seconds. These adds explode on contact and must be killed immediately by ranged DPS. An uncontrolled Flare can easily one-shot a caster.`,fr:`Le Curator invoque une ${M("Astral Flare")} toutes les 10 secondes. Ces adds explosent au contact et doivent être tuées immédiatement par les ranged DPS. Une Flare non contrôlée peut facilement one-shot un caster.`},
 {en:`Ranged DPS and healers must maintain at least 10 yards between each other to avoid chain damage if a Flare reaches someone.`,fr:`Les ranged DPS et healers doivent maintenir une distance d'au moins 10 yards entre eux pour éviter les dégâts en chaîne si une Flare atteint quelqu'un.`,role:"ranged"},
@@ -519,7 +584,15 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: An unkilled Flare explodes in the ranged group. Solution: assign dedicated DPS to Flares with absolute priority.`,fr:`<b>Point de wipe courant</b> : Une Flare non tuée explose dans le groupe ranged. Solution : assignez des DPS dédiés aux Flares avec priorité absolue.`}
 ]}
 ]},
-{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",vi:12,sections:[
+{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",vi:12,abilities:[
+{name:"Heroic Blow",category:"damage",desc:{en:"King piece's ability. Deals damage to adjacent squares."}},
+{name:"Sweep",category:"damage",desc:{en:"Queen piece's cone attack. Affects multiple squares."}},
+{name:"Smash",category:"damage",desc:{en:"Rook piece ability. Heavy damage to one square."}},
+{name:"Charge",category:"damage",desc:{en:"Knight piece ability. Jumps to distant square and damages."}},
+{name:"Holy Lance",category:"damage",desc:{en:"Bishop piece ability. Ranged attack in a line."}},
+{name:"Shield Block",category:"buff",desc:{en:"Pawn piece ability. Reduces incoming damage briefly."}},
+{name:"Cheat",category:"phase",desc:{en:"Medivh occasionally cheats: damages your pieces or buffs enemy pieces. Unavoidable."}}
+],sections:[
 {title:{en:"Basic Strategy",fr:"Stratégie de base"},tips:[
 {en:`The Chess Event is a giant chess game where each player controls a piece. Start by advancing Pawns to create openings and allow powerful pieces (Rooks, Knights, King) to advance.`,fr:`L'event Chess est une partie d'échecs géante où chaque joueur contrôle une pièce. Commencez par avancer les Pions pour créer des ouvertures et permettre aux pièces puissantes (Tours, Cavaliers, Roi) d'avancer.`},
 {en:`Prioritize killing enemy Bishops first as they can heal other pieces. Then focus on the Queen then the King to end the event.`,fr:`Priorisez l'élimination des Bishops (Fous) ennemis en premier car ils peuvent heal les autres pièces. Ensuite, concentrez-vous sur la Queen (Dame) puis le King (Roi) pour terminer l'event.`},
@@ -535,7 +608,15 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Relax</b>: This is the easiest event in Karazhan. Even with chaotic strategy, you'll probably win.`,fr:`<b>Relaxez</b> : C'est l'event le plus facile de Karazhan. Même avec une stratégie chaotique, vous gagnerez probablement.`}
 ]}
 ]},
-{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",vi:9,sections:[
+{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",vi:9,abilities:[
+{name:"Sacrifice",category:"debuff",desc:{en:"Teleports random player to Demon Chains, dealing 1,500 Shadow damage/sec until chains are destroyed."}},
+{name:"Summon Fiendish Imp",category:"add",desc:{en:"Summons imps continuously. They shoot Firebolt for 187-213 Fire damage. AoE them down."}},
+{name:"Summon Demon Chains",category:"add",desc:{en:"Spawns chains that hold Sacrifice target. Kill chains quickly to free player."}},
+{name:"Shadow Bolt Volley",category:"damage",desc:{en:"Deals 1,400-2,000 Shadow damage to all players. Interruptible."}},
+{name:"Summon Kil'rek",category:"add",desc:{en:"Kil'rek respawns if killed. His death briefly weakens Illhoof (+25% damage taken)."}},
+{name:"Broken Pact",category:"debuff",desc:{en:"When Kil'rek dies: Illhoof takes +25% damage for 25 sec. Use this window."}},
+{name:"Berserk",category:"buff",desc:{en:"Enrages after 10 min, wiping the raid."}}
+],sections:[
 {title:{en:"Main Strategy",fr:"Stratégie principale"},tips:[
 {en:`Position the fight near the green ritual circle at the center of the room. The tank keeps ${M("Illhoof")} and his demon ${M("Kil'rek")} together to facilitate cleave and control.`,fr:`Positionnez le combat près du cercle rituel vert au centre de la salle. Le tank maintient ${M("Illhoof")} et son démon ${M("Kil'rek")} ensemble pour faciliter le cleave et le contrôle.`,role:"tank"},
 {en:`The main mechanic is ${S("Sacrifice")}: Illhoof chains a random player above the circle and starts draining their life. The entire raid must immediately switch to the chains (Demon Chains) to free the victim while healers keep them alive. It's a race against time.`,fr:`La mécanique principale est ${S("Sacrifice")} : Illhoof enchaîne un joueur aléatoire au-dessus du cercle et commence à drainer sa vie. Tout le raid doit immédiatement switcher sur les chaînes (Demon Chains) pour libérer la victime, pendant que les healers la maintiennent en vie. C'est une course contre la montre.`,role:"heal"},
@@ -553,7 +634,17 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: Sacrifice target dies because DPS are too slow to switch. Solution: assign dedicated DPS to chains.`,fr:`<b>Point de wipe courant</b> : La cible de Sacrifice meurt car les DPS sont trop lents à switch. Solution : assignez des DPS dédiés aux chaînes.`}
 ]}
 ]},
-{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",vi:10,sections:[
+{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",vi:10,abilities:[
+{name:"Flame Wreath",category:"aoe",desc:{en:"Creates fire rings around 3 players for 20 sec. DO NOT MOVE or raid explodes for 4,000-5,000 Fire damage."}},
+{name:"Blizzard",category:"aoe",desc:{en:"Rotating Blizzard around the room. 1,313-1,688 Frost damage/sec + slow. Stay mobile."}},
+{name:"Arcane Explosion",category:"phase",desc:{en:"Pulls raid to center, then Slow + AoE. Run to walls during 10-sec cast."}},
+{name:"Frostbolt",category:"damage",desc:{en:"Single target 4,000-5,000 Frost damage. Cannot be interrupted normally."}},
+{name:"Fireball",category:"damage",desc:{en:"Single target 4,000-5,000 Fire damage. Cannot be interrupted normally."}},
+{name:"Arcane Missiles",category:"damage",desc:{en:"Channels missiles at random target for 1,500-2,000 Arcane damage per hit."}},
+{name:"Chains of Ice",category:"debuff",desc:{en:"Roots random target in place for 10 sec. Dispellable."}},
+{name:"Mass Polymorph",category:"phase",desc:{en:"At 40% mana: polymorphs entire raid, drinks to full mana, then Pyroblast."}},
+{name:"Summon Water Elemental",category:"add",desc:{en:"At 20% HP: summons 4 Water Elementals. Each casts Waterbolt for 3,000 Frost damage."}}
+],sections:[
 {title:{en:"Basic Mechanics",fr:"Mécanique de base"},tips:[
 {en:`Aran has no threat table and cannot be traditionally tanked. He attacks random targets with his spells. Tanks can wear DPS gear for this fight.`,fr:`Aran n'a pas de table d'aggro et ne peut pas être tanké traditionnellement. Il attaque des cibles aléatoires avec ses sorts. Les tanks peuvent porter du stuff DPS pour ce combat.`,role:"tank"},
 {en:`Casters must stay more than 10 yards from Aran to avoid his ${S("Counterspell")} which silences and locks your spell school for several seconds.`,fr:`Les casters doivent rester à plus de 10 yards d'Aran pour éviter son ${S("Counterspell")} qui silence et lock votre école de magie pendant plusieurs secondes.`,role:"ranged"},
@@ -581,7 +672,15 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Common Wipe Point</b>: Someone moves during Flame Wreath. Solution: yell "FREEZE" on voice and trust the raid.`,fr:`<b>Point de wipe courant</b> : Quelqu'un bouge pendant Flame Wreath. Solution : criez "FREEZE" dans vocal et faites confiance au raid.`}
 ]}
 ]},
-{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",vi:11,sections:[
+{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",vi:11,abilities:[
+{name:"Red Beam",category:"phase",desc:{en:"Perseverance - Tank beam. Reduces damage taken, increases HP. Stacks reduce healing received."}},
+{name:"Green Beam",category:"phase",desc:{en:"Serenity - Healer beam. Restores mana but reduces max HP. Stacks cause mana drain."}},
+{name:"Blue Beam",category:"phase",desc:{en:"Dominance - DPS beam. Increases spell damage but reduces max HP per stack."}},
+{name:"Nether Burn",category:"aoe",desc:{en:"Raid-wide damage during Banish Phase. Healers must top everyone off."}},
+{name:"Void Zone",category:"aoe",desc:{en:"Spawns void zones during Banish Phase. Move out immediately."}},
+{name:"Netherbreath",category:"damage",desc:{en:"Frontal cone attack dealing 4,500-5,500 Arcane damage + knockback. Face away from raid."}},
+{name:"Empowerment",category:"buff",desc:{en:"If Netherspite reaches a portal, he heals and gains +300% damage. Block all beams."}}
+],sections:[
 {title:{en:"Portal Phase — 1 min",fr:"Portal Phase — 1 min"},tips:[
 {en:`Three portals appear and send colored beams toward the boss: <b style="color:#ef4444">red</b> (attack power), <b style="color:#22c55e">green</b> (regeneration), and <b style="color:#3b82f6">blue</b> (mana but increased damage taken). Players must intercept these beams to prevent the boss from strengthening.`,fr:`Trois portails apparaissent et envoient des faisceaux colorés vers le boss : <b style="color:#ef4444">rouge</b> (puissance d'attaque), <b style="color:#22c55e">vert</b> (régénération), et <b style="color:#3b82f6">bleu</b> (mana mais dégâts accrus). Les joueurs doivent intercepter ces faisceaux pour empêcher le boss de se renforcer.`},
 {en:`After absorbing a beam, you receive ${S("Nether Exhaustion")} for 1m30, preventing you from taking the same color again. Plan rotations between players.`,fr:`Après avoir absorbé un faisceau, vous recevez ${S("Nether Exhaustion")} pendant 1m30, ce qui vous empêche de reprendre la même couleur. Prévoyez des rotations entre joueurs.`},
@@ -609,7 +708,16 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Progression Tip</b>: This fight requires coordination, not DPS. In progression, prioritize reliable players on beams over your best DPS. Survival trumps parses.`,fr:`<b>Conseil de progression</b> : Ce combat demande de la coordination, pas du DPS. En progression, privilégiez des joueurs fiables sur les beams plutôt que vos meilleurs DPS. La survie prime sur les parses.`}
 ]}
 ]},
-{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",vi:13,sections:[
+{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",vi:13,abilities:[
+{name:"Infernal",category:"add",desc:{en:"Every 45 sec: summons Infernal that lands with AoE, persists with pulsing Fire damage. Avoid landing zones."}},
+{name:"Enfeeble",category:"debuff",desc:{en:"Reduces 5 players HP to 1 for 7 sec. Heals to 100% after. Do not heal during Enfeeble."}},
+{name:"Shadow Word: Pain",category:"debuff",desc:{en:"Phase 1 only: DoT dealing 1,500 Shadow damage every 3 sec for 18 sec."}},
+{name:"Shadow Nova",category:"aoe",desc:{en:"After Enfeeble: 3,000 Shadow damage to all within 30 yards. Enfeebled players die if in range."}},
+{name:"Thrash",category:"damage",desc:{en:"Phase 2: Grants 2 extra attacks. Increases tank damage taken significantly."}},
+{name:"Sunder Armor",category:"debuff",desc:{en:"Phase 2: Stacking armor reduction on tank. Healers compensate."}},
+{name:"Dual Wield",category:"phase",desc:{en:"Phase 3 (30%): Dual wields axes, fast attacks, +30% damage. Tank dies quickly without CDs."}},
+{name:"Amplify Damage",category:"debuff",desc:{en:"Phase 3: Increases Physical damage taken by 100% for 10 sec. Coordinate tank CDs."}}
+],sections:[
 {title:{en:"Phase 1 — 100% to 60%",fr:"Phase 1 — 100% à 60%"},tips:[
 {en:`The tank must position with their back to the wall to avoid being knocked back by ${S("Shadow Nova")}. This position remains critical throughout the fight.`,fr:`Le tank doit se positionner dos au mur pour éviter d'être projeté par le knockback de ${S("Shadow Nova")}. Cette position reste critique tout au long du combat.`,role:"tank"},
 {en:`An ${M("Infernal")} drops from the sky roughly every 45 seconds and stays in place, radiating permanent fire damage (Hellfire). These Infernals progressively limit available space in the room.`,fr:`Un ${M("Infernal")} tombe du ciel toutes les 45 secondes environ et reste sur place, irradiant des dégâts de feu permanents (Hellfire). Ces Infernals limitent progressivement l'espace disponible dans la salle.`},
@@ -639,7 +747,17 @@ karazhan:{name:"Karazhan",bosses:[
 {en:`<b>Progression Tip</b>: Infernal RNG can ruin a perfect pull. If an Infernal drops on the tank or in the middle of the raid early, don't hesitate to wipe and restart — it's often more efficient than struggling.`,fr:`<b>Conseil de progression</b> : La RNG des Infernals peut ruiner un pull parfait. Si un Infernal tombe sur le tank ou au milieu du raid en début de combat, n'hésitez pas à wipe et recommencer — c'est souvent plus efficace que de s'entêter.`}
 ]}
 ]},
-{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",vi:14,sections:[
+{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",vi:14,abilities:[
+{name:"Bellowing Roar",category:"debuff",desc:{en:"AoE fear for 3 sec within 35 yards. Use Fear Ward, Tremor Totem, or Berserker Rage."}},
+{name:"Charred Earth",category:"aoe",desc:{en:"Fire patch under random player dealing 2,625-3,375 Fire damage/sec. Move out immediately."}},
+{name:"Cleave",category:"damage",desc:{en:"Frontal cleave dealing 5,000-6,000 Physical damage. Face away from raid."}},
+{name:"Tail Sweep",category:"damage",desc:{en:"Rear cone dealing 3,000-4,000 Physical damage + knockback. Don't stand behind."}},
+{name:"Smoldering Breath",category:"damage",desc:{en:"Frontal cone dealing 4,375-5,625 Fire damage. Only tank should be in front."}},
+{name:"Distracting Ash",category:"debuff",desc:{en:"Reduces hit chance by 30% on random player. Prioritize dispel on melee."}},
+{name:"Rain of Bones",category:"phase",desc:{en:"Air phase: rains Smoking Blast on raid, spawns 5 Restless Skeletons."}},
+{name:"Smoking Blast",category:"damage",desc:{en:"Air phase: targets random player with 2,750-3,250 Fire damage."}},
+{name:"Fireball Barrage",category:"damage",desc:{en:"Air phase: targets random player with fireball splash damage."}}
+],sections:[
 {title:{en:"Ground Phase",fr:"Ground Phase"},tips:[
 {en:`Position with your back to the wall with the boss facing outside the terrace. This protects you from knockbacks and gives the raid space to avoid mechanics.`,fr:`Positionnez-vous dos au mur avec le boss face à l'extérieur de la terrasse. Cette position vous protège des knockbacks et donne au raid de l'espace pour éviter les mécaniques.`,role:"tank"},
 {en:`Stay on the dragon's flanks, never in front or behind. ${S("Smoldering Breath")} deals massive frontal cone damage, and ${S("Tail Sweep")} knocks back and stuns those behind.`,fr:`Restez sur les flancs du dragon, jamais devant ni derrière. ${S("Smoldering Breath")} inflige des dégâts massifs en cône frontal, et ${S("Tail Sweep")} projette et étourdit ceux qui sont derrière.`,role:"melee"},
@@ -786,7 +904,14 @@ magtheridon:{name:"Magtheridon's Lair",bosses:[
 ]}
 ]},
 ssc:{name:"Serpentshrine Cavern",bosses:[
-{name:"Hydross the Unstable",img:IMG["Hydross the Unstable"],icon:"\u{1F4A7}",vi:1,sections:[
+{name:"Hydross the Unstable",img:IMG["Hydross the Unstable"],icon:"\u{1F4A7}",vi:1,abilities:[
+{name:"Mark of Hydross",category:"debuff",desc:{en:"Pure form: stacking Frost debuff +10% Frost damage taken per stack. Forces phase transition."}},
+{name:"Mark of Corruption",category:"debuff",desc:{en:"Corrupt form: stacking Nature debuff +10% Nature damage taken per stack. Forces phase transition."}},
+{name:"Water Tomb",category:"debuff",desc:{en:"Pure form: encases random player for 4 sec, dealing 4,500 Frost damage. Healable through it."}},
+{name:"Vile Sludge",category:"debuff",desc:{en:"Corrupt form: DoT on random player dealing 3,000 Nature damage over 24 sec. Dispellable."}},
+{name:"Summon Adds",category:"add",desc:{en:"4 elemental adds spawn each transition. Pure Water spawns in Frost form, Tainted spawn in Nature."}},
+{name:"Enrage",category:"buff",desc:{en:"Soft enrage at 10 min: +500% damage. Kill before this."}}
+],sections:[
 {title:{en:"Frost/Nature Phases",fr:"Phases Frost/Nature"},tips:[
 {en:`This encounter requires two tanks: one stacking Frost Resistance and one stacking Nature Resistance, each capped at 365.`,fr:`Ce combat nécessite deux tanks : un avec de la Résistance au Givre et un avec de la Résistance à la Nature, chacun cappé à 365.`,role:"tank"},
 {en:`${S("Mark of Hydross")} stacks on the raid every 15 seconds, dealing increasing damage. The debuff resets completely when the boss transitions between forms.`,fr:`${S("Mark of Hydross")} s'accumule sur le raid toutes les 15 secondes, infligeant des dégâts croissants. Le debuff se réinitialise complètement lors des transitions de forme du boss.`},
@@ -799,7 +924,14 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 {en:`Pre-assign melee players to swap immediately to adds when they spawn, ensuring quick pickup and control.`,fr:`Pré-assignez les joueurs mêlée pour qu'ils swap immédiatement sur les adds quand ils apparaissent, assurant un pickup et un contrôle rapides.`,role:"melee"}
 ]}
 ]},
-{name:"The Lurker Below",img:IMG["The Lurker Below"],icon:"\u{1F41F}",vi:2,sections:[
+{name:"The Lurker Below",img:IMG["The Lurker Below"],icon:"\u{1F41F}",vi:2,abilities:[
+{name:"Spout",category:"aoe",desc:{en:"Rotating water jet dealing 4,500 Frost damage + knockback. Jump in water to avoid it."}},
+{name:"Whirl",category:"damage",desc:{en:"AoE knockback + 3,500 Physical damage to all in melee range. Melee run out during cast."}},
+{name:"Water Bolt",category:"damage",desc:{en:"Shoots Frost bolt at random player for 5,500-6,500 Frost damage. Unavoidable."}},
+{name:"Geyser",category:"aoe",desc:{en:"Water eruption under random player dealing 2,500 Frost damage + knockback."}},
+{name:"Submerge",category:"phase",desc:{en:"Lurker submerges every 2 min. Spawns adds: Coilfang Ambushers + Coilfang Guardians."}},
+{name:"Scalding Water",category:"aoe",desc:{en:"Water deals 500 Fire damage/sec. Jump in only during Spout, then get out quickly."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`The Lurker is the simplest boss in Serpentshrine Cavern, requiring only a single tank and straightforward positioning.`,fr:`Le Lurker est le boss le plus simple de Serpentshrine Cavern, ne nécessitant qu'un seul tank et un positionnement simple.`,role:"tank"},
 {en:`${S("Spout")} is a rotating water jet that activates every 20-25 seconds, dealing approximately 3500 Frost damage and knocking back anyone caught in its path.`,fr:`${S("Spout")} est un jet d'eau rotatif qui s'active toutes les 20-25 secondes, infligeant environ 3500 dégâts de Givre et repoussant toute personne prise dans son passage.`},
@@ -812,7 +944,15 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 {en:`Swimming in the water does not interrupt casting if players position themselves correctly at the edge, making this a DPS-neutral mechanic for casters.`,fr:`Nager dans l'eau n'interrompt pas les incantations si les joueurs se positionnent correctement au bord, ce qui en fait une mécanique neutre en DPS pour les casters.`,role:"ranged"}
 ]}
 ]},
-{name:"Leotheras the Blind",img:IMG["Leotheras the Blind"],icon:"\u{1F608}",vi:3,sections:[
+{name:"Leotheras the Blind",img:IMG["Leotheras the Blind"],icon:"\u{1F608}",vi:3,abilities:[
+{name:"Whirlwind",category:"damage",desc:{en:"Elf form: spins around dealing 3,000 Physical damage/sec. Run away during this."}},
+{name:"Chaos Blast",category:"damage",desc:{en:"Demon form: hits highest aggro for 3,000 Fire damage. Needs Warlock tank."}},
+{name:"Insidious Whisper",category:"debuff",desc:{en:"Demon form: summons Inner Demon for 5 random players. Kill your own demon or die."}},
+{name:"Inner Demon",category:"add",desc:{en:"Personal add for each marked player. Must solo kill it within 30 sec or die permanently."}},
+{name:"Metamorphosis",category:"phase",desc:{en:"Alternates between Elf (60 sec) and Demon (60 sec) forms. Different tanks needed."}},
+{name:"Demon Within",category:"phase",desc:{en:"Below 15%: both forms active simultaneously. Kill quickly."}},
+{name:"Berserk",category:"buff",desc:{en:"10 min enrage timer."}}
+],sections:[
 {title:{en:"Humanoid/Demon Phase",fr:"Phase Humanoïde/Démon"},tips:[
 {en:`This fight requires two tanks: a main tank for the humanoid form and a Warlock to tank the demon form using high-threat abilities.`,fr:`Ce combat nécessite deux tanks : un main tank pour la forme humanoïde et un Démoniste pour tanker la forme démon en utilisant des capacités à haute menace.`,role:"tank"},
 {en:`The Warlock tank should spam ${S("Searing Pain")} to generate enough threat to hold the demon form, as it cannot be conventionally tanked.`,fr:`Le tank Démoniste doit spammer ${S("Searing Pain")} pour générer assez de menace pour tenir la forme démon, car elle ne peut pas être tankée conventionnellement.`,role:"ranged"},
@@ -833,7 +973,16 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 {en:`Assign a dedicated healer to the Warlock tank who does nothing but keep them alive during demon phase.`,fr:`Assignez un healer dédié au tank Démoniste qui ne fait rien d'autre que le maintenir en vie pendant la phase démon.`,role:"heal"}
 ]}
 ]},
-{name:"Fathom-Lord Karathress",img:IMG["Fathom-Lord Karathress"],icon:"\u{1F419}",vi:4,sections:[
+{name:"Fathom-Lord Karathress",img:IMG["Fathom-Lord Karathress"],icon:"\u{1F419}",vi:4,abilities:[
+{name:"Cataclysmic Bolt",category:"damage",desc:{en:"Hits random target for 50% of their max HP. Unavoidable. Keep everyone topped."}},
+{name:"Sear Nova",category:"aoe",desc:{en:"Gained from Caribdis: 6,000 Fire damage to all in 20 yards. Spread out."}},
+{name:"Tidal Surge",category:"debuff",desc:{en:"Gained from Tidalvess: knockback + 2 sec stun + 2,000 Frost damage."}},
+{name:"The Beast Within",category:"buff",desc:{en:"Gained from Sharkkis: +30% damage, immune to CC for 30 sec."}},
+{name:"Spitfire Totem",category:"add",desc:{en:"Tidalvess summons Fire totem dealing 2,500-3,000 Fire damage. Kill immediately."}},
+{name:"Healing Wave",category:"buff",desc:{en:"Caribdis heals other adds. Interrupt or burn Caribdis first."}},
+{name:"Summon Pet",category:"add",desc:{en:"Sharkkis summons a pet that attacks raid. Off-tank the pet."}},
+{name:"Enrage",category:"buff",desc:{en:"Karathress enrages at 10 min."}}
+],sections:[
 {title:{en:"Council — Kill Order",fr:"Conseil — Ordre de Kill"},tips:[
 {en:`The kill order is: ${M("Tidalvess")} first, then ${M("Sharkkis")}, followed by ${M("Caribdis")}, and finally ${M("Karathress")} himself.`,fr:`L'ordre de kill est : ${M("Tidalvess")} en premier, puis ${M("Sharkkis")}, suivi de ${M("Caribdis")}, et enfin ${M("Karathress")} lui-même.`},
 {en:`You will need 3-4 tanks for this encounter: one dedicated to each advisor plus one for the boss himself.`,fr:`Vous aurez besoin de 3-4 tanks pour ce combat : un dédié à chaque conseiller plus un pour le boss lui-même.`,role:"tank"},
