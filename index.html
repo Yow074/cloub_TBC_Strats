@@ -185,7 +185,7 @@
   <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
 </footer>
 <script>
-const VERSION = "1.1.2";
+const VERSION = "1.1.3";
 let currentLang = localStorage.getItem('lang') || 'en';
 const UI = {
   en: { filterRole: "Filter by role:", all: "All", tank: "Tank", heal: "Heal", melee: "Melee DPS", ranged: "Ranged DPS", boss: "BOSS", bosses: "bosses", video: "Video", coming: "Strategies for", comingSoon: "coming soon!", abilities: "Abilities", combatFlow: "Combat Flow", tankSection: "Tank", healSection: "Healers", meleeSection: "Melee DPS", rangedSection: "Ranged DPS", rlTakeaway: "RL Takeaway", showRL: "Show RL Tips", notes: "Notes", tip: "tip", tips: "tips" },
@@ -995,7 +995,14 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 {en:`Tank damage scales significantly with each advisor kill, so ensure tanks have cooldowns ready for the Karathress-only phase.`,fr:`Les dégâts sur les tanks augmentent significativement avec chaque kill de conseiller, donc assurez-vous que les tanks ont leurs cooldowns prêts pour la phase Karathress seul.`,role:"tank"}
 ]}
 ]},
-{name:"Morogrim Tidewalker",img:IMG["Morogrim Tidewalker"],icon:"\u{1F40B}",vi:5,sections:[
+{name:"Morogrim Tidewalker",img:IMG["Morogrim Tidewalker"],icon:"\u{1F40B}",vi:5,abilities:[
+{name:"Tidal Wave",category:"aoe",desc:{en:"Raid-wide AoE dealing 2,500 Frost damage + knockback. Stay spread to avoid collision."}},
+{name:"Watery Grave",category:"debuff",desc:{en:"Teleports 4 players to distant graves, stunning for 6 sec + 4,500 Frost damage. Heal through."}},
+{name:"Earthquake",category:"aoe",desc:{en:"2-sec AoE stun + 2,000 Physical damage. Spawns Murloc waves."}},
+{name:"Summon Murlocs",category:"add",desc:{en:"Spawns 12 Murlocs after Earthquake. AoE tank picks them up, raid burns them down."}},
+{name:"Watery Globules",category:"add",desc:{en:"Below 25%: spawns water globules that chase players. If they reach, deal 4,500 Frost damage."}},
+{name:"Enrage",category:"buff",desc:{en:"Enrages after 15 min."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`This encounter requires two tanks: one for the boss and one for the Murloc adds, with a Paladin being strongly preferred for the add tank role.`,fr:`Ce combat nécessite deux tanks : un pour le boss et un pour les adds Murlocs, avec un Paladin étant fortement préféré pour le rôle de tank adds.`,role:"tank"},
 {en:`${S("Watery Grave")} periodically traps a random player in place, requiring the raid to maintain awareness of affected members.`,fr:`${S("Watery Grave")} piège périodiquement un joueur aléatoire sur place, nécessitant que le raid maintienne une vigilance sur les membres affectés.`},
@@ -1012,7 +1019,17 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 {en:`Discipline beats reaction on this fight—drill into your raid that letting the tank build aggro is more important than starting damage early.`,fr:`La discipline bat la réaction sur ce combat—enfoncez dans votre raid que laisser le tank construire l'aggro est plus important que commencer les dégâts tôt.`}
 ]}
 ]},
-{name:"Lady Vashj",img:IMG["Lady Vashj"],icon:"\u{1F40D}",vi:6,sections:[
+{name:"Lady Vashj",img:IMG["Lady Vashj"],icon:"\u{1F40D}",vi:6,abilities:[
+{name:"Shoot",category:"damage",desc:{en:"Ranged attack dealing 4,000-6,000 damage to highest threat. Tank must maintain range."}},
+{name:"Multi-Shot",category:"damage",desc:{en:"Hits multiple targets in a cone for 4,000-6,000 damage. Spread out."}},
+{name:"Shock Blast",category:"damage",desc:{en:"20-yard AoE dealing 7,500 Nature damage + stun. Melee run out during cast."}},
+{name:"Entangle",category:"debuff",desc:{en:"Roots random player for 10 sec + 500 Nature damage/sec. Dispellable."}},
+{name:"Static Charge",category:"debuff",desc:{en:"Phase 3: chains lightning between nearby players. Spread 10+ yards."}},
+{name:"Tainted Core",category:"phase",desc:{en:"Phase 2: looted from Tainted Elementals. Must be used on generators to remove shield."}},
+{name:"Forked Lightning",category:"damage",desc:{en:"Phase 2: hits random players for 2,000 Nature damage."}},
+{name:"Poison Bolt Volley",category:"damage",desc:{en:"Phase 3: hits 15 closest players for 2,000 Nature damage + DoT. Spread and heal through."}},
+{name:"Summon Sporebat",category:"add",desc:{en:"Flying adds that must be killed. They explode on death dealing AoE damage."}}
+],sections:[
 {title:{en:"Phase 1 — 100% to 70%",fr:"Phase 1 — 100% à 70%"},tips:[
 {en:`During Phase 1, Lady Vashj is shielded and cannot take damage—the raid must kill elemental adds to progress the fight.`,fr:`Pendant la Phase 1, Lady Vashj est protégée et ne peut pas prendre de dégâts—le raid doit tuer des adds élémentaires pour faire progresser le combat.`},
 {en:`${S("Spore Bat")} adds spawn throughout this phase and should be stacked together for efficient AOE damage.`,fr:`Les adds ${S("Spore Bat")} apparaissent tout au long de cette phase et devraient être stackés ensemble pour des dégâts AOE efficaces.`,role:"ranged"},
@@ -1036,7 +1053,14 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 ]}
 ]},
 tk:{name:"Tempest Keep — The Eye",bosses:[
-{name:"Al'ar",img:IMG["Al'ar"],icon:"🐦‍🔥",vi:1,sections:[
+{name:"Al'ar",img:IMG["Al'ar"],icon:"🐦‍🔥",vi:1,abilities:[
+{name:"Flame Buffet",category:"debuff",desc:{en:"Stacking debuff if no melee in range: +10% Fire damage taken per stack. Wipes raid if unchecked."}},
+{name:"Flame Quills",category:"aoe",desc:{en:"Al'ar moves to center, bombards all platforms. 8,000 Fire damage. Hide on ramps."}},
+{name:"Ember of Al'ar",category:"add",desc:{en:"Adds spawn on transitions. Explode on death dealing 8,000 Fire damage. Keep low HP, don't kill."}},
+{name:"Melt Armor",category:"debuff",desc:{en:"Reduces tank armor by 80% for 60 sec. Requires tank swaps or cooldowns."}},
+{name:"Dive Bomb",category:"damage",desc:{en:"Phase 2: dives to random location dealing massive Fire damage. Move out of impact zone."}},
+{name:"Rebirth",category:"phase",desc:{en:"Al'ar explodes on Phase 1 death: 5,000 Fire damage + knockback. Reborn at 100% HP for Phase 2."}}
+],sections:[
 {title:{en:"Phase 1 — Platforms",fr:"Phase 1 — Plateformes"},tips:[
 {en:`Al'ar flies between three elevated platforms in a fixed rotation every 30 seconds. Position one tank on each platform to pick up the boss immediately upon arrival.`,fr:`Al'ar vole entre trois plateformes surélevées dans une rotation fixe toutes les 30 secondes. Positionnez un tank sur chaque plateforme pour récupérer le boss immédiatement à son arrivée.`,role:"tank"},
 {en:`${S("Flame Buffet")} is a stacking debuff applied to the raid if no melee players are in range of Al'ar. Melee must follow the boss religiously between platforms to prevent this from overwhelming healers.`,fr:`${S("Flame Buffet")} est un debuff cumulable appliqué au raid si aucun joueur de mêlée n'est à portée d'Al'ar. Les mêlées doivent suivre le boss religieusement entre les plateformes pour éviter de submerger les healers.`,role:"melee"},
@@ -1055,7 +1079,12 @@ tk:{name:"Tempest Keep — The Eye",bosses:[
 {en:`Ranged players should spread out to minimize Flame Quills overlap and maintain maximum range to simplify movement requirements.`,fr:`Les joueurs distants doivent s'espacer pour minimiser le chevauchement de Flame Quills et maintenir la portée maximale pour simplifier les exigences de mouvement.`,role:"ranged"}
 ]}
 ]},
-{name:"Void Reaver",img:IMG["Void Reaver"],icon:"🤖",vi:2,sections:[
+{name:"Void Reaver",img:IMG["Void Reaver"],icon:"🤖",vi:2,abilities:[
+{name:"Pounding",category:"aoe",desc:{en:"Raid-wide Arcane AoE dealing 4,275-5,225 damage every 14 sec. Constant healing pressure."}},
+{name:"Arcane Orb",category:"damage",desc:{en:"Slow projectile targeting ranged. 6,175-7,825 Arcane damage + 6 sec silence. Dodge it."}},
+{name:"Knock Away",category:"damage",desc:{en:"Tank knockback dealing 3,238-3,762 damage. Reduces threat by 25%. Requires tank rotation."}},
+{name:"Enrage",category:"buff",desc:{en:"Enrages after 10 min. DPS race."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`Void Reaver is the simplest boss in Tempest Keep, often nicknamed the "Loot Piñata." This is essentially a pure DPS race with minimal mechanics.`,fr:`Void Reaver est le boss le plus simple de Tempest Keep, souvent surnommé "Loot Piñata". C'est essentiellement une course DPS pure avec des mécaniques minimales.`},
 {en:`Three tanks are recommended, with two being the absolute minimum. Feral Druids are ideal for this encounter due to their high threat generation and survivability.`,fr:`Trois tanks sont recommandés, avec deux comme minimum absolu. Les Druides Feral sont idéaux pour cette rencontre grâce à leur génération de menace élevée et leur survie.`,role:"tank"},
@@ -1068,7 +1097,14 @@ tk:{name:"Tempest Keep — The Eye",bosses:[
 {en:`Position ranged players at maximum range to reduce Arcane Orb targeting frequency. Call out orb spawns so players can react quickly.`,fr:`Positionnez les joueurs distants à portée maximale pour réduire la fréquence de ciblage des Arcane Orb. Annoncez les apparitions d'orbes pour que les joueurs puissent réagir rapidement.`,role:"ranged"}
 ]}
 ]},
-{name:"High Astromancer Solarian",img:IMG["High Astromancer Solarian"],icon:"✨",vi:3,sections:[
+{name:"High Astromancer Solarian",img:IMG["High Astromancer Solarian"],icon:"✨",vi:3,abilities:[
+{name:"Wrath of the Astromancer",category:"debuff",desc:{en:"Bomb debuff on random player. Explodes after 6 sec for 5,400-6,600 Arcane damage in 8 yards. Run out."}},
+{name:"Arcane Missiles",category:"damage",desc:{en:"Channels missiles at random target dealing 2,000-3,000 Arcane damage per hit."}},
+{name:"Blinding Light",category:"aoe",desc:{en:"2 sec cast AoE dealing 2,500 Arcane damage to all in 20 yards."}},
+{name:"Solarium Agent",category:"add",desc:{en:"Adds spawn periodically. Must be tanked and killed. Paladin ideal for AoE threat."}},
+{name:"Void Bolt",category:"damage",desc:{en:"Phase 2: hits tank for 4,500-5,500 Shadow damage. Main damage source in P2."}},
+{name:"Psychic Scream",category:"debuff",desc:{en:"Phase 2: AoE fear in 8 yards. Use Tremor Totem, Fear Ward, Berserker Rage."}}
+],sections:[
 {title:{en:"Phase 1 — Arcane (100-20%)",fr:"Phase 1 — Arcane (100-20%)"},tips:[
 {en:`${S("Wrath of the Astromancer")} places a bomb debuff on a random player. After 6 seconds, the player explodes dealing Arcane damage to everyone within 8 yards.`,fr:`${S("Wrath of the Astromancer")} place un debuff bombe sur un joueur aléatoire. Après 6 secondes, le joueur explose et inflige des dégâts Arcane à tous ceux dans un rayon de 8 yards.`},
 {en:`When you receive the bomb, immediately run away from the raid to a designated spot at least 20 yards away. The explosion damage is survivable with healing, but will kill anyone near you.`,fr:`Quand vous recevez la bombe, courez immédiatement loin du raid vers un spot désigné à au moins 20 yards. Les dégâts de l'explosion sont survivables avec des soins, mais tueront tous ceux près de vous.`},
@@ -1086,7 +1122,16 @@ tk:{name:"Tempest Keep — The Eye",bosses:[
 {en:`Shadow Resistance gear helps significantly in Phase 2, especially for melee who may be caught in Psychic Scream range.`,fr:`L'équipement de Résistance Shadow aide significativement en Phase 2, surtout pour les mêlées qui peuvent être pris dans la portée de Psychic Scream.`}
 ]}
 ]},
-{name:"Kael'thas Sunstrider",img:IMG["Kael'thas Sunstrider"],icon:"👑",vi:4,sections:[
+{name:"Kael'thas Sunstrider",img:IMG["Kael'thas Sunstrider"],icon:"👑",vi:4,abilities:[
+{name:"Fireball",category:"damage",desc:{en:"Single target dealing 18,000-22,000 Fire damage. Interruptible."}},
+{name:"Flamestrike",category:"aoe",desc:{en:"Ground AoE dealing 6,000 Fire damage + DoT. Move out immediately."}},
+{name:"Phoenix",category:"add",desc:{en:"Summons Phoenix that drops fire patches. Leaves egg on death - kill egg or Phoenix respawns."}},
+{name:"Mind Control",category:"debuff",desc:{en:"Phase 4+: MCs random player. Must be CC'd or damaged to break. Paladins immune with bubble."}},
+{name:"Pyroblast",category:"damage",desc:{en:"Phase 4+: 45,000 Fire damage to tank. Use Phaseshift Bulwark to absorb."}},
+{name:"Shock Barrier",category:"buff",desc:{en:"Phase 5: absorbs 80,000 damage. Must break through to damage Kael'thas."}},
+{name:"Gravity Lapse",category:"phase",desc:{en:"Phase 5: raid floats in air. Swim to avoid Nether Vapor. Nether Beams target random players."}},
+{name:"Nether Beam",category:"damage",desc:{en:"Phase 5: targets random players during Gravity Lapse for 2,000 Arcane damage."}}
+],sections:[
 {title:{en:"Phase 1 — Advisors",fr:"Phase 1 — Conseillers"},tips:[
 {en:`Four Advisors must be defeated in a specific order: ${M("Thaladred")} → ${M("Sanguinar")} → ${M("Capernian")} → ${M("Telonicus")}. Each has unique abilities requiring different handling.`,fr:`Quatre Conseillers doivent être vaincus dans un ordre spécifique : ${M("Thaladred")} → ${M("Sanguinar")} → ${M("Capernian")} → ${M("Telonicus")}. Chacun a des capacités uniques nécessitant une gestion différente.`},
 {en:`Assign one tank to each Advisor and coordinate positioning carefully. Thaladred fixates random targets, Sanguinar fears, Capernian must be interrupted, and Telonicus applies bombs.`,fr:`Assignez un tank à chaque Conseiller et coordonnez le positionnement soigneusement. Thaladred fixe des cibles aléatoires, Sanguinar fear, Capernian doit être interrompu, et Telonicus applique des bombes.`,role:"tank"},
@@ -1111,7 +1156,12 @@ tk:{name:"Tempest Keep — The Eye",bosses:[
 ]}
 ]},
 hyjal:{name:"Battle for Mount Hyjal",bosses:[
-{name:"Rage Winterchill",img:IMG["Rage Winterchill"],icon:"❄️",vi:1,sections:[
+{name:"Rage Winterchill",img:IMG["Rage Winterchill"],icon:"❄️",vi:1,abilities:[
+{name:"Icebolt",category:"damage",desc:{en:"Single target 4,250-5,750 Frost damage + freeze for 4 sec. Heal frozen player immediately."}},
+{name:"Death and Decay",category:"aoe",desc:{en:"Ground AoE dealing 15% max HP per sec for 15 sec. Move out immediately."}},
+{name:"Frost Nova",category:"aoe",desc:{en:"AoE 2,775-3,225 Frost damage + 10 sec root within 20 yards. Spread out."}},
+{name:"Frost Armor",category:"debuff",desc:{en:"Slows melee attack speed by 25%. Cleansable by Paladin tanks."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`${S("Icebolt")} deals 4-5k Frost damage and freezes the target in place. Healers must react immediately to heal the frozen player, as they will die within 2-3 seconds if left unattended.`,fr:`${S("Icebolt")} inflige 4-5k dégâts de Givre et gèle la cible sur place. Les soigneurs doivent réagir immédiatement pour soigner le joueur gelé, car il mourra en 2-3 secondes s'il n'est pas soigné.`,role:"heal"},
 {en:`${S("Death and Decay")} creates a large AoE zone that deals 15% of your maximum HP per second within 20 yards. Move out of it immediately when it spawns beneath you.`,fr:`${S("Death and Decay")} crée une large zone AoE qui inflige 15% de vos PV max par seconde dans un rayon de 20 mètres. Sortez-en immédiatement lorsqu'elle apparaît sous vos pieds.`},
@@ -1128,7 +1178,12 @@ hyjal:{name:"Battle for Mount Hyjal",bosses:[
 {en:`This is a simple execution fight. If your raid can handle the trash waves, the boss itself should not pose a significant challenge.`,fr:`C'est un combat d'exécution simple. Si votre raid gère les vagues de trash, le boss lui-même ne devrait pas poser de défi majeur.`}
 ]}
 ]},
-{name:"Anetheron",img:IMG["Anetheron"],icon:"😈",vi:2,sections:[
+{name:"Anetheron",img:IMG["Anetheron"],icon:"😈",vi:2,abilities:[
+{name:"Carrion Swarm",category:"damage",desc:{en:"Frontal cone 4,375-5,625 Shadow damage + 75% reduced healing for 20 sec. Spread healers."}},
+{name:"Inferno",category:"add",desc:{en:"Summons Infernal on random player. Deals Fire damage on impact + pulses. Tank with FR gear."}},
+{name:"Sleep",category:"debuff",desc:{en:"Sleeps 2-3 players for 10 sec. Dispel immediately."}},
+{name:"Vampiric Aura",category:"buff",desc:{en:"Heals Anetheron for 300% of melee damage dealt. Increases sustain."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`${S("Carrion Swarm")} deals 4-5k Shadow damage in a cone and applies a debuff that reduces healing received by 75% for 20 seconds. Healers must spread around the boss to ensure not all of them get hit simultaneously.`,fr:`${S("Carrion Swarm")} inflige 4-5k dégâts d'Ombre en cône et applique un debuff réduisant les soins reçus de 75% pendant 20 secondes. Les soigneurs doivent s'étaler autour du boss pour éviter d'être tous touchés simultanément.`,role:"heal"},
 {en:`${S("Infernal")} adds spawn on random raid members throughout the fight. Assign a dedicated tank with Fire Resistance gear to pick them up and keep them away from the raid.`,fr:`Des adds ${S("Infernal")} apparaissent sur des membres aléatoires du raid pendant le combat. Assignez un tank dédié avec de l'équipement Résistance au Feu pour les récupérer et les éloigner du raid.`,role:"tank"},
@@ -1145,7 +1200,12 @@ hyjal:{name:"Battle for Mount Hyjal",bosses:[
 {en:`Call out Sleep targets on voice so dispellers can react quickly. Sleeping DPS during a critical burn phase can hurt your overall damage output.`,fr:`Annoncez les cibles de Sommeil en vocal pour que les dispelleurs puissent réagir rapidement. Des DPS endormis pendant une phase de burst critique peut nuire à votre DPS global.`}
 ]}
 ]},
-{name:"Kaz'rogal",img:IMG["Kaz'rogal"],icon:"💥",vi:3,sections:[
+{name:"Kaz'rogal",img:IMG["Kaz'rogal"],icon:"💥",vi:3,abilities:[
+{name:"Mark of Kaz'rogal",category:"debuff",desc:{en:"Drains 600 mana/sec for 5 sec. If mana hits 0, player explodes for 10,000 Shadow damage in 15 yards."}},
+{name:"War Stomp",category:"aoe",desc:{en:"AoE 2,063-2,937 Physical damage + 5 sec stun to nearby players."}},
+{name:"Cleave",category:"damage",desc:{en:"Frontal cleave dealing extra Physical damage. Face away from raid."}},
+{name:"Malevolent Cleave",category:"damage",desc:{en:"Enhanced cleave dealing 7,000+ Physical damage. Tank cooldowns required."}}
+],sections:[
 {title:{en:"Strategy — DPS Race",fr:"Stratégie — Course DPS"},tips:[
 {en:`${S("Mark of Kaz'rogal")} drains 600 mana per second for 5 seconds from all mana users in the raid. This ability is the central mechanic of the encounter.`,fr:`${S("Mark of Kaz'rogal")} draine 600 mana par seconde pendant 5 secondes de tous les utilisateurs de mana du raid. Cette capacité est la mécanique centrale du combat.`},
 {en:`If any player's mana reaches zero while affected by the Mark, they explode for 10k Shadow damage to all players within 15 yards. Run away from the raid immediately if your mana is low!`,fr:`Si le mana d'un joueur atteint zéro pendant qu'il est affecté par la Marque, il explose pour 10k dégâts d'Ombre à tous les joueurs dans un rayon de 15 mètres. Éloignez-vous du raid immédiatement si votre mana est bas !`},
@@ -1162,7 +1222,13 @@ hyjal:{name:"Battle for Mount Hyjal",bosses:[
 {en:`Brief your raid on the exact timing of each Mark. Players who understand the escalation can better manage their mana and know when to start panicking.`,fr:`Briefez votre raid sur le timing exact de chaque Marque. Les joueurs qui comprennent l'escalade peuvent mieux gérer leur mana et savoir quand commencer à paniquer.`}
 ]}
 ]},
-{name:"Azgalor",img:IMG["Azgalor"],icon:"🔥",vi:4,sections:[
+{name:"Azgalor",img:IMG["Azgalor"],icon:"🔥",vi:4,abilities:[
+{name:"Doom",category:"debuff",desc:{en:"20 sec debuff on random player. On expiry: instant death + spawns Lesser Doomguard add."}},
+{name:"Rain of Fire",category:"aoe",desc:{en:"Ground AoE dealing 1,600-1,900 Fire damage every 2 sec in melee range."}},
+{name:"Howl of Azgalor",category:"debuff",desc:{en:"Raid-wide 5 sec silence. Pre-HoT before it hits."}},
+{name:"Cleave",category:"damage",desc:{en:"Frontal cleave dealing 7,000 Physical damage."}},
+{name:"Unquenchable Flames",category:"debuff",desc:{en:"DoT dealing 1,250 Fire damage every 2 sec for 5 sec. Applied by Rain of Fire."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`${S("Doom")} places a 20-second debuff on a random raid member. When the debuff expires, it instantly kills the affected player and spawns a ${M("Lesser Doomguard")} add that must be tanked.`,fr:`${S("Doom")} place un debuff de 20 secondes sur un membre aléatoire du raid. Quand le debuff expire, il tue instantanément le joueur affecté et fait apparaître un add ${M("Lesser Doomguard")} qui doit être tanké.`},
 {en:`Rain of Fire combined with ${S("Unquenchable Flames")} deals 1.6-1.9k damage every 2 seconds plus an additional DoT. Healers must keep the raid topped off to survive sustained fire damage.`,fr:`Pluie de Feu combinée à ${S("Unquenchable Flames")} inflige 1.6-1.9k dégâts toutes les 2 secondes plus un DoT supplémentaire. Les soigneurs doivent garder le raid à pleine vie pour survivre aux dégâts de feu soutenus.`,role:"heal"},
@@ -1179,7 +1245,15 @@ hyjal:{name:"Battle for Mount Hyjal",bosses:[
 {en:`Practice the Silence timing. Knowing when Howl is coming allows healers to pre-HoT and tanks to use defensive cooldowns, making the silence windows much safer.`,fr:`Pratiquez le timing du Silence. Savoir quand le Hurlement arrive permet aux soigneurs de pré-HoT et aux tanks d'utiliser des cooldowns défensifs, rendant les fenêtres de silence beaucoup plus sûres.`}
 ]}
 ]},
-{name:"Archimonde",img:IMG["Archimonde"],icon:"💀",vi:5,sections:[
+{name:"Archimonde",img:IMG["Archimonde"],icon:"💀",vi:5,abilities:[
+{name:"Air Burst",category:"damage",desc:{en:"Launches player into air. Use Tears of the Goddess to slow fall or die."}},
+{name:"Doomfire",category:"debuff",desc:{en:"Fire trail dealing 2,400 damage every 3 sec for 60 sec. Run away from raid. Cannot dispel."}},
+{name:"Fear",category:"debuff",desc:{en:"AoE fear. Tremor Totem in every group essential."}},
+{name:"Grip of the Legion",category:"debuff",desc:{en:"DoT on random player dealing 2,500 Shadow damage every 2 sec for 5 min. Dispellable."}},
+{name:"Soul Charge",category:"phase",desc:{en:"On player death: 4,500 raid damage + class-specific debuff. Every death hurts raid."}},
+{name:"Hand of Death",category:"phase",desc:{en:"Below 10%: casts repeatedly until dead. Burns wisps help finish him."}},
+{name:"Finger of Death",category:"damage",desc:{en:"Instant kill if anyone is out of range. Stay near boss."}}
+],sections:[
 {title:{en:"Strategy",fr:"Stratégie"},tips:[
 {en:`${S("Air Burst")} knocks players high into the air. Every raid member MUST have <b>Tears of the Goddess</b> equipped and ready to use, or they will die from fall damage.`,fr:`${S("Air Burst")} projette les joueurs haut dans les airs. Chaque membre du raid DOIT avoir <b>Tears of the Goddess</b> équipé et prêt à utiliser, sinon ils mourront des dégâts de chute.`},
 {en:`${S("Doomfire")} creates a trail of fire that deals 2400 damage every 3 seconds. This debuff cannot be dispelled, so affected players must simply run away from the raid and wait for it to expire.`,fr:`${S("Doomfire")} crée une traînée de feu qui inflige 2400 dégâts toutes les 3 secondes. Ce debuff ne peut pas être dissipé, donc les joueurs affectés doivent simplement s'éloigner du raid et attendre qu'il expire.`},
@@ -1200,7 +1274,11 @@ hyjal:{name:"Battle for Mount Hyjal",bosses:[
 ]}
 ]},
 bt:{name:"Black Temple",bosses:[
-{name:"High Warlord Naj'entus",img:IMG["High Warlord Naj'entus"],icon:"🐚",vi:1,sections:[
+{name:"High Warlord Naj'entus",img:IMG["High Warlord Naj'entus"],icon:"🐚",vi:1,abilities:[
+{name:"Impaling Spine",category:"debuff",desc:{en:"Impales target for 2,750 damage + 2,500 bleed/3 sec. Root. Dispel drops spine to ground."}},
+{name:"Tidal Shield",category:"buff",desc:{en:"Immune to damage + heals 1% HP/sec. Break with Impaling Spine throw, 8,500 Frost damage to raid."}},
+{name:"Needle Spine Spray",category:"damage",desc:{en:"Shoots spines at random targets for 3,000 Frost damage each. Spread out."}}
+],sections:[
 {title:{en:"Core Mechanics",fr:"Mécaniques Principales"},tips:[
 {en:`${S("Impaling Spine")} impales one or two raid members, dealing damage over time and rooting them in place. When dispelled or when the target dies, the spine drops to the ground and can be picked up by any player.`,fr:`${S("Impaling Spine")} empale un ou deux membres du raid, infligeant des dégâts sur la durée et les immobilisant. Quand le debuff est dissipé ou que la cible meurt, l'épine tombe au sol et peut être ramassée par n'importe quel joueur.`},
 {en:`${S("Tidal Shield")} makes the boss completely immune to all damage while also healing him. The only way to break this shield is to throw a collected Impaling Spine at him, which shatters the barrier and deals significant damage to the entire raid.`,fr:`${S("Tidal Shield")} rend le boss complètement immunisé à tous les dégâts tout en le soignant. La seule façon de briser ce bouclier est de lui lancer une Épine Empalante collectée, ce qui brise la barrière et inflige des dégâts significatifs à tout le raid.`},
@@ -1217,7 +1295,12 @@ bt:{name:"Black Temple",bosses:[
 {en:`Loot Council Note: Drops are generally starter pieces. Prioritize undergeared players to help smooth progression through harder bosses.`,fr:`Note Loot Council : Les drops sont généralement des pièces de démarrage. Priorisez les joueurs sous-équipés pour faciliter la progression sur les boss plus difficiles.`}
 ]}
 ]},
-{name:"Supremus",img:IMG["Supremus"],icon:"🦾",vi:2,sections:[
+{name:"Supremus",img:IMG["Supremus"],icon:"🦾",vi:2,abilities:[
+{name:"Hateful Strike",category:"damage",desc:{en:"Phase 1: hits 2nd highest threat in melee for 27,750-32,250 Physical damage. Need 2 tanks."}},
+{name:"Molten Flame",category:"aoe",desc:{en:"Fire patch on ground dealing 3,325-4,175 Fire damage/sec. Move out immediately."}},
+{name:"Gaze",category:"phase",desc:{en:"Phase 2: fixates random player. Kite 30+ yards or get charged for massive damage."}},
+{name:"Volcanic Geyser",category:"add",desc:{en:"Phase 2: spawns volcano on random player. Erupts after 30 sec dealing AoE Fire damage."}}
+],sections:[
 {title:{en:"Phase 1 — Hateful Strike",fr:"Phase 1 — Frappe Haineuse"},tips:[
 {en:`During this phase, Supremus is a straightforward tank-and-spank encounter. The boss melees the main tank while casting Hateful Strike on the second-highest threat target in melee range, requiring two tanks to share the damage.`,fr:`Pendant cette phase, Supremus est un combat tank-and-spank classique. Le boss frappe le tank principal au corps à corps tout en lançant Frappe Haineuse sur la deuxième cible avec le plus de menace en mêlée, nécessitant deux tanks pour partager les dégâts.`,role:"tank"},
 {en:`Molten Flame creates fire patches on the ground that persist and deal significant damage. All melee should be aware of their positioning and move out of fire immediately when it spawns beneath them.`,fr:`Flamme en Fusion crée des zones de feu au sol qui persistent et infligent des dégâts significatifs. Tous les mêlées doivent être conscients de leur positionnement et sortir du feu immédiatement quand il apparaît sous eux.`,role:"melee"},
@@ -1233,7 +1316,12 @@ bt:{name:"Black Temple",bosses:[
 {en:`Avoid the upper areas of the room where obstacles can cause pathing issues for the boss. Keep the fight in the open central area for clean kiting paths.`,fr:`Évitez les zones supérieures de la salle où les obstacles peuvent causer des problèmes de pathing pour le boss. Gardez le combat dans la zone centrale ouverte pour des chemins de kite propres.`}
 ]}
 ]},
-{name:"Shade of Akama",img:IMG["Shade of Akama"],icon:"👻",vi:3,sections:[
+{name:"Shade of Akama",img:IMG["Shade of Akama"],icon:"👻",vi:3,abilities:[
+{name:"Channeling",category:"phase",desc:{en:"Phase 1: 6 Channelers keep Shade imprisoned. Kill all 6 to start Phase 2."}},
+{name:"Ashtongue Defender",category:"add",desc:{en:"Melee adds from doorways. Tank and AoE down. Continuous spawns."}},
+{name:"Ashtongue Spiritbinder",category:"add",desc:{en:"Caster adds that heal other adds. Kill or interrupt priority."}},
+{name:"Rain of Fire",category:"aoe",desc:{en:"Ground AoE from Spiritbinders. Move out immediately."}}
+],sections:[
 {title:{en:"Phase 1 — Channelers",fr:"Phase 1 — Canalisateurs"},tips:[
 {en:`Six Ashtongue Channelers maintain control over the Shade of Akama through their channeling spell. All six must be killed to free Akama and begin Phase 2. Split your DPS evenly between the channelers for efficient clearing.`,fr:`Six Canalisateurs Ashtongue maintiennent le contrôle sur l'Ombre d'Akama via leur sort de canalisation. Les six doivent être tués pour libérer Akama et commencer la Phase 2. Répartissez vos DPS équitablement entre les canalisateurs pour un clear efficace.`},
 {en:`Adds continuously spawn from two doorways on opposite sides of the room. Assign dedicated tank groups to each door to intercept and control the incoming waves of Ashtongue Defenders and Spiritbinders.`,fr:`Des adds apparaissent continuellement depuis deux portes sur les côtés opposés de la salle. Assignez des groupes de tanks dédiés à chaque porte pour intercepter et contrôler les vagues entrantes de Défenseurs et Lieur d'Esprits Ashtongue.`,role:"tank"},
@@ -1249,7 +1337,14 @@ bt:{name:"Black Temple",bosses:[
 {en:`Use this fight as a warm-up opportunity and morale booster. It drops solid loot and builds confidence heading into the more challenging encounters ahead.`,fr:`Utilisez ce combat comme opportunité d'échauffement et boost de moral. Il drop du bon loot et construit la confiance avant les rencontres plus difficiles à venir.`}
 ]}
 ]},
-{name:"Teron Gorefiend",img:IMG["Teron Gorefiend"],icon:"💀",vi:4,sections:[
+{name:"Teron Gorefiend",img:IMG["Teron Gorefiend"],icon:"💀",vi:4,abilities:[
+{name:"Shadow of Death",category:"debuff",desc:{en:"Target dies after 55 sec, becomes ghost with special abilities. Must collect ~5 spirit orbs."}},
+{name:"Vengeful Spirit",category:"add",desc:{en:"Spirits spawn around room. Ghost players must collect them or they kill living raiders."}},
+{name:"Incinerate",category:"damage",desc:{en:"Random target takes 2,775-3,225 Fire damage. Spread out to minimize overlap."}},
+{name:"Crushing Shadows",category:"debuff",desc:{en:"Cone attack reducing armor by 20% for 15 sec. Tank swap when stacks high."}},
+{name:"Spirit Lance",category:"phase",desc:{en:"Ghost ability: slow spirits from range. Master before fight."}},
+{name:"Spirit Chains",category:"phase",desc:{en:"Ghost ability: root spirits in place. Use to catch escaping spirits."}}
+],sections:[
 {title:{en:"The Shadow of Death Mechanic",fr:"La Mécanique d'Ombre de la Mort"},tips:[
 {en:`${S("Shadow of Death")} is the defining mechanic of this encounter. When applied to a player, they will die after a short duration and transform into a ghost. As a ghost, you must collect Vengeful Spirit orbs that spawn around the room to prevent them from reaching and killing raid members.`,fr:`${S("Shadow of Death")} est la mécanique définissante de cette rencontre. Quand appliqué à un joueur, il mourra après une courte durée et se transformera en fantôme. En tant que fantôme, vous devez collecter les orbes d'Esprit Vengeur qui apparaissent dans la salle pour les empêcher d'atteindre et tuer les membres du raid.`},
 {en:`Each ghost player MUST collect approximately 5 orbs during their ghost phase. Failing to do so allows the Vengeful Spirits to reach living players and trigger a chain reaction of deaths that will wipe the raid.`,fr:`Chaque joueur fantôme DOIT collecter environ 5 orbes pendant sa phase fantôme. Ne pas le faire permet aux Esprits Vengeurs d'atteindre les joueurs vivants et déclencher une réaction en chaîne de morts qui wipera le raid.`},
@@ -1269,7 +1364,13 @@ bt:{name:"Black Temple",bosses:[
 {en:`Call out Shadow of Death targets immediately so healers can focus them and the raid knows who is about to become a ghost. A single failed ghost phase means a wipe, so treat this mechanic with utmost seriousness.`,fr:`Annoncez les cibles d'Ombre de la Mort immédiatement pour que les soigneurs puissent les focus et que le raid sache qui va devenir un fantôme. Une seule phase fantôme ratée signifie un wipe, donc traitez cette mécanique avec le plus grand sérieux.`}
 ]}
 ]},
-{name:"Gurtogg Bloodboil",img:IMG["Gurtogg Bloodboil"],icon:"🟥",vi:5,sections:[
+{name:"Gurtogg Bloodboil",img:IMG["Gurtogg Bloodboil"],icon:"🟥",vi:5,abilities:[
+{name:"Bloodboil",category:"debuff",desc:{en:"Phase 1: 5 furthest players take stacking DoT. Rotate groups to share stacks."}},
+{name:"Arcing Smash",category:"damage",desc:{en:"Frontal cone + stacking armor reduction. Tank swap at 3-4 stacks."}},
+{name:"Acidic Wound",category:"debuff",desc:{en:"Stacking debuff reducing armor. Tank swap when stacks dangerous."}},
+{name:"Fel Rage",category:"phase",desc:{en:"Phase 2: fixates random player for 30 sec. Target gains +15,000 HP, +300% armor, aggro."}},
+{name:"Insignificance",category:"debuff",desc:{en:"Phase 2: reduces threat by 100%. Cannot regain aggro during Fel Rage."}}
+],sections:[
 {title:{en:"Phase 1 — Bloodboil (60 seconds)",fr:"Phase 1 — Sang Bouillant (60 secondes)"},tips:[
 {en:`${S("Bloodboil")} applies a stacking damage-over-time debuff to the five raid members furthest from the boss. This debuff stacks continuously throughout the phase, so groups must rotate their positions to share the stacks.`,fr:`${S("Bloodboil")} applique un debuff de dégâts sur la durée cumulable aux cinq membres du raid les plus éloignés du boss. Ce debuff se cumule continuellement pendant la phase, donc les groupes doivent faire une rotation de leurs positions pour partager les stacks.`},
 {en:`Arcing Smash hits the tank and applies a stacking debuff that increases physical damage taken. Tanks should swap at 3-4 stacks to prevent the debuff from becoming lethal.`,fr:`Arcing Smash frappe le tank et applique un debuff cumulable qui augmente les dégâts physiques subis. Les tanks doivent swap à 3-4 stacks pour empêcher le debuff de devenir létal.`,role:"tank"},
@@ -1289,7 +1390,14 @@ bt:{name:"Black Temple",bosses:[
 {en:`This is primarily a healing and positioning check. If your healers can keep up with Fel Rage damage and your raid can execute Bloodboil rotations cleanly, the boss will die.`,fr:`C'est principalement un check de soin et de positionnement. Si vos soigneurs peuvent suivre les dégâts de Rage Gangrenée et que votre raid peut exécuter les rotations de Sang Bouillant proprement, le boss mourra.`}
 ]}
 ]},
-{name:"Reliquary of Souls",img:IMG["Reliquary of Souls"],icon:"🗿",vi:6,sections:[
+{name:"Reliquary of Souls",img:IMG["Reliquary of Souls"],icon:"🗿",vi:6,abilities:[
+{name:"Aura of Suffering",category:"phase",desc:{en:"Phase 1: no healing works, 0 armor. Use shields, absorbs, healthstones only."}},
+{name:"Aura of Desire",category:"phase",desc:{en:"Phase 2: 50% damage backlash on dealers, +100% healing. Moderate DPS or die."}},
+{name:"Spirit Shock",category:"damage",desc:{en:"Phase 2: interrupt and silence. Must interrupt or raid dies."}},
+{name:"Aura of Anger",category:"phase",desc:{en:"Phase 3: stacking Shadow DoT + damage buff. Burn phase."}},
+{name:"Soul Scream",category:"debuff",desc:{en:"Phase 3: threat wipe. Watch threat meters, stop DPS if needed."}},
+{name:"Spite",category:"damage",desc:{en:"Phase 3: 7,500 Shadow damage split between 5 closest targets. Stack for splits."}}
+],sections:[
 {title:{en:"Essence of Suffering (Phase 1)",fr:"Essence de Souffrance (Phase 1)"},tips:[
 {en:`${S("Aura of Suffering")} completely negates all healing received and reduces armor to zero. This means healers cannot keep anyone alive through traditional healing during this phase.`,fr:`${S("Aura of Suffering")} annule complètement tous les soins reçus et réduit l'armure à zéro. Cela signifie que les soigneurs ne peuvent garder personne en vie par le soin traditionnel pendant cette phase.`},
 {en:`Survival during this phase relies entirely on damage mitigation: Power Word: Shield, Earth Shield, trinkets with absorption effects, and healthstones. Priests are essential for keeping shields on the tank and vulnerable DPS.`,fr:`La survie pendant cette phase repose entièrement sur la mitigation des dégâts : Mot de Pouvoir : Bouclier, Bouclier de Terre, bibelots avec effets d'absorption, et pierres de soin. Les Prêtres sont essentiels pour garder les boucliers sur le tank et les DPS vulnérables.`,role:"heal"},
@@ -1310,7 +1418,13 @@ bt:{name:"Black Temple",bosses:[
 {en:`Assign an interrupt rotation for Phase 2 with at least 4 interrupters. Call out threat warnings during Phase 3 and be ready to call for DPS stops if necessary. This fight punishes undisciplined play severely.`,fr:`Assignez une rotation d'interrupt pour la Phase 2 avec au moins 4 interrupteurs. Annoncez les avertissements de menace pendant la Phase 3 et soyez prêt à demander des stops de DPS si nécessaire. Ce combat punit sévèrement le jeu indiscipliné.`}
 ]}
 ]},
-{name:"Mother Shahraz",img:IMG["Mother Shahraz"],icon:"💎",vi:7,sections:[
+{name:"Mother Shahraz",img:IMG["Mother Shahraz"],icon:"💎",vi:7,abilities:[
+{name:"Fatal Attraction",category:"debuff",desc:{en:"Teleports 3 players together. Deals massive Shadow damage if close. SPREAD IMMEDIATELY."}},
+{name:"Saber Lash",category:"damage",desc:{en:"Cleave split between 3 closest targets. Need 3 tanks stacked to survive."}},
+{name:"Prismatic Aura",category:"buff",desc:{en:"Rotates resistance schools. +25% resist to one school, boss deals that damage type."}},
+{name:"Silencing Shriek",category:"debuff",desc:{en:"10 sec silence on all players within 35 yards. Healers must pre-HoT."}},
+{name:"Sinister Beam",category:"damage",desc:{en:"Hits random target for 7,000-9,000 Shadow damage. Requires ~200 SR gear."}}
+],sections:[
 {title:{en:"Shadow Resistance Requirement",fr:"Exigence de Résistance à l'Ombre"},tips:[
 {en:`This encounter requires approximately 200 Shadow Resistance on all raid members to survive the constant shadow damage. Without proper resistance gear, healers cannot keep up with the incoming damage and the raid will wipe.`,fr:`Cette rencontre nécessite environ 200 de Résistance à l'Ombre sur tous les membres du raid pour survivre aux dégâts d'ombre constants. Sans équipement de résistance approprié, les soigneurs ne peuvent pas suivre les dégâts entrants et le raid wipera.`},
 {en:`Shadow Resistance gear can be crafted using patterns from Black Temple trash and materials from the instance. Ensure all raiders have their resistance sets before attempting this boss.`,fr:`L'équipement de Résistance à l'Ombre peut être fabriqué en utilisant les patrons des trash de Black Temple et les matériaux de l'instance. Assurez-vous que tous les raiders ont leurs sets de résistance avant de tenter ce boss.`}
@@ -1332,7 +1446,16 @@ bt:{name:"Black Temple",bosses:[
 {en:`Call out Fatal Attraction immediately when it happens and remind players to spread. Wipes on this boss are almost always caused by Fatal Attraction victims failing to separate quickly enough.`,fr:`Annoncez l'Attraction Fatale immédiatement quand elle se produit et rappelez aux joueurs de se disperser. Les wipes sur ce boss sont presque toujours causés par des victimes d'Attraction Fatale qui n'arrivent pas à se séparer assez vite.`}
 ]}
 ]},
-{name:"Illidari Council",img:IMG["Illidari Council"],icon:"👫",vi:8,sections:[
+{name:"Illidari Council",img:IMG["Illidari Council"],icon:"👫",vi:8,abilities:[
+{name:"Shared Health Pool",category:"phase",desc:{en:"All 4 members share HP. DPS all evenly, cannot focus one down."}},
+{name:"Circle of Healing",category:"buff",desc:{en:"Malande heals all council. Interrupt constantly or fight extends."}},
+{name:"Divine Wrath",category:"damage",desc:{en:"Malande smites random target for 3,000 Holy damage."}},
+{name:"Consecration",category:"aoe",desc:{en:"Gathios drops consecration. Move out of fire."}},
+{name:"Vanish",category:"phase",desc:{en:"Veras vanishes and uses Deadly Poison. Track with Hunter's Mark or Faerie Fire."}},
+{name:"Flamestrike",category:"aoe",desc:{en:"Zerevor casts ground AoE. Move out immediately."}},
+{name:"Blizzard",category:"aoe",desc:{en:"Zerevor casts moving Blizzard. Avoid the slow zone."}},
+{name:"Reflective Shield",category:"buff",desc:{en:"Zerevor's shield reflects spells. Stop casting when active."}}
+],sections:[
 {title:{en:"Shared Health Pool",fr:"Pool de Vie Partagé"},tips:[
 {en:`All four council members share a single health pool and must be damaged evenly. They cannot be killed individually, so spread your DPS across all four targets rather than focusing one down.`,fr:`Les quatre membres du conseil partagent un seul pool de vie et doivent être endommagés équitablement. Ils ne peuvent pas être tués individuellement, donc répartissez vos DPS sur les quatre cibles plutôt que d'en focus une.`},
 {en:`Each council member has unique abilities and requires specific handling. Assigning the wrong class to tank or control a council member will result in unnecessary deaths or a wipe.`,fr:`Chaque membre du conseil a des capacités uniques et nécessite une gestion spécifique. Assigner la mauvaise classe pour tank ou contrôler un membre du conseil résultera en morts inutiles ou un wipe.`}
@@ -1352,7 +1475,18 @@ bt:{name:"Black Temple",bosses:[
 {en:`The most common cause of wipes is a missed Circle of Healing interrupt. Use raid warnings for interrupt calls and consider having backup interrupters ready if primary assignments are dead or out of range.`,fr:`La cause la plus commune de wipes est un interrupt de Cercle de Soins manqué. Utilisez des avertissements de raid pour les appels d'interrupt et envisagez d'avoir des interrupteurs de backup prêts si les assignations principales sont mortes ou hors de portée.`}
 ]}
 ]},
-{name:"Illidan Stormrage",img:IMG["Illidan Stormrage"],icon:"😈",vi:9,sections:[
+{name:"Illidan Stormrage",img:IMG["Illidan Stormrage"],icon:"😈",vi:9,abilities:[
+{name:"Shear",category:"debuff",desc:{en:"Reduces max HP by 60% for 7 sec. Warrior tanks with Shield Block avoid it."}},
+{name:"Draw Soul",category:"damage",desc:{en:"6,500 Shadow damage to current target. Heals Illidan for 100k if it kills."}},
+{name:"Flame Crash",category:"aoe",desc:{en:"Blue fire patch under random player. Move out, persists for 60 sec."}},
+{name:"Parasitic Shadowfiend",category:"add",desc:{en:"Spawns 2 Shadowfiends on random target. Kill fast or they multiply."}},
+{name:"Flames of Azzinoth",category:"phase",desc:{en:"Phase 2: Illidan flies, 2 Flame adds spawn. Need Warlock tanks with FR gear."}},
+{name:"Eye Beam",category:"damage",desc:{en:"Phase 2: Illidan fires beam across platform. Avoid the line."}},
+{name:"Dark Barrage",category:"damage",desc:{en:"Phase 2: targets random player for 3,000 Shadow damage/sec for 10 sec."}},
+{name:"Demon Form",category:"phase",desc:{en:"Phase 4: transforms into Demon. Shadow Blast, Flame Burst. High damage phase."}},
+{name:"Shadow Demons",category:"add",desc:{en:"Phase 4: spawn on random players. Kill them or they paralyze and kill."}},
+{name:"Enrage",category:"buff",desc:{en:"Phase 5 (30%): soft enrage, increased damage. Maiev helps. Burn fast."}}
+],sections:[
 {title:{en:"Phase 1 — Elf Form (100%-65%)",fr:"Phase 1 — Forme Elfe (100%-65%)"},tips:[
 {en:`${S("Shear")} reduces the tank's maximum health by 60% for 7 seconds. The main tank MUST have 102.4% combined block, dodge, and parry to avoid this attack entirely. A tank who cannot achieve this avoidance threshold will be killed by Shear.`,fr:`${S("Shear")} réduit la vie maximum du tank de 60% pendant 7 secondes. Le tank principal DOIT avoir 102.4% combiné de blocage, esquive et parade pour éviter cette attaque entièrement. Un tank qui ne peut pas atteindre ce seuil d'évitement sera tué par Cisaillement.`,role:"tank"},
 {en:`${S("Parasitic Shadowfiend")} spawns adds on random raid members that will multiply if not killed quickly. All DPS should immediately switch to shadowfiends when they spawn to prevent the adds from overwhelming the raid.`,fr:`${S("Parasitic Shadowfiend")} fait apparaître des adds sur des membres du raid aléatoires qui se multiplieront s'ils ne sont pas tués rapidement. Tous les DPS doivent immédiatement switch sur les démons d'ombre quand ils apparaissent pour empêcher les adds de submerger le raid.`},
@@ -1386,7 +1520,13 @@ bt:{name:"Black Temple",bosses:[
 ]},
 
 sunwell:{name:"Sunwell Plateau",bosses:[
-{name:"Kalecgos",img:IMG["Kalecgos"],icon:"🐉",vi:1,sections:[
+{name:"Kalecgos",img:IMG["Kalecgos"],icon:"🐉",vi:1,abilities:[
+{name:"Spectral Blast",category:"phase",desc:{en:"Spawns portal to Spectral realm. Send 2-3 DPS + 1-2 healers per portal."}},
+{name:"Arcane Buffet",category:"debuff",desc:{en:"Normal realm: stacking Arcane debuff on tank. Requires tank rotation."}},
+{name:"Curse of Boundless Agony",category:"debuff",desc:{en:"Curse prevents portal entry. Decurse immediately or rotation fails."}},
+{name:"Spectral Exhaustion",category:"debuff",desc:{en:"60 sec debuff after leaving Spectral realm. Cannot re-enter."}},
+{name:"Corruption Strike",category:"damage",desc:{en:"Sathrovarr hits tank in Spectral realm. Need tank presence there."}}
+],sections:[
 {title:{en:"Dual Realm Combat",fr:"Combat Double Royaume"},tips:[
 {en:`This encounter takes place in two realms simultaneously: the Normal realm where you fight ${M("Kalecgos")}, and the Spectral realm where you face ${M("Sathrovarr")} the Corruptor.`,fr:`Ce combat se déroule simultanément dans deux royaumes : le royaume Normal où vous affrontez ${M("Kalecgos")}, et le royaume Spectral où vous combattez ${M("Sathrovarr")} le Corrupteur.`},
 {en:`Portals spawn every 30 seconds and teleport players to the Spectral realm. Send 2-3 DPS and 1-2 healers through each portal to maintain balanced damage.`,fr:`Des portails apparaissent toutes les 30 secondes et téléportent les joueurs vers le royaume Spectral. Envoyez 2-3 DPS et 1-2 soigneurs à travers chaque portail pour maintenir des dégâts équilibrés.`},
@@ -1399,7 +1539,12 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 {en:`This is the introductory boss of Sunwell and serves as a coordination check rather than a pure DPS race.`,fr:`C'est le boss d'introduction du Sunwell et sert de test de coordination plutôt que de pure course aux DPS.`}
 ]}
 ]},
-{name:"Brutallus",img:IMG["Brutallus"],icon:"💪",vi:2,sections:[
+{name:"Brutallus",img:IMG["Brutallus"],icon:"💪",vi:2,abilities:[
+{name:"Meteor Slash",category:"damage",desc:{en:"Massive frontal cleave split between targets. Stack 2 groups to alternate soaking."}},
+{name:"Burn",category:"debuff",desc:{en:"Random target: -25% max HP, Fire DoT. Only removed by Stomp."}},
+{name:"Stomp",category:"aoe",desc:{en:"Raid-wide knockback. Removes all Burn debuffs. Essential cleanse mechanic."}},
+{name:"Enrage",category:"buff",desc:{en:"6 min hard enrage. Ultimate DPS check of TBC."}}
+],sections:[
 {title:{en:"Pure DPS Race",fr:"Course DPS Pure"},tips:[
 {en:`${S("Burn")} is applied to random raid members, reducing their maximum HP by 25% and dealing fire damage over time. Affected players must survive until the next Stomp.`,fr:`${S("Burn")} est appliqué à des membres aléatoires du raid, réduisant leur HP maximum de 25% et infligeant des dégâts de feu sur la durée. Les joueurs affectés doivent survivre jusqu'au prochain Stomp.`},
 {en:`${S("Meteor Slash")} is a massive frontal cleave that must be split between multiple players. Position the raid in two groups to alternate soaking.`,fr:`${S("Meteor Slash")} est un cleave frontal massif qui doit être partagé entre plusieurs joueurs. Positionnez le raid en deux groupes pour alterner l'absorption.`,role:"tank"},
@@ -1412,7 +1557,13 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 {en:`This is the gateway boss of Sunwell—progression stops here until your raid meets the gear requirements.`,fr:`C'est le boss portail du Sunwell—la progression s'arrête ici jusqu'à ce que votre raid atteigne les exigences d'équipement.`}
 ]}
 ]},
-{name:"Felmyst",img:IMG["Felmyst"],icon:"🐲",vi:3,sections:[
+{name:"Felmyst",img:IMG["Felmyst"],icon:"🐲",vi:3,abilities:[
+{name:"Gas Nova",category:"aoe",desc:{en:"Ground phase: raid-wide 2,000 Shadow damage. Constant healing pressure."}},
+{name:"Encapsulate",category:"debuff",desc:{en:"Traps player in bubble. Explodes for AoE + MC if others nearby. Stay in camps <10 players."}},
+{name:"Demonic Vapor",category:"aoe",desc:{en:"Air phase: beam chases random player. Move immediately or die."}},
+{name:"Fog of Corruption",category:"aoe",desc:{en:"Air phase: green fog MCs anyone touched. Clear defined escape paths."}},
+{name:"Corrosion",category:"debuff",desc:{en:"Stacking debuff on tank. Reduces armor significantly. Tank swaps needed."}}
+],sections:[
 {title:{en:"Ground and Air Phases",fr:"Phases Sol et Air"},tips:[
 {en:`During the ground phase, ${M("Felmyst")} remains stationary and the fight is a standard tank-and-spank with minor positioning requirements.`,fr:`Pendant la phase au sol, ${M("Felmyst")} reste stationnaire et le combat est un tank-and-spank standard avec des exigences de positionnement mineures.`},
 {en:`In the air phase, ${M("Felmyst")} flies overhead and casts ${S("Demonic Vapor")}, creating a deadly beam that chases random players. Move immediately when targeted.`,fr:`En phase aérienne, ${M("Felmyst")} survole le raid et lance ${S("Demonic Vapor")}, créant un rayon mortel qui poursuit des joueurs aléatoires. Bougez immédiatement quand vous êtes ciblé.`},
@@ -1425,7 +1576,14 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 {en:`Mechanically this is an easy to moderate fight once players understand their positioning responsibilities.`,fr:`Mécaniquement c'est un combat facile à modéré une fois que les joueurs comprennent leurs responsabilités de positionnement.`}
 ]}
 ]},
-{name:"Eredar Twins",img:IMG["Eredar Twins"],icon:"👯",vi:4,sections:[
+{name:"Eredar Twins",img:IMG["Eredar Twins"],icon:"👯",vi:4,abilities:[
+{name:"Conflagration",category:"debuff",desc:{en:"Fire debuff explodes for AoE damage. Move 10+ yards from raid immediately."}},
+{name:"Shadow Nova",category:"aoe",desc:{en:"Requires raid to stack. Drops Flame Touched stacks when hit together."}},
+{name:"Flame Touched",category:"debuff",desc:{en:"Stacking Fire debuff. Drop stacks by getting hit by Shadow Nova while grouped."}},
+{name:"Dark Touched",category:"debuff",desc:{en:"Stacking Shadow debuff. Drop stacks by getting hit by fire abilities."}},
+{name:"Shadow Image",category:"add",desc:{en:"3 untargetable Sacrolash copies. Cannot kill, just heal through damage."}},
+{name:"Pyrogenics",category:"buff",desc:{en:"Phase 2: surviving twin gains +30% Fire damage. Burn fast."}}
+],sections:[
 {title:{en:"Sacrolash and Alythess",fr:"Sacrolash et Alythess"},tips:[
 {en:`Focus all DPS on ${M("Sacrolash")} first. When the first twin dies, the surviving twin absorbs her sister's abilities and enters an enraged Phase 2.`,fr:`Concentrez tous les DPS sur ${M("Sacrolash")} en premier. Quand la première jumelle meurt, la survivante absorbe les capacités de sa sœur et entre dans une Phase 2 enragée.`},
 {en:`${S("Conflagration")} applies a fire debuff that explodes and damages nearby players. Affected players must immediately move at least 10 yards away from the group.`,fr:`${S("Conflagration")} applique un debuff de feu qui explose et endommage les joueurs proches. Les joueurs affectés doivent immédiatement s'éloigner d'au moins 10 yards du groupe.`},
@@ -1438,7 +1596,14 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 {en:`Consider using a voice countdown for Conflagration to ensure players react immediately when debuffed.`,fr:`Envisagez d'utiliser un compte à rebours vocal pour Conflagration afin que les joueurs réagissent immédiatement quand ils sont debuffés.`}
 ]}
 ]},
-{name:"M'uru",img:IMG["M'uru"],icon:"🌑",vi:5,sections:[
+{name:"M'uru",img:IMG["M'uru"],icon:"🌑",vi:5,abilities:[
+{name:"Negative Energy",category:"damage",desc:{en:"Hits random targets for Shadow damage. Chains between players in P2."}},
+{name:"Darkness",category:"buff",desc:{en:"Buff on Dark Fiends making them dangerous. Mass Dispel removes it."}},
+{name:"Dark Fiend",category:"add",desc:{en:"Small adds with Darkness buff. Priests Mass Dispel, then AoE kill."}},
+{name:"Void Sentinel",category:"add",desc:{en:"Large add that casts Shadow Pulse. Tank and kill."}},
+{name:"Singularity",category:"aoe",desc:{en:"Phase 2: rotating black hole. Knockback + heavy Shadow damage. Avoid it."}},
+{name:"Entropius",category:"phase",desc:{en:"Phase 2: M'uru transforms at 0%. Kill remaining adds, then burn boss."}}
+],sections:[
 {title:{en:"Phase 1 — M'uru",fr:"Phase 1 — M'uru"},tips:[
 {en:`${M("M'uru")} cannot be tanked and will continuously cast ${S("Negative Energy")} on random raid members, dealing significant shadow damage.`,fr:`${M("M'uru")} ne peut pas être tanké et lancera continuellement ${S("Negative Energy")} sur des membres aléatoires du raid, infligeant des dégâts d'ombre significatifs.`},
 {en:`Dark Fiends are small adds that spawn with a Darkness buff making them extremely dangerous. They must be controlled and killed quickly.`,fr:`Les Dark Fiends sont des petits adds qui apparaissent avec un buff Darkness les rendant extrêmement dangereux. Ils doivent être contrôlés et tués rapidement.`},
@@ -1455,7 +1620,15 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 {en:`This is considered one of the hardest encounters in TBC. Expect significant progression time.`,fr:`C'est considéré comme l'un des combats les plus difficiles de TBC. Attendez-vous à un temps de progression significatif.`}
 ]}
 ]},
-{name:"Kil'jaeden",img:IMG["Kil'jaeden"],icon:"🔥",vi:6,sections:[
+{name:"Kil'jaeden",img:IMG["Kil'jaeden"],icon:"🔥",vi:6,abilities:[
+{name:"Darkness of a Thousand Souls",category:"aoe",desc:{en:"47,000-52,000 Shadow damage after 8 sec cast. Shield of Blue MANDATORY or instant death."}},
+{name:"Shield of Blue",category:"buff",desc:{en:"From Dragon Orbs. Required to survive Darkness. Coordinate orb activation."}},
+{name:"Fire Bloom",category:"debuff",desc:{en:"5 random targets take Fire damage + spawn fire patches. Spread out."}},
+{name:"Soul Flay",category:"damage",desc:{en:"Random target 3,000 Shadow damage/sec for 3 sec. Heavy healing needed."}},
+{name:"Shadow Spike",category:"add",desc:{en:"Late phases: adds that must be killed quickly or they explode."}},
+{name:"Flame Dart",category:"damage",desc:{en:"Targets random player for 3,000 Fire damage. Unavoidable, heal through."}},
+{name:"Sinister Reflection",category:"add",desc:{en:"Creates hostile copies of players. Kill your own reflection."}}
+],sections:[
 {title:{en:"Five Phase Encounter",fr:"Combat en Cinq Phases"},tips:[
 {en:`Dragon Orbs are positioned at the corners of the platform. When activated, they grant Shield of Blue, which is essential for surviving certain mechanics.`,fr:`Les Dragon Orbs sont positionnés aux coins de la plateforme. Quand ils sont activés, ils accordent Shield of Blue, qui est essentiel pour survivre à certaines mécaniques.`},
 {en:`${S("Darkness of a Thousand Souls")} deals approximately 47,000-52,000 shadow damage after an 8-second cast. This is unsurvivable without Shield of Blue.`,fr:`${S("Darkness of a Thousand Souls")} inflige environ 47 000-52 000 dégâts d'ombre après une incantation de 8 secondes. C'est insurmontable sans Shield of Blue.`},
@@ -1532,7 +1705,7 @@ function render(){
     const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
     const videoBtn=(b.vi!==undefined&&videoId)?`<button class="boss-video-btn" onclick="event.stopPropagation();playVideo(${b.vi})">▶ ${T('video')}</button>`:'';
     h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">${T('boss')} ${i+1}</div><div class="boss-name">${b.name}</div></div>${videoBtn}<div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
-    if(b.abilities&&b.abilities.length>0){const grouped=groupAbilitiesByCategory(b.abilities);h+=`<div class="abilities-section" data-boss="${i}"><div class="abilities-header" onclick="event.stopPropagation();toggleAbilities(${i})"><span class="abilities-title">${T('abilities')}</span><span class="abilities-count">${b.abilities.length}</span><span class="abilities-chevron">▾</span></div><div class="abilities-body">`;for(const[cat,items]of Object.entries(grouped)){const ci=ABILITY_CATEGORIES[cat];h+=`<div class="ability-group"><div class="ability-group-title">${ci.icon} ${ci[currentLang]}</div><ul class="ability-list">`;items.forEach(a=>{h+=`<li class="ability-item">${S(a.name)}<span class="ability-desc">— ${a.desc[currentLang]||a.desc}</span></li>`;});h+=`</ul></div>`;}h+=`</div></div>`;}
+    if(b.abilities&&b.abilities.length>0){const grouped=groupAbilitiesByCategory(b.abilities);h+=`<div class="abilities-section" data-boss="${i}"><div class="abilities-header" onclick="event.stopPropagation();toggleAbilities(${i})"><span class="abilities-title">${T('abilities')}</span><span class="abilities-count">${b.abilities.length}</span><span class="abilities-chevron">▾</span></div><div class="abilities-body">`;for(const[cat,items]of Object.entries(grouped)){const ci=ABILITY_CATEGORIES[cat];h+=`<div class="ability-group"><div class="ability-group-title">${ci.icon} ${ci[currentLang]}</div><ul class="ability-list">`;items.forEach(a=>{h+=`<li class="ability-item">${S(a.name)}<span class="ability-desc">— ${a.desc[currentLang]||a.desc.en||a.desc}</span></li>`;});h+=`</ul></div>`;}h+=`</div></div>`;}
     // Process sections into role-based groups
     const roles=processBossSections(b.sections);
     // Combat Flow section (general tips, phases)
