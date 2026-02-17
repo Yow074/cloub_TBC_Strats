@@ -92,6 +92,9 @@
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg-primary); }
   ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; }
+  .site-footer { max-width: 1100px; margin: 2rem auto 1rem; padding: 1rem 1.5rem; border-top: 1px solid var(--border); text-align: center; }
+  .site-footer p { font-size: 0.7rem; color: var(--text-muted); }
+  .site-footer .version { font-family: monospace; color: var(--accent-gold-dim); }
   @media (max-width: 700px) {
     .header-inner { flex-direction: column; align-items: flex-start; }
     .raid-selector { justify-content: flex-start; }
@@ -126,7 +129,12 @@
   </div>
 </header>
 <main class="main-content" id="app"></main>
+<footer class="site-footer">
+  <p>TBC Strat Library — Version <span class="version" id="version"></span></p>
+  <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
+</footer>
 <script>
+const VERSION = "1.0.1";
 const SPELLS={"Shadow Cleave":{t:"Melee",d:"Cleave frontale ~4000 Shadow DMG. Cône devant le boss."},"Intangible Presence":{t:"Curse",d:"Malédiction AoE : -50% hit chance (mêlée, distance, sorts) pendant 12 sec. Décursable."},"Berserker Charge":{t:"Physical",d:"Charge un ennemi à 8-40 yards, dégâts + knockdown. Portée min : 8 yards."},"Spell Reflection":{t:"Warrior",d:"Renvoie le prochain sort ciblé pendant 5 sec."},"Disarm":{t:"Warrior",d:"Désarme la cible 10 sec, réduisant ses dégâts de ~65%."},"Misdirection":{t:"Hunter",d:"Redirige les 3 prochaines attaques vers le tank ciblé."},"Gouge":{t:"Physical",d:"Incapacite la cible 6 sec. Le boss frappe le 2nd en menace."},"Blind":{t:"Poison",d:"Désoriente 10 sec. Retiré par Poison Cleansing / Cleanse."},"Garrote":{t:"Bleed",d:"Saignement 5 min après Vanish. Retiré par : Ice Block, Divine Shield, BoP, Stoneform."},"Greater Heal":{t:"Holy",d:"Gros soin des adds healers. Interrupt prioritaire."},"Mana Burn":{t:"Shadow",d:"Brûle le mana. Interrompre si possible."},"Stoneform":{t:"Racial",d:"Racial Nain : retire poisons, saignements, maladies."},"Divine Shield":{t:"Paladin",d:"Immunité totale 12 sec. Retire tous les debuffs."},"Blessing of Protection":{t:"Paladin",d:"Immunité physique 10 sec. Retire Garrote."},"Ice Block":{t:"Mage",d:"Invulnérable + immobile 10 sec. Retire tous les debuffs."},"Shackle Undead":{t:"Priest",d:"CC mort-vivant 50 sec. Réappliquable."},"Freezing Trap":{t:"Hunter",d:"Piège de givre : CC 20 sec au contact."},"Turn Evil":{t:"Paladin",d:"Fear un mort-vivant. Attention au pathing (risk de reset)."},"Poison Cleansing Totem":{t:"Shaman",d:"Retire un poison sur les alliés proches toutes les 5 sec."},"Holy Wrath":{t:"Holy",d:"Dégâts Holy chaînés. ~2000 1ère cible, doublés à chaque rebond. SPREAD."},"Holy Fire":{t:"Holy",d:"~3500 DMG + DoT 1750/2sec pendant 12 sec. Dispel magique IMMÉDIAT."},"Holy Ground":{t:"Holy",d:"Consécration permanente : 240-360 Holy/3sec + silence. Rayon 12y. Casse Repentance."},"Repentance":{t:"Holy",d:"Incapacite TOUT le raid 12 sec. ~2000 Holy DMG. Cassé par les dégâts. CD ~30 sec."},"Blessing of Sacrifice":{t:"Paladin",d:"Transfère 10% dégâts au Paladin. Le dégât casse Repentance."},"Grounding Totem":{t:"Shaman",d:"Absorbe le prochain sort hostile ciblé. Absorbe Holy Fire."},"Cloak of Shadows":{t:"Rogue",d:"Retire debuffs magiques + 90% résistance sorts 5 sec."},"Fear Ward":{t:"Priest",d:"Protège du prochain effet de peur."},"Little Red Riding Hood":{t:"Debuff",d:"Transforme en Petit Chaperon Rouge : désarmé, pacifié, slow. Kiter le long des bords !"},"Terrifying Howl":{t:"Fear",d:"Fear AoE. Contré par Tremor Totem, Fear Ward, Berserker Rage."},"Wide Swipe":{t:"Physical",d:"Attaque frontale en cône, lourds dégâts."},"Tremor Totem":{t:"Shaman",d:"Retire Fear, Charm, Sleep toutes les 3 sec sur alliés proches."},"Vanish":{t:"Rogue",d:"Moroes stealth puis Garrote une cible aléatoire."},"Feign Death":{t:"Hunter",d:"Simule la mort, drop toute aggro."},"Eternal Affection":{t:"Holy",d:"Gros heal de Julianne. Interrupt PRIORITAIRE."},"Devotion":{t:"Buff",d:"Buff cast speed sur Julianne. Dispel / Spellsteal."},"Daring":{t:"Buff",d:"Buff dégâts sur Romulo. Dispel."},"Spellsteal":{t:"Mage",d:"Vole un buff magique. Steal Devotion = gros boost cast speed."},"Hateful Bolt":{t:"Shadow",d:"Bolt sur le 2nd en menace, ~7-8k Shadow DMG. OT doit soak."},"Evocation":{t:"Arcane",d:"Curator régénère mana 20 sec. Prend le TRIPLE de dégâts !"},"Curse of Doom":{t:"Warlock",d:"Dégâts massifs après 60 sec. Placer après 4ème Flare pour pop en Evocation (x3)."},"Sacrifice":{t:"Shadow",d:"Enchaîne un joueur au centre, dégâts/tick. Kill chaînes ASAP. Ice Block/DS retire."},"Broken Pact":{t:"Debuff",d:"Debuff sur Illhoof quand Kil'rek meurt : +25% dégâts reçus."},"Counterspell":{t:"Arcane",d:"Silence tous casters dans 10 yards pendant 10 sec."},"Fireball":{t:"Fire",d:"Cast d'Aran. ~5000 Fire DMG. Doit être interrompu."},"Frostbolt":{t:"Frost",d:"Cast d'Aran. ~5000 Frost DMG + slow. Doit être interrompu."},"Arcane Missiles":{t:"Arcane",d:"Canal d'Aran, dégâts modérés. Laisser passer."},"Dragon's Breath":{t:"Fire",d:"AoE feu : dégâts + disorient."},"Flame Wreath":{t:"Fire",d:"Cercles de feu sous 3 joueurs. NE PAS BOUGER. Explose ~5000 DMG raid-wide."},"Circular Blizzard":{t:"Frost",d:"Blizzard tournante. Esquiver vers le centre ou l'autre côté."},"Magnetic Pull":{t:"Arcane",d:"Pull tout le raid au centre, suivi d'Arcane Explosion. Courir loin !"},"Arcane Explosion":{t:"Arcane",d:"AoE après Magnetic Pull. ~8000+ DMG. Courir loin du centre."},"Polymorph":{t:"Arcane",d:"À 20% mana, Polymorph tout le raid + Pyroblast. Top off après."},"Pyroblast":{t:"Fire",d:"Gros cast après Polymorph global. ~6-7k Fire DMG raid-wide."},"Fear":{t:"Warlock",d:"Fear un Water Elemental 20 sec."},"Banish":{t:"Warlock",d:"Banit un démon/élémentaire 30 sec. Immunisé mais intouchable."},"Nether Exhaustion":{t:"Debuff",d:"Empêche de soak le même portail pendant 1m30."},"Nether Burn":{t:"Shadow",d:"AoE Shadow constante sur tout le raid pendant Portal Phase."},"Void Zone":{t:"Shadow",d:"Zone au sol ~1000 Shadow/sec. Bouger immédiatement."},"Netherbreath":{t:"Shadow",d:"Souffle d'ombre sur joueurs aléatoires en Banish Phase."},"Shadow Resistance Aura":{t:"Paladin",d:"Aura +70 Shadow Resistance pour le groupe."},"Shadow Protection":{t:"Priest",d:"Buff +70 Shadow Resistance 10 min."},"Shadow Nova":{t:"Shadow",d:"AoE massive ~3000 Shadow + knockback. Ranged 30+ yards. Melee sortir."},"Enfeeble":{t:"Shadow",d:"HP de 5 joueurs réduits à 1 pendant 7 sec. MORTEL avec Shadow Nova."},"Shadow Word: Pain":{t:"Shadow",d:"DoT Ombre sur joueur aléatoire. Dispel magique."},"Thrash":{t:"Physical",d:"2 attaques supplémentaires. Énorme pression sur le tank."},"Sunder Armor":{t:"Physical",d:"-2600 armure/stack. Très dangereux avec Thrash."},"Amplify Damage":{t:"Shadow",d:"Double les dégâts reçus par la cible."},"Shadow Word: Death":{t:"Priest",d:"Backlash si cible survit. MORTEL sous Enfeeble (1 HP) !"},"Seal of Blood":{t:"Paladin",d:"Self-damage à chaque frappe. MORTEL sous Enfeeble (1 HP) !"},"Smoldering Breath":{t:"Fire",d:"Souffle frontal de feu. Tank face au mur."},"Tail Sweep":{t:"Physical",d:"Balayage arrière. Melee sur les côtés, pas derrière."},"Bellowing Roar":{t:"Fear",d:"Fear AoE ~40 yards. Tremor Totem / Fear Ward / Berserker Rage."},"Charred Earth":{t:"Fire",d:"Zone de feu au sol. Bouger immédiatement."},"Distracting Ash":{t:"Debuff",d:"-30% hit chance. Dispel magique immédiat."},"Rain of Bones":{t:"Physical",d:"Invoque des squelettes en Air Phase. Focus DPS adds."},"Smoking Blast":{t:"Fire",d:"~1800 DMG/sec pendant 15 sec sur le plus haut en menace."},"Berserker Stance":{t:"Warrior",d:"Posture pour utiliser Berserker Rage."},"Berserker Rage":{t:"Warrior",d:"Immunise aux Fear 10 sec. Nécessite Berserker Stance."},"Flame Shock":{t:"Shaman",d:"Sort de feu instantané. Disorient Strawman."},"Incinerate":{t:"Warlock",d:"Sort de feu. Disorient Strawman."},"Rust":{t:"Debuff",d:"Stacks ralentissant Tinhead. Kitable à haut stacks."},"Cyclone":{t:"Nature",d:"Tourbillon mobile. Esquiver. Cible invulnérable + incapacitée."},"Chain Lightning":{t:"Nature",d:"Dégâts Nature chaînés. Spread pour minimiser."}};
 
 function S(n){const s=SPELLS[n];if(!s)return'<span class="spell">'+n+'</span>';return'<span class="spell">'+n+'<span class="tt"><div class="tt-name">'+n+' <span class="tt-type">'+s.t+'</span></div><div class="tt-desc">'+s.d+'</div></span></span>';}
@@ -159,7 +167,7 @@ const IMG={
 
 const RAIDS={
 karazhan:{name:"Karazhan",bosses:[
-{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",vi:1,sections:[
+{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",vi:2,sections:[
 {title:"Phase 1",tips:[{text:`Tank and spank sur ${M("Midnight")} (le cheval).`}]},
 {title:"Phase 2 \u2014 \u00C0 95% HP de Midnight",tips:[
 {text:`${M("Attumen")} spawn \u00E0 c\u00F4t\u00E9 de ${M("Midnight")}.`,role:"tank"},
@@ -181,7 +189,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Vendeur r\u00E9paration dans la zone derri\u00E8re le boss.`}
 ]}
 ]},
-{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",vi:2,sections:[
+{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",vi:3,sections:[
 {title:"Pre-Pull",tips:[
 {text:`Kill order : ${M("Lady Catriona Von'Indi")} et ${M("Lady Keira Berrybuck")} (heal) d'abord, puis ${M("Baroness Dorothea Millstipe")} (mana burn), ${M("Baron Rafe Dreuger")} (stun), ${M("Lord Robin Daris")}, ${M("Moroes")}, ${M("Lord Crispin Ference")}.`}
 ]},
@@ -199,7 +207,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Shamans : ${S("Poison Cleansing Totem")} pour ${S("Blind")}.`,role:"heal"}
 ]}
 ]},
-{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",vi:3,sections:[
+{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",vi:4,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Tank ${M("Maiden")} au centre de la salle.`,role:"tank"},
 {text:`Healers et Ranged spread autour de la salle pour \u00E9viter ${S("Holy Wrath")} chain.`,role:"ranged"},
@@ -213,7 +221,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Mages : ${S("Ice Block")} / Rogues : ${S("Cloak of Shadows")} retirent ${S("Holy Fire")}.`,role:"melee"}
 ]}
 ]},
-{name:"Opera \u2014 Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:4,sections:[
+{name:"Opera \u2014 Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:5,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Cibl\u00E9 par ${S("Little Red Riding Hood")} = kiter le long des bords de la salle.`},
 {text:`Tank and spank en dehors de ${S("Terrifying Howl")} et ${S("Wide Swipe")}.`,role:"tank"},
@@ -225,7 +233,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Rogues : ${S("Vanish")}, Hunters : ${S("Feign Death")}, Paladins : BoP.`,role:"melee"}
 ]}
 ]},
-{name:"Opera \u2014 Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:6,sections:[
+{name:"Opera \u2014 Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:7,sections:[
 {title:"Phase 1 \u2014 Les 4 adds",tips:[
 {text:`Kill ${M("Dorothee")} en premier (pas d'aggro table). Ne pas kill ${M("Tito")} avant elle.`},
 {text:`Puis ${M("Roar")} (tank\u00E9 par l'OT).`,role:"tank"},
@@ -240,7 +248,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`${M("Roar")} peut \u00EAtre fear par Warlocks (${S("Fear")}) et Hunters.`}
 ]}
 ]},
-{name:"Opera \u2014 Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:5,sections:[
+{name:"Opera \u2014 Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:6,sections:[
 {title:"Phase 1 \u2014 Julianne",tips:[
 {text:`Interrupt ${M("Julianne")} : ${S("Eternal Affection")} = priorit\u00E9 max.`,role:"melee"},
 {text:`Dispel le buff ${S("Devotion")}.`,role:"heal"}
@@ -258,7 +266,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Mages : ${S("Spellsteal")} le buff ${S("Devotion")} = gros boost cast speed.`,role:"ranged"}
 ]}
 ]},
-{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",vi:7,sections:[
+{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",vi:8,sections:[
 {title:"Flare Phase",tips:[
 {text:`Kill les ${M("Flares")} ASAP. Spawn toutes les 10 sec.`},
 {text:`Ranged \u00E0 10 yards les uns des autres.`,role:"ranged"},
@@ -276,7 +284,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Warlocks : ${S("Curse of Doom")} apr\u00E8s le 4\u00E8me Flare pour pop en Evocation (x3 DMG).`,role:"ranged"}
 ]}
 ]},
-{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",vi:11,sections:[
+{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",vi:12,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Bouger les Pions pour laisser passer les pi\u00E8ces puissantes.`},
 {text:`Kill Bishops d'abord (heal), puis Queen, puis King.`},
@@ -287,7 +295,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`On peut rel\u00E2cher une pi\u00E8ce pour en prendre une autre.`}
 ]}
 ]},
-{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",vi:8,sections:[
+{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",vi:9,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Tank ${M("Illhoof")} et ${M("Kil'rek")} pr\u00E8s du cercle vert.`,role:"tank"},
 {text:`${S("Sacrifice")} : kill cha\u00EEnes ASAP et heal la cible.`,role:"heal"},
@@ -299,7 +307,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`${M("Illhoof")} target le joueur avant ${S("Sacrifice")} \u2014 pre-HoT possible.`,role:"heal"}
 ]}
 ]},
-{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",vi:9,sections:[
+{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",vi:10,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Casters \u00E0 10+ yards d'Aran pour \u00E9viter ${S("Counterspell")}.`,role:"ranged"},
 {text:`Rotation d'interrupt : ${S("Fireball")} et ${S("Frostbolt")}. Laisser ${S("Arcane Missiles")}.`,role:"melee"},
@@ -315,7 +323,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Pas d'aggro table \u2014 tanks en stuff DPS.`,role:"tank"}
 ]}
 ]},
-{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",vi:10,sections:[
+{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",vi:11,sections:[
 {title:"Portal Phase \u2014 1 min",tips:[
 {text:`3 portails (rouge, vert, bleu). 2 tanks + 2 DPS pour soak.`,role:"tank"},
 {text:`Apr\u00E8s soak : ${S("Nether Exhaustion")} (1m30, bloque m\u00EAme couleur).`},
@@ -337,7 +345,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Hunters : ${S("Misdirection")} \u00E0 chaque Portal Phase.`,role:"ranged"}
 ]}
 ]},
-{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",vi:12,sections:[
+{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",vi:13,sections:[
 {title:"Phase 1 \u2014 100% \u00E0 60%",tips:[
 {text:`Tank dos au mur pour ${S("Shadow Nova")} knockback.`,role:"tank"},
 {text:`${M("Infernal")} spawn toutes les 45 sec (Hellfire permanent).`},
@@ -361,7 +369,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`NE PAS utiliser ${S("Shadow Word: Death")} / ${S("Seal of Blood")} sous ${S("Enfeeble")}.`,role:"ranged"}
 ]}
 ]},
-{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",vi:13,sections:[
+{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",vi:14,sections:[
 {title:"Ground Phase",tips:[
 {text:`Tank dos au mur, face ext\u00E9rieure.`,role:"tank"},
 {text:`Melee sur le c\u00F4t\u00E9 : \u00E9viter ${S("Smoldering Breath")} et ${S("Tail Sweep")}.`,role:"melee"},
@@ -422,6 +430,7 @@ document.querySelectorAll('.raid-btn').forEach(b=>{b.addEventListener('click',()
 document.querySelectorAll('.role-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.role-btn').forEach(x=>{x.classList.remove('active-all','active-tank','active-heal','active-melee','active-ranged');});const r=b.dataset.role;activeRole=r;b.classList.add(r==='all'?'active-all':`active-${r}`);applyRoleFilter();});});
 
 render();
+document.getElementById('version').textContent = VERSION;
 </script>
 </body>
 </html>
