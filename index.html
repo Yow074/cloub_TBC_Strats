@@ -77,11 +77,15 @@
   .raid-section-header .boss-count { font-size: 0.8rem; color: var(--text-muted); background: var(--bg-section); padding: 0.2rem 0.6rem; border-radius: 12px; border: 1px solid var(--border); }
   .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
   .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
-  .video-banner { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; }
-  .video-banner-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .video-banner { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.25rem; overflow: hidden; }
+  .video-banner-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1rem; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .video-banner-header:hover { background: var(--bg-card-hover); }
   .video-banner-title { font-size: 0.8rem; font-weight: 600; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.05em; }
-  .video-banner-subtitle { font-size: 0.7rem; color: var(--text-muted); }
-  .video-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 8px; overflow: hidden; background: var(--bg-section); }
+  .video-banner-subtitle { font-size: 0.7rem; color: var(--text-muted); flex: 1; }
+  .video-banner-chevron { color: var(--text-muted); font-size: 1.1rem; transition: transform 0.3s; }
+  .video-banner.open .video-banner-chevron { transform: rotate(180deg); }
+  .video-container { display: none; position: relative; width: 100%; padding-bottom: 56.25%; background: var(--bg-section); }
+  .video-banner.open .video-container { display: block; }
   .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -388,7 +392,7 @@ function render(){
   if(!raid.bosses.length){app.innerHTML=`<div class="empty-state"><div class="icon">\u{1F4DC}</div><p>Les strats pour <strong>${raid.name}</strong> arrivent bient\u00F4t !</p></div>`;return;}
   let h=`<div class="raid-section-header"><h2>${raid.name}</h2><span class="boss-count">${raid.bosses.length} boss</span></div>`;
   const playlistId=PLAYLISTS[currentRaid];
-  if(playlistId){h+=`<div class="video-banner"><div class="video-banner-header"><span class="video-banner-title">📺 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span></div><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>`;}
+  if(playlistId){h+=`<div class="video-banner" id="video-banner"><div class="video-banner-header" onclick="toggleVideo()"><span class="video-banner-title">📺 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span><span class="video-banner-chevron">▾</span></div><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;}
   raid.bosses.forEach((b,i)=>{
     const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
     h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">BOSS ${i+1}</div><div class="boss-name">${b.name}</div></div><div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
@@ -407,6 +411,7 @@ function render(){
 }
 
 function toggleBoss(i){document.querySelector(`.boss-card[data-boss="${i}"]`).classList.toggle('open');}
+function toggleVideo(){document.getElementById('video-banner').classList.toggle('open');}
 function applyRoleFilter(){document.querySelectorAll('.strat-list li[data-role]').forEach(l=>{const r=l.getAttribute('data-role');l.classList.toggle('hidden-role',activeRole!=='all'&&r!==activeRole);});}
 
 document.querySelectorAll('.raid-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.raid-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentRaid=b.dataset.raid;render();});});
