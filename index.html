@@ -86,6 +86,10 @@
   .ability-item { padding: 0.25rem 0 0.25rem 0.75rem; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4; position: relative; }
   .ability-item::before { content: '·'; position: absolute; left: 0; color: var(--text-muted); }
   .ability-desc { color: var(--text-muted); font-size: 0.78rem; margin-left: 0.25rem; }
+  .mob-group { margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .mob-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .mob-group-title { font-size: 0.85rem; font-weight: 600; color: var(--accent-gold); margin-bottom: 0.5rem; }
+  .mob-group-title .mob { color: var(--accent-gold); }
   .role-section { background: var(--bg-section); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.65rem; overflow: hidden; }
   .role-section-header { padding: 0.55rem 1rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; transition: background 0.15s; border-left: 3px solid var(--accent-gold); }
   .role-section-header:hover { background: var(--bg-card-hover); }
@@ -185,7 +189,7 @@
   <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
 </footer>
 <script>
-const VERSION = "1.1.3";
+const VERSION = "1.1.4";
 let currentLang = localStorage.getItem('lang') || 'en';
 const UI = {
   en: { filterRole: "Filter by role:", all: "All", tank: "Tank", heal: "Heal", melee: "Melee DPS", ranged: "Ranged DPS", boss: "BOSS", bosses: "bosses", video: "Video", coming: "Strategies for", comingSoon: "coming soon!", abilities: "Abilities", combatFlow: "Combat Flow", tankSection: "Tank", healSection: "Healers", meleeSection: "Melee DPS", rangedSection: "Ranged DPS", rlTakeaway: "RL Takeaway", showRL: "Show RL Tips", notes: "Notes", tip: "tip", tips: "tips" },
@@ -206,6 +210,18 @@ function groupAbilitiesByCategory(abilities) {
   const result = {};
   order.forEach(cat => { if (grouped[cat]) result[cat] = grouped[cat]; });
   return result;
+}
+function groupAbilitiesByMob(abilities) {
+  const hasMobs = abilities.some(a => a.mob);
+  if (!hasMobs) return null;
+  const mobOrder = [];
+  const grouped = {};
+  abilities.forEach(a => {
+    const mob = a.mob || 'General';
+    if (!grouped[mob]) { grouped[mob] = []; mobOrder.push(mob); }
+    grouped[mob].push(a);
+  });
+  return { mobs: mobOrder, groups: grouped };
 }
 const SPELL_IDS={
 // Karazhan - Attumen & Midnight
@@ -492,13 +508,13 @@ karazhan:{name:"Karazhan",bosses:[
 ]}
 ]},
 {name:"Opera — Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:7,abilities:[
-{name:"Brain Bash",category:"debuff",desc:{en:"Strawman's disorient on random target for 4 sec. Can be broken by fire damage."}},
-{name:"Rust",category:"debuff",desc:{en:"Tinhead's attack slow debuff. Stacks and slows him down over time (beneficial)."}},
-{name:"Cleave",category:"damage",desc:{en:"Tinhead's frontal cleave. Position him away from raid."}},
-{name:"Frightened Scream",category:"debuff",desc:{en:"Roar's AoE fear within 10 yards. Keep him tanked away from the raid."}},
-{name:"Mangle",category:"debuff",desc:{en:"Roar's bleed. Deals Physical damage over time on tank."}},
-{name:"Summon Cyclone",category:"add",desc:{en:"Crone summons a moving cyclone that tosses players into the air. Avoid it."}},
-{name:"Chain Lightning",category:"damage",desc:{en:"Crone's spell that chains between players. Spread out to minimize bounces."}}
+{name:"Brain Bash",mob:"Strawman",category:"debuff",desc:{en:"Disorient on random target for 4 sec. Can be broken by fire damage."}},
+{name:"Rust",mob:"Tinhead",category:"debuff",desc:{en:"Attack slow debuff. Stacks and slows him down over time (beneficial)."}},
+{name:"Cleave",mob:"Tinhead",category:"damage",desc:{en:"Frontal cleave. Position him away from raid."}},
+{name:"Frightened Scream",mob:"Roar",category:"debuff",desc:{en:"AoE fear within 10 yards. Keep him tanked away from the raid."}},
+{name:"Mangle",mob:"Roar",category:"debuff",desc:{en:"Bleed dealing Physical damage over time on tank."}},
+{name:"Summon Cyclone",mob:"Crone",category:"add",desc:{en:"Summons a moving cyclone that tosses players into the air. Avoid it."}},
+{name:"Chain Lightning",mob:"Crone",category:"damage",desc:{en:"Chains between players. Spread out to minimize bounces."}}
 ],sections:[
 {title:{en:"Phase 1 — The 4 Characters",fr:"Phase 1 — Les 4 personnages"},tips:[
 {en:`This fight features 4 Wizard of Oz characters that must be managed simultaneously. Start by killing ${M("Dorothee")} as she has no aggro table and attacks randomly. Important: don't kill ${M("Tito")} (her dog) before her, or she enrages and wipes the raid.`,fr:`Ce combat met en scène 4 personnages du Magicien d'Oz qui doivent être gérés simultanément. Commencez par tuer ${M("Dorothee")} car elle n'a pas de table d'aggro et attaque aléatoirement. Important : ne tuez pas ${M("Tito")} (son chien) avant elle, sinon elle enrage et wipe le raid.`},
@@ -521,14 +537,14 @@ karazhan:{name:"Karazhan",bosses:[
 ]}
 ]},
 {name:"Opera — Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:6,abilities:[
-{name:"Blinding Passion",category:"debuff",desc:{en:"Julianne disorients a target for 6 sec. Dispellable (magic)."}},
-{name:"Devotion",category:"buff",desc:{en:"Julianne heals herself for 31,250-46,250. Must be interrupted."}},
-{name:"Eternal Affection",category:"buff",desc:{en:"Julianne resurrects Romulo with 50% HP if he dies first."}},
-{name:"Powerful Attraction",category:"debuff",desc:{en:"Julianne stuns a target for 6 sec. Dispellable (magic)."}},
-{name:"Backward Lunge",category:"damage",desc:{en:"Romulo's knockback. Tank with back to wall."}},
-{name:"Daring",category:"buff",desc:{en:"Romulo's self-buff: +35% Physical damage, +50% attack speed for 8 sec."}},
-{name:"Deadly Swathe",category:"damage",desc:{en:"Romulo's frontal cleave dealing 2,625-3,375 damage. Face away from raid."}},
-{name:"Undying Love",category:"buff",desc:{en:"Romulo resurrects Julianne with 50% HP if she dies first."}}
+{name:"Blinding Passion",mob:"Julianne",category:"debuff",desc:{en:"Disorients a target for 6 sec. Dispellable (magic)."}},
+{name:"Devotion",mob:"Julianne",category:"buff",desc:{en:"Heals herself for 31,250-46,250. Must be interrupted."}},
+{name:"Eternal Affection",mob:"Julianne",category:"buff",desc:{en:"Resurrects Romulo with 50% HP if he dies first."}},
+{name:"Powerful Attraction",mob:"Julianne",category:"debuff",desc:{en:"Stuns a target for 6 sec. Dispellable (magic)."}},
+{name:"Backward Lunge",mob:"Romulo",category:"damage",desc:{en:"Knockback. Tank with back to wall."}},
+{name:"Daring",mob:"Romulo",category:"buff",desc:{en:"Self-buff: +35% Physical damage, +50% attack speed for 8 sec."}},
+{name:"Deadly Swathe",mob:"Romulo",category:"damage",desc:{en:"Frontal cleave dealing 2,625-3,375 damage. Face away from raid."}},
+{name:"Undying Love",mob:"Romulo",category:"buff",desc:{en:"Resurrects Julianne with 50% HP if she dies first."}}
 ],sections:[
 {title:{en:"Phase 1 — Julianne Alone",fr:"Phase 1 — Julianne seule"},tips:[
 {en:`The fight starts against ${M("Julianne")} alone. She's a caster and must be interrupted constantly. Her absolute interrupt priority is ${S("Eternal Affection")}, a massive heal that can reset all your progress.`,fr:`Le combat commence contre ${M("Julianne")} seule. Elle est une caster et doit être interrompue constamment. Sa priorité d'interrupt absolue est ${S("Eternal Affection")}, un heal massif qui peut reset tout votre progrès.`,role:"melee"},
@@ -788,14 +804,17 @@ karazhan:{name:"Karazhan",bosses:[
 ]},
 gruul:{name:"Gruul's Lair",bosses:[
 {name:"High King Maulgar",img:IMG["High King Maulgar"],icon:"👑",vi:1,abilities:[
-{name:"Arcing Smash",category:"damage",desc:{en:"Frontal cone cleave. Only tank in front, melee stay behind.",fr:"Cleave en cône frontal. Seul le tank devant, melee restent derrière."}},
-{name:"Whirlwind",category:"aoe",desc:{en:"15 sec AoE around boss. All melee must move 15+ yards away immediately.",fr:"AoE 15 sec autour du boss. Tous les melee doivent s'éloigner de 15+ yards immédiatement."}},
-{name:"Mighty Blow",category:"damage",desc:{en:"Knockback on tank. Position with back to wall to avoid being thrown.",fr:"Knockback sur le tank. Positionnez dos au mur pour éviter d'être projeté."}},
-{name:"Intimidating Roar",category:"debuff",desc:{en:"Stuns tank + fears nearby players 4 sec. Pre-HoT tank before it lands.",fr:"Stun le tank + fear joueurs proches 4 sec. Pré-HoT le tank avant qu'il arrive."}},
-{name:"Flurry",category:"buff",desc:{en:"At 50%: +200% attack speed and damage. Heavy healing required on tank.",fr:"À 50% : +200% vitesse d'attaque et dégâts. Heal intense requis sur le tank."}},
-{name:"Spell Shield",category:"buff",desc:{en:"Krosh Firehand's shield. Mage tank must Spellsteal to survive Blast Wave.",fr:"Bouclier de Krosh. Le tank Mage doit Spellsteal pour survivre à Blast Wave."}},
-{name:"Dark Decay",category:"debuff",desc:{en:"Olm's stacking DoT. Tank swap at 4 stacks to let debuff fall off.",fr:"DoT stackable d'Olm. Swap tank à 4 stacks pour laisser le debuff tomber."}},
-{name:"Greater Polymorph",category:"debuff",desc:{en:"Kiggler's polymorph. Feral Druid tank immune via shapeshift.",fr:"Polymorph de Kiggler. Tank Druide Feral immunisé via changement de forme."}}
+{name:"Arcing Smash",mob:"High King Maulgar",category:"damage",desc:{en:"Frontal cone cleave. Only tank in front, melee stay behind."}},
+{name:"Whirlwind",mob:"High King Maulgar",category:"aoe",desc:{en:"15 sec AoE around boss. All melee must move 15+ yards away."}},
+{name:"Mighty Blow",mob:"High King Maulgar",category:"damage",desc:{en:"Knockback on tank. Position with back to wall."}},
+{name:"Intimidating Roar",mob:"High King Maulgar",category:"debuff",desc:{en:"Stuns tank + fears nearby players 4 sec."}},
+{name:"Flurry",mob:"High King Maulgar",category:"buff",desc:{en:"At 50%: +200% attack speed and damage. Heavy healing required."}},
+{name:"Spell Shield",mob:"Krosh Firehand",category:"buff",desc:{en:"Shield. Mage tank must Spellsteal to survive Blast Wave."}},
+{name:"Blast Wave",mob:"Krosh Firehand",category:"damage",desc:{en:"Fire AoE. Mage tank needs 9k+ HP buffed to survive without shield."}},
+{name:"Dark Decay",mob:"Olm the Summoner",category:"debuff",desc:{en:"Stacking DoT. Tank swap at 4 stacks."}},
+{name:"Summon Felhound",mob:"Olm the Summoner",category:"add",desc:{en:"Spawns Felhounds. Warlocks Enslave or Banish them."}},
+{name:"Greater Polymorph",mob:"Kiggler the Crazed",category:"debuff",desc:{en:"Polymorph on target. Feral Druid tank immune via shapeshift."}},
+{name:"Prayer of Healing",mob:"Blindeye the Seer",category:"buff",desc:{en:"Heals all council. MUST interrupt or fight unwinnable."}}
 ],sections:[
 {title:{en:"Council — Kill Order and Adds",fr:"Conseil — Kill Order et Adds"},tips:[
 {en:`The recommended kill order is ${M("Blindeye the Seer")} → ${M("Olm the Summoner")} → ${M("Kiggler the Crazed")} → ${M("Krosh Firehand")} → ${M("High King Maulgar")}. Following this order minimizes healing pressure and dangerous abilities.`,fr:`L'ordre de kill recommandé est ${M("Blindeye the Seer")} → ${M("Olm the Summoner")} → ${M("Kiggler the Crazed")} → ${M("Krosh Firehand")} → ${M("High King Maulgar")}. Suivre cet ordre minimise la pression de heal et les abilities dangereuses.`},
@@ -974,14 +993,16 @@ ssc:{name:"Serpentshrine Cavern",bosses:[
 ]}
 ]},
 {name:"Fathom-Lord Karathress",img:IMG["Fathom-Lord Karathress"],icon:"\u{1F419}",vi:4,abilities:[
-{name:"Cataclysmic Bolt",category:"damage",desc:{en:"Hits random target for 50% of their max HP. Unavoidable. Keep everyone topped."}},
-{name:"Sear Nova",category:"aoe",desc:{en:"Gained from Caribdis: 6,000 Fire damage to all in 20 yards. Spread out."}},
-{name:"Tidal Surge",category:"debuff",desc:{en:"Gained from Tidalvess: knockback + 2 sec stun + 2,000 Frost damage."}},
-{name:"The Beast Within",category:"buff",desc:{en:"Gained from Sharkkis: +30% damage, immune to CC for 30 sec."}},
-{name:"Spitfire Totem",category:"add",desc:{en:"Tidalvess summons Fire totem dealing 2,500-3,000 Fire damage. Kill immediately."}},
-{name:"Healing Wave",category:"buff",desc:{en:"Caribdis heals other adds. Interrupt or burn Caribdis first."}},
-{name:"Summon Pet",category:"add",desc:{en:"Sharkkis summons a pet that attacks raid. Off-tank the pet."}},
-{name:"Enrage",category:"buff",desc:{en:"Karathress enrages at 10 min."}}
+{name:"Cataclysmic Bolt",mob:"Karathress",category:"damage",desc:{en:"Hits random target for 50% of their max HP. Keep everyone topped."}},
+{name:"Enrage",mob:"Karathress",category:"buff",desc:{en:"Enrages at 10 min."}},
+{name:"Sear Nova",mob:"Karathress",category:"aoe",desc:{en:"Gained from Caribdis: 6,000 Fire damage in 20 yards."}},
+{name:"Tidal Surge",mob:"Karathress",category:"debuff",desc:{en:"Gained from Tidalvess: knockback + stun + Frost damage."}},
+{name:"The Beast Within",mob:"Karathress",category:"buff",desc:{en:"Gained from Sharkkis: +30% damage, CC immune."}},
+{name:"Spitfire Totem",mob:"Tidalvess",category:"add",desc:{en:"Fire totem dealing 2,500-3,000 Fire damage. Kill immediately."}},
+{name:"Healing Wave",mob:"Caribdis",category:"buff",desc:{en:"Heals other adds. Interrupt or burn Caribdis first."}},
+{name:"Water Bolt Volley",mob:"Caribdis",category:"damage",desc:{en:"AoE Frost damage. Interruptible."}},
+{name:"Summon Pet",mob:"Sharkkis",category:"add",desc:{en:"Summons pet that attacks raid. Off-tank the pet."}},
+{name:"Multi-Shot",mob:"Sharkkis",category:"damage",desc:{en:"Ranged attack hitting multiple targets."}}
 ],sections:[
 {title:{en:"Council — Kill Order",fr:"Conseil — Ordre de Kill"},tips:[
 {en:`The kill order is: ${M("Tidalvess")} first, then ${M("Sharkkis")}, followed by ${M("Caribdis")}, and finally ${M("Karathress")} himself.`,fr:`L'ordre de kill est : ${M("Tidalvess")} en premier, puis ${M("Sharkkis")}, suivi de ${M("Caribdis")}, et enfin ${M("Karathress")} lui-même.`},
@@ -1123,14 +1144,19 @@ tk:{name:"Tempest Keep — The Eye",bosses:[
 ]}
 ]},
 {name:"Kael'thas Sunstrider",img:IMG["Kael'thas Sunstrider"],icon:"👑",vi:4,abilities:[
-{name:"Fireball",category:"damage",desc:{en:"Single target dealing 18,000-22,000 Fire damage. Interruptible."}},
-{name:"Flamestrike",category:"aoe",desc:{en:"Ground AoE dealing 6,000 Fire damage + DoT. Move out immediately."}},
-{name:"Phoenix",category:"add",desc:{en:"Summons Phoenix that drops fire patches. Leaves egg on death - kill egg or Phoenix respawns."}},
-{name:"Mind Control",category:"debuff",desc:{en:"Phase 4+: MCs random player. Must be CC'd or damaged to break. Paladins immune with bubble."}},
-{name:"Pyroblast",category:"damage",desc:{en:"Phase 4+: 45,000 Fire damage to tank. Use Phaseshift Bulwark to absorb."}},
-{name:"Shock Barrier",category:"buff",desc:{en:"Phase 5: absorbs 80,000 damage. Must break through to damage Kael'thas."}},
-{name:"Gravity Lapse",category:"phase",desc:{en:"Phase 5: raid floats in air. Swim to avoid Nether Vapor. Nether Beams target random players."}},
-{name:"Nether Beam",category:"damage",desc:{en:"Phase 5: targets random players during Gravity Lapse for 2,000 Arcane damage."}}
+{name:"Gaze",mob:"Thaladred",category:"debuff",desc:{en:"Fixates random player. Cannot be tanked, just kite and avoid."}},
+{name:"Psychic Blow",mob:"Thaladred",category:"damage",desc:{en:"Knockback + 2,000 Shadow damage. Stay at max range while kiting."}},
+{name:"Bellowing Roar",mob:"Sanguinar",category:"debuff",desc:{en:"AoE fear. Use Tremor Totem, Fear Ward, or Berserker Rage."}},
+{name:"Fireball",mob:"Capernian",category:"damage",desc:{en:"6,000-8,000 Fire damage. Must interrupt or she kills healers."}},
+{name:"Conflagration",mob:"Capernian",category:"debuff",desc:{en:"Fire DoT + AoE. Affected player must move away from raid."}},
+{name:"Remote Toy",mob:"Telonicus",category:"debuff",desc:{en:"Bomb on random player. Run away or explode for AoE damage."}},
+{name:"Fireball",mob:"Kael'thas",category:"damage",desc:{en:"18,000-22,000 Fire damage. Interruptible."}},
+{name:"Flamestrike",mob:"Kael'thas",category:"aoe",desc:{en:"Ground AoE + DoT. Move out immediately."}},
+{name:"Phoenix",mob:"Kael'thas",category:"add",desc:{en:"Fire patches. Kill egg or Phoenix respawns."}},
+{name:"Mind Control",mob:"Kael'thas",category:"debuff",desc:{en:"Phase 4+: MCs random player. CC or damage to break."}},
+{name:"Pyroblast",mob:"Kael'thas",category:"damage",desc:{en:"Phase 4+: 45,000 Fire damage. Use Phaseshift Bulwark."}},
+{name:"Shock Barrier",mob:"Kael'thas",category:"buff",desc:{en:"Phase 5: absorbs 80,000 damage."}},
+{name:"Gravity Lapse",mob:"Kael'thas",category:"phase",desc:{en:"Phase 5: raid floats. Swim to avoid Nether Vapor."}}
 ],sections:[
 {title:{en:"Phase 1 — Advisors",fr:"Phase 1 — Conseillers"},tips:[
 {en:`Four Advisors must be defeated in a specific order: ${M("Thaladred")} → ${M("Sanguinar")} → ${M("Capernian")} → ${M("Telonicus")}. Each has unique abilities requiring different handling.`,fr:`Quatre Conseillers doivent être vaincus dans un ordre spécifique : ${M("Thaladred")} → ${M("Sanguinar")} → ${M("Capernian")} → ${M("Telonicus")}. Chacun a des capacités uniques nécessitant une gestion différente.`},
@@ -1447,14 +1473,20 @@ bt:{name:"Black Temple",bosses:[
 ]}
 ]},
 {name:"Illidari Council",img:IMG["Illidari Council"],icon:"👫",vi:8,abilities:[
-{name:"Shared Health Pool",category:"phase",desc:{en:"All 4 members share HP. DPS all evenly, cannot focus one down."}},
-{name:"Circle of Healing",category:"buff",desc:{en:"Malande heals all council. Interrupt constantly or fight extends."}},
-{name:"Divine Wrath",category:"damage",desc:{en:"Malande smites random target for 3,000 Holy damage."}},
-{name:"Consecration",category:"aoe",desc:{en:"Gathios drops consecration. Move out of fire."}},
-{name:"Vanish",category:"phase",desc:{en:"Veras vanishes and uses Deadly Poison. Track with Hunter's Mark or Faerie Fire."}},
-{name:"Flamestrike",category:"aoe",desc:{en:"Zerevor casts ground AoE. Move out immediately."}},
-{name:"Blizzard",category:"aoe",desc:{en:"Zerevor casts moving Blizzard. Avoid the slow zone."}},
-{name:"Reflective Shield",category:"buff",desc:{en:"Zerevor's shield reflects spells. Stop casting when active."}}
+{name:"Shared Health Pool",mob:"Council",category:"phase",desc:{en:"All 4 members share HP. DPS all evenly."}},
+{name:"Circle of Healing",mob:"Lady Malande",category:"buff",desc:{en:"Heals all council. Interrupt constantly."}},
+{name:"Divine Wrath",mob:"Lady Malande",category:"damage",desc:{en:"Smites random target for 3,000 Holy damage."}},
+{name:"Reflective Shield",mob:"Lady Malande",category:"buff",desc:{en:"Reflects Holy spells. Watch for this before casting."}},
+{name:"Blessing of Protection",mob:"Gathios",category:"buff",desc:{en:"Protects council member. Purge or wait."}},
+{name:"Consecration",mob:"Gathios",category:"aoe",desc:{en:"Fire ground AoE. Move out immediately."}},
+{name:"Judgment",mob:"Gathios",category:"damage",desc:{en:"Holy damage on current target."}},
+{name:"Vanish",mob:"Veras Darkshadow",category:"phase",desc:{en:"Vanishes and applies Deadly Poison. Track with Hunter's Mark."}},
+{name:"Deadly Poison",mob:"Veras Darkshadow",category:"debuff",desc:{en:"Stacking poison. Dispel or player dies."}},
+{name:"Envenom",mob:"Veras Darkshadow",category:"damage",desc:{en:"Consumes poison stacks for burst damage."}},
+{name:"Flamestrike",mob:"High Nethermancer Zerevor",category:"aoe",desc:{en:"Ground AoE. Move out immediately."}},
+{name:"Blizzard",mob:"High Nethermancer Zerevor",category:"aoe",desc:{en:"Moving Blizzard. Avoid the slow zone."}},
+{name:"Arcane Explosion",mob:"High Nethermancer Zerevor",category:"aoe",desc:{en:"PBAoE. Stay at range if possible."}},
+{name:"Dampen Magic",mob:"High Nethermancer Zerevor",category:"buff",desc:{en:"Reduces magic damage taken. Purge it."}}
 ],sections:[
 {title:{en:"Shared Health Pool",fr:"Pool de Vie Partagé"},tips:[
 {en:`All four council members share a single health pool and must be damaged evenly. They cannot be killed individually, so spread your DPS across all four targets rather than focusing one down.`,fr:`Les quatre membres du conseil partagent un seul pool de vie et doivent être endommagés équitablement. Ils ne peuvent pas être tués individuellement, donc répartissez vos DPS sur les quatre cibles plutôt que d'en focus une.`},
@@ -1577,12 +1609,14 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 ]}
 ]},
 {name:"Eredar Twins",img:IMG["Eredar Twins"],icon:"👯",vi:4,abilities:[
-{name:"Conflagration",category:"debuff",desc:{en:"Fire debuff explodes for AoE damage. Move 10+ yards from raid immediately."}},
-{name:"Shadow Nova",category:"aoe",desc:{en:"Requires raid to stack. Drops Flame Touched stacks when hit together."}},
-{name:"Flame Touched",category:"debuff",desc:{en:"Stacking Fire debuff. Drop stacks by getting hit by Shadow Nova while grouped."}},
-{name:"Dark Touched",category:"debuff",desc:{en:"Stacking Shadow debuff. Drop stacks by getting hit by fire abilities."}},
-{name:"Shadow Image",category:"add",desc:{en:"3 untargetable Sacrolash copies. Cannot kill, just heal through damage."}},
-{name:"Pyrogenics",category:"buff",desc:{en:"Phase 2: surviving twin gains +30% Fire damage. Burn fast."}}
+{name:"Conflagration",mob:"Alythess",category:"debuff",desc:{en:"Fire debuff explodes for AoE damage. Move 10+ yards from raid immediately."}},
+{name:"Blaze",mob:"Alythess",category:"aoe",desc:{en:"Fire ground AoE. Move out immediately."}},
+{name:"Flame Touched",mob:"Alythess",category:"debuff",desc:{en:"Stacking Fire debuff. Drop stacks by getting hit by Shadow Nova while grouped."}},
+{name:"Shadow Nova",mob:"Sacrolash",category:"aoe",desc:{en:"Requires raid to stack. Drops Flame Touched stacks when hit together."}},
+{name:"Shadow Blades",mob:"Sacrolash",category:"damage",desc:{en:"Melee attacks apply Shadow damage. Tank and melee take consistent Shadow damage."}},
+{name:"Dark Touched",mob:"Sacrolash",category:"debuff",desc:{en:"Stacking Shadow debuff. Drop stacks by getting hit by fire abilities."}},
+{name:"Shadow Image",mob:"Sacrolash",category:"add",desc:{en:"3 untargetable Sacrolash copies. Cannot kill, just heal through damage."}},
+{name:"Pyrogenics",mob:"Phase 2",category:"buff",desc:{en:"Surviving twin gains +30% Fire damage. Burn fast before raid overwhelmed."}}
 ],sections:[
 {title:{en:"Sacrolash and Alythess",fr:"Sacrolash et Alythess"},tips:[
 {en:`Focus all DPS on ${M("Sacrolash")} first. When the first twin dies, the surviving twin absorbs her sister's abilities and enters an enraged Phase 2.`,fr:`Concentrez tous les DPS sur ${M("Sacrolash")} en premier. Quand la première jumelle meurt, la survivante absorbe les capacités de sa sœur et entre dans une Phase 2 enragée.`},
@@ -1597,12 +1631,15 @@ sunwell:{name:"Sunwell Plateau",bosses:[
 ]}
 ]},
 {name:"M'uru",img:IMG["M'uru"],icon:"🌑",vi:5,abilities:[
-{name:"Negative Energy",category:"damage",desc:{en:"Hits random targets for Shadow damage. Chains between players in P2."}},
-{name:"Darkness",category:"buff",desc:{en:"Buff on Dark Fiends making them dangerous. Mass Dispel removes it."}},
-{name:"Dark Fiend",category:"add",desc:{en:"Small adds with Darkness buff. Priests Mass Dispel, then AoE kill."}},
-{name:"Void Sentinel",category:"add",desc:{en:"Large add that casts Shadow Pulse. Tank and kill."}},
-{name:"Singularity",category:"aoe",desc:{en:"Phase 2: rotating black hole. Knockback + heavy Shadow damage. Avoid it."}},
-{name:"Entropius",category:"phase",desc:{en:"Phase 2: M'uru transforms at 0%. Kill remaining adds, then burn boss."}}
+{name:"Negative Energy",mob:"M'uru",category:"damage",desc:{en:"Hits random targets for Shadow damage. Unavoidable raid damage."}},
+{name:"Summon Blood Elf",mob:"M'uru",category:"add",desc:{en:"Spawns waves of Sunblade adds. Must be picked up and AoE'd."}},
+{name:"Summon Void Sentinel",mob:"M'uru",category:"add",desc:{en:"Spawns large add casting Shadow Pulse. Tank and focus down."}},
+{name:"Darkness",mob:"Dark Fiend",category:"buff",desc:{en:"Buff making Dark Fiends extremely dangerous. Mass Dispel removes it."}},
+{name:"Dark Fiend Explosion",mob:"Dark Fiend",category:"aoe",desc:{en:"Dark Fiends explode if not killed. Mass Dispel then AoE immediately."}},
+{name:"Shadow Pulse",mob:"Void Sentinel",category:"aoe",desc:{en:"Channeled AoE Shadow damage. Interrupt or heal through."}},
+{name:"Void Zone",mob:"Void Sentinel",category:"aoe",desc:{en:"Ground AoE. Move out immediately."}},
+{name:"Singularity",mob:"Entropius",category:"aoe",desc:{en:"Rotating black hole. Knockback + heavy Shadow damage. Avoid at all costs."}},
+{name:"Negative Energy (Chained)",mob:"Entropius",category:"damage",desc:{en:"Bounces between players. Spread to reduce chain damage."}}
 ],sections:[
 {title:{en:"Phase 1 — M'uru",fr:"Phase 1 — M'uru"},tips:[
 {en:`${M("M'uru")} cannot be tanked and will continuously cast ${S("Negative Energy")} on random raid members, dealing significant shadow damage.`,fr:`${M("M'uru")} ne peut pas être tanké et lancera continuellement ${S("Negative Energy")} sur des membres aléatoires du raid, infligeant des dégâts d'ombre significatifs.`},
@@ -1705,7 +1742,22 @@ function render(){
     const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
     const videoBtn=(b.vi!==undefined&&videoId)?`<button class="boss-video-btn" onclick="event.stopPropagation();playVideo(${b.vi})">▶ ${T('video')}</button>`:'';
     h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">${T('boss')} ${i+1}</div><div class="boss-name">${b.name}</div></div>${videoBtn}<div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
-    if(b.abilities&&b.abilities.length>0){const grouped=groupAbilitiesByCategory(b.abilities);h+=`<div class="abilities-section" data-boss="${i}"><div class="abilities-header" onclick="event.stopPropagation();toggleAbilities(${i})"><span class="abilities-title">${T('abilities')}</span><span class="abilities-count">${b.abilities.length}</span><span class="abilities-chevron">▾</span></div><div class="abilities-body">`;for(const[cat,items]of Object.entries(grouped)){const ci=ABILITY_CATEGORIES[cat];h+=`<div class="ability-group"><div class="ability-group-title">${ci.icon} ${ci[currentLang]}</div><ul class="ability-list">`;items.forEach(a=>{h+=`<li class="ability-item">${S(a.name)}<span class="ability-desc">— ${a.desc[currentLang]||a.desc.en||a.desc}</span></li>`;});h+=`</ul></div>`;}h+=`</div></div>`;}
+    if(b.abilities&&b.abilities.length>0){
+      const mobData=groupAbilitiesByMob(b.abilities);
+      h+=`<div class="abilities-section" data-boss="${i}"><div class="abilities-header" onclick="event.stopPropagation();toggleAbilities(${i})"><span class="abilities-title">${T('abilities')}</span><span class="abilities-count">${b.abilities.length}</span><span class="abilities-chevron">▾</span></div><div class="abilities-body">`;
+      if(mobData){
+        mobData.mobs.forEach(mob=>{
+          h+=`<div class="mob-group"><div class="mob-group-title">${M(mob)}</div>`;
+          const catGrouped=groupAbilitiesByCategory(mobData.groups[mob]);
+          for(const[cat,items]of Object.entries(catGrouped)){const ci=ABILITY_CATEGORIES[cat];h+=`<div class="ability-group"><div class="ability-group-title">${ci.icon} ${ci[currentLang]}</div><ul class="ability-list">`;items.forEach(a=>{h+=`<li class="ability-item">${S(a.name)}<span class="ability-desc">— ${a.desc[currentLang]||a.desc.en||a.desc}</span></li>`;});h+=`</ul></div>`;}
+          h+=`</div>`;
+        });
+      }else{
+        const grouped=groupAbilitiesByCategory(b.abilities);
+        for(const[cat,items]of Object.entries(grouped)){const ci=ABILITY_CATEGORIES[cat];h+=`<div class="ability-group"><div class="ability-group-title">${ci.icon} ${ci[currentLang]}</div><ul class="ability-list">`;items.forEach(a=>{h+=`<li class="ability-item">${S(a.name)}<span class="ability-desc">— ${a.desc[currentLang]||a.desc.en||a.desc}</span></li>`;});h+=`</ul></div>`;}
+      }
+      h+=`</div></div>`;
+    }
     // Process sections into role-based groups
     const roles=processBossSections(b.sections);
     // Combat Flow section (general tips, phases)
