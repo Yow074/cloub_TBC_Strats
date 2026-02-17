@@ -134,7 +134,7 @@
   <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
 </footer>
 <script>
-const VERSION = "1.0.12";
+const VERSION = "1.0.13";
 const SPELLS={"Shadow Cleave":{t:"Melee",d:"Cleave frontale ~4000 Shadow DMG. Cône devant le boss."},"Intangible Presence":{t:"Curse",d:"Malédiction AoE : -50% hit chance (mêlée, distance, sorts) pendant 12 sec. Décursable."},"Berserker Charge":{t:"Physical",d:"Charge un ennemi à 8-40 yards, dégâts + knockdown. Portée min : 8 yards."},"Spell Reflection":{t:"Warrior",d:"Renvoie le prochain sort ciblé pendant 5 sec."},"Disarm":{t:"Warrior",d:"Désarme la cible 10 sec, réduisant ses dégâts de ~65%."},"Misdirection":{t:"Hunter",d:"Redirige les 3 prochaines attaques vers le tank ciblé."},"Gouge":{t:"Physical",d:"Incapacite la cible 6 sec. Le boss frappe le 2nd en menace."},"Blind":{t:"Poison",d:"Désoriente 10 sec. Retiré par Poison Cleansing / Cleanse."},"Garrote":{t:"Bleed",d:"Saignement 5 min après Vanish. Retiré par : Ice Block, Divine Shield, BoP, Stoneform."},"Greater Heal":{t:"Holy",d:"Gros soin des adds healers. Interrupt prioritaire."},"Mana Burn":{t:"Shadow",d:"Brûle le mana. Interrompre si possible."},"Stoneform":{t:"Racial",d:"Racial Nain : retire poisons, saignements, maladies."},"Divine Shield":{t:"Paladin",d:"Immunité totale 12 sec. Retire tous les debuffs."},"Blessing of Protection":{t:"Paladin",d:"Immunité physique 10 sec. Retire Garrote."},"Ice Block":{t:"Mage",d:"Invulnérable + immobile 10 sec. Retire tous les debuffs."},"Shackle Undead":{t:"Priest",d:"CC mort-vivant 50 sec. Réappliquable."},"Freezing Trap":{t:"Hunter",d:"Piège de givre : CC 20 sec au contact."},"Turn Evil":{t:"Paladin",d:"Fear un mort-vivant. Attention au pathing (risk de reset)."},"Poison Cleansing Totem":{t:"Shaman",d:"Retire un poison sur les alliés proches toutes les 5 sec."},"Holy Wrath":{t:"Holy",d:"Dégâts Holy chaînés. ~2000 1ère cible, doublés à chaque rebond. SPREAD."},"Holy Fire":{t:"Holy",d:"~3500 DMG + DoT 1750/2sec pendant 12 sec. Dispel magique IMMÉDIAT."},"Holy Ground":{t:"Holy",d:"Consécration permanente : 240-360 Holy/3sec + silence. Rayon 12y. Casse Repentance."},"Repentance":{t:"Holy",d:"Incapacite TOUT le raid 12 sec. ~2000 Holy DMG. Cassé par les dégâts. CD ~30 sec."},"Blessing of Sacrifice":{t:"Paladin",d:"Transfère 10% dégâts au Paladin. Le dégât casse Repentance."},"Grounding Totem":{t:"Shaman",d:"Absorbe le prochain sort hostile ciblé. Absorbe Holy Fire."},"Cloak of Shadows":{t:"Rogue",d:"Retire debuffs magiques + 90% résistance sorts 5 sec."},"Fear Ward":{t:"Priest",d:"Protège du prochain effet de peur."},"Little Red Riding Hood":{t:"Debuff",d:"Transforme en Petit Chaperon Rouge : désarmé, pacifié, slow. Kiter le long des bords !"},"Terrifying Howl":{t:"Fear",d:"Fear AoE. Contré par Tremor Totem, Fear Ward, Berserker Rage."},"Wide Swipe":{t:"Physical",d:"Attaque frontale en cône, lourds dégâts."},"Tremor Totem":{t:"Shaman",d:"Retire Fear, Charm, Sleep toutes les 3 sec sur alliés proches."},"Vanish":{t:"Rogue",d:"Moroes stealth puis Garrote une cible aléatoire."},"Feign Death":{t:"Hunter",d:"Simule la mort, drop toute aggro."},"Eternal Affection":{t:"Holy",d:"Gros heal de Julianne. Interrupt PRIORITAIRE."},"Devotion":{t:"Buff",d:"Buff cast speed sur Julianne. Dispel / Spellsteal."},"Daring":{t:"Buff",d:"Buff dégâts sur Romulo. Dispel."},"Spellsteal":{t:"Mage",d:"Vole un buff magique. Steal Devotion = gros boost cast speed."},"Hateful Bolt":{t:"Shadow",d:"Bolt sur le 2nd en menace, ~7-8k Shadow DMG. OT doit soak."},"Evocation":{t:"Arcane",d:"Curator régénère mana 20 sec. Prend le TRIPLE de dégâts !"},"Curse of Doom":{t:"Warlock",d:"Dégâts massifs après 60 sec. Placer après 4ème Flare pour pop en Evocation (x3)."},"Sacrifice":{t:"Shadow",d:"Enchaîne un joueur au centre, dégâts/tick. Kill chaînes ASAP. Ice Block/DS retire."},"Broken Pact":{t:"Debuff",d:"Debuff sur Illhoof quand Kil'rek meurt : +25% dégâts reçus."},"Counterspell":{t:"Arcane",d:"Silence tous casters dans 10 yards pendant 10 sec."},"Fireball":{t:"Fire",d:"Cast d'Aran. ~5000 Fire DMG. Doit être interrompu."},"Frostbolt":{t:"Frost",d:"Cast d'Aran. ~5000 Frost DMG + slow. Doit être interrompu."},"Arcane Missiles":{t:"Arcane",d:"Canal d'Aran, dégâts modérés. Laisser passer."},"Flame Wreath":{t:"Fire",d:"Cercles de feu sous 3 joueurs. NE PAS BOUGER. Explose ~5000 DMG raid-wide."},"Circular Blizzard":{t:"Frost",d:"Blizzard tournante. Esquiver vers le centre ou l'autre côté."},"Magnetic Pull":{t:"Arcane",d:"Pull tout le raid au centre, suivi d'Arcane Explosion. Courir loin !"},"Arcane Explosion":{t:"Arcane",d:"AoE après Magnetic Pull. ~8000+ DMG. Courir loin du centre."},"Polymorph":{t:"Arcane",d:"À 20% mana, Polymorph tout le raid + Pyroblast. Top off après."},"Pyroblast":{t:"Fire",d:"Gros cast après Polymorph global. ~6-7k Fire DMG raid-wide."},"Fear":{t:"Warlock",d:"Fear un Water Elemental 20 sec."},"Banish":{t:"Warlock",d:"Banit un démon/élémentaire 30 sec. Immunisé mais intouchable."},"Nether Exhaustion":{t:"Debuff",d:"Empêche de soak le même portail pendant 1m30."},"Void Zone":{t:"Shadow",d:"Zone au sol ~1000 Shadow/sec. Bouger immédiatement."},"Netherbreath":{t:"Shadow",d:"Souffle d'ombre sur joueurs aléatoires en Banish Phase."},"Shadow Resistance Aura":{t:"Paladin",d:"Aura +70 Shadow Resistance pour le groupe."},"Shadow Protection":{t:"Priest",d:"Buff +70 Shadow Resistance 10 min."},"Shadow Nova":{t:"Shadow",d:"AoE massive ~3000 Shadow + knockback. Ranged 30+ yards. Melee sortir."},"Enfeeble":{t:"Shadow",d:"HP de 5 joueurs réduits à 1 pendant 7 sec. MORTEL avec Shadow Nova."},"Shadow Word: Pain":{t:"Shadow",d:"DoT Ombre sur joueur aléatoire. Dispel magique."},"Thrash":{t:"Physical",d:"2 attaques supplémentaires. Énorme pression sur le tank."},"Sunder Armor":{t:"Physical",d:"-2600 armure/stack. Très dangereux avec Thrash."},"Amplify Damage":{t:"Shadow",d:"Double les dégâts reçus par la cible."},"Shadow Word: Death":{t:"Priest",d:"Backlash si cible survit. MORTEL sous Enfeeble (1 HP) !"},"Seal of Blood":{t:"Paladin",d:"Self-damage à chaque frappe. MORTEL sous Enfeeble (1 HP) !"},"Smoldering Breath":{t:"Fire",d:"Souffle frontal de feu. Tank face au mur."},"Tail Sweep":{t:"Physical",d:"Balayage arrière. Melee sur les côtés, pas derrière."},"Bellowing Roar":{t:"Fear",d:"Fear AoE ~40 yards. Tremor Totem / Fear Ward / Berserker Rage."},"Charred Earth":{t:"Fire",d:"Zone de feu au sol. Bouger immédiatement."},"Distracting Ash":{t:"Debuff",d:"-30% hit chance. Dispel magique immédiat."},"Rain of Bones":{t:"Physical",d:"Invoque des squelettes en Air Phase. Focus DPS adds."},"Smoking Blast":{t:"Fire",d:"~1200 DMG/sec pendant 15 sec sur une cible aléatoire."},"Berserker Stance":{t:"Warrior",d:"Posture pour utiliser Berserker Rage."},"Berserker Rage":{t:"Warrior",d:"Immunise aux Fear 10 sec. Nécessite Berserker Stance."},"Flame Shock":{t:"Shaman",d:"Sort de feu instantané. Disorient Strawman."},"Incinerate":{t:"Warlock",d:"Sort de feu. Disorient Strawman."},"Rust":{t:"Debuff",d:"Stacks ralentissant Tinhead. Kitable à haut stacks."},"Cyclone":{t:"Nature",d:"Tourbillon mobile. Esquiver. Cible invulnérable + incapacitée."},"Chain Lightning":{t:"Nature",d:"Dégâts Nature chaînés. Spread pour minimiser."},"Growth":{t:"Buff",d:"+15% DMG et +10% taille par stack. Appliqué toutes les 30 sec. Non-dispellable."},"Ground Slam":{t:"Physical",d:"Knockback tout le raid. Suivi de Gronn Lord's Grasp."},"Gronn Lord's Grasp":{t:"Debuff",d:"-20% vitesse/stack, jusqu'à 5 stacks. À 5 stacks → Stoned."},"Shatter":{t:"Physical",d:"Dégâts basés sur proximité. ~9000 si stackés, 70-100 si 20+ yards."},"Hurtful Strike":{t:"Physical",d:"Frappe le 2nd en menace toutes les ~20 sec. OT doit soak."},"Reverberation":{t:"Silence",d:"Silence tout le raid pendant 4 sec."},"Dark Mending":{t:"Holy",d:"Heal les autres adds. Interrupt prioritaire."},"Dark Decay":{t:"Shadow",d:"DoT sur le tank. Swap à 4 stacks."},"Spell Shield":{t:"Buff",d:"Bouclier magique de Krosh. Mage doit Spellsteal."},"Greater Polymorph":{t:"Arcane",d:"Transforme un joueur. Druide tank immunisé en forme."},"Arcing Smash":{t:"Physical",d:"Frappe en arc devant Maulgar. Éviter le cône."},"Flurry":{t:"Buff",d:"Augmente vitesse d'attaque et dégâts de Maulgar."},"Intimidating Roar":{t:"Fear",d:"Stun le tank + fear joueurs proches."},"Whirlwind":{t:"Physical",d:"Tourbillon de Maulgar. Melee s'éloigner 15+ yards."},"Mighty Blow":{t:"Physical",d:"Knockback sur le tank. Dos au mur pour éviter."},"Blast Nova":{t:"Fire",d:"Cast de 2 sec. Raid wipe si non interrompu par 5 cubes."},"Conflagration":{t:"Fire",d:"Feu sur joueur aléatoire. Se spread."},"Mind Exhaustion":{t:"Debuff",d:"3 min debuff après cube click. Empêche nouveau click."},"Quake":{t:"Physical",d:"À 30% HP : 5250-6750 DMG + stun 2 sec raid-wide."},"Cleave":{t:"Physical",d:"Attaque en cône frontale. Tank face au mur."},"Mark of Hydross":{t:"Debuff",d:"Debuff raid stack toutes les 15 sec. Reset à chaque transition."},"Water Tomb":{t:"Frost",d:"Emprisonne un joueur. Spread 8+ yards pour éviter."},"Spout":{t:"Frost",d:"Jet d'eau rotatif ~3500 Frost DMG + knockback 60 yards. Sauter dans l'eau ou suivre la rotation."},"Inner Demon":{t:"Shadow",d:"Démon personnel à tuer soi-même ou MC 10 min. Pets ne doivent PAS kill."},"Chaos Blast":{t:"Shadow",d:"Nuke sur le tank Warlock en phase démon."},"Spitfire Totem":{t:"Fire",d:"Totem de Tidalvess. Focus DPS immédiat."},"The Beast Within":{t:"Buff",d:"Buff de Sharkkis. Gros dégâts sur tank."},"Watery Grave":{t:"Frost",d:"Piège sur un joueur. Coordonner avec Earthquake."},"Tainted Core":{t:"Shadow",d:"Drop par Tainted Elemental. Passer aux alliés vers le générateur."},"Spore Bat":{t:"Nature",d:"Adds spawn en continu. Priorité ranged AoE."},"Knock Away":{t:"Physical",d:"3-4k DMG + knockback 25 yards + -25% threat."},"Pounding":{t:"Arcane",d:"1350-2250 Arcane/sec pendant 3 sec. AoE 20 yards."},"Arcane Orb":{t:"Arcane",d:"Projectile lent sur ranged. 6 sec silence si touché. Éviter."},"Flame Buffet":{t:"Fire",d:"Debuff +fire DMG si aucun melee en range."},"Flame Quills":{t:"Fire",d:"Tirs sur plateformes. Se repositionner."},"Ember of Al'ar":{t:"Fire",d:"Add spawn quand Al'ar change de plateforme. Burn à 10-20%."},"Wrath of the Astromancer":{t:"Arcane",d:"Bombe arcane sur joueur. 7-8k DMG + explosion AoE. Soakers 365 AR."},"Void Bolt":{t:"Shadow",d:"4-5k Shadow sur tank toutes les 8-15 sec."},"Psychic Scream":{t:"Fear",d:"Fear 8 yards. Tremor Totem / Fear Ward."},"Flamestrike":{t:"Fire",d:"AoE au sol. Bouger immédiatement."},"Phaseshift Bulwark":{t:"Shield",d:"Arme légendaire. Bouclier 100k absorb vs Pyroblast."},"Infinity Blade":{t:"Physical",d:"Arme légendaire. Thrash auto-attacks pour melee."},"Icebolt":{t:"Frost",d:"4250-5750 Frost + freeze DoT. Mortel en 2-3 sec sans heal."},"Death and Decay":{t:"Shadow",d:"15% max HP/sec pendant 10 sec. AoE 20 yards. Bouger !"},"Frost Armor":{t:"Frost",d:"+3000 armure, +75 Frost resist. Melee: -25% attack speed, -50% move speed."},"Carrion Swarm":{t:"Shadow",d:"4250-5750 Shadow + -75% healing done 20 sec. Spread healers."},"Infernal":{t:"Fire",d:"Add spawn sur joueur random. Tank dédié avec Fire Resist."},"Mark of Kaz'rogal":{t:"Shadow",d:"600 mana/sec drain. Si mana = 0, explosion 10k AoE. Course DPS !"},"Doom":{t:"Shadow",d:"Debuff 20 sec. Tue la cible + spawn Lesser Doomguard."},"Unquenchable Flames":{t:"Fire",d:"DoT 1250 fire/sec pendant 5 sec après Rain of Fire."},"Air Burst":{t:"Physical",d:"Knockup. Tears of the Goddess requis pour survivre."},"Doomfire":{t:"Fire",d:"Trainée de feu 2400/3 sec. Non-dispellable. Éviter."},"Soul Charge":{t:"Shadow",d:"Si joueur meurt: 4500 DMG raid + debuff classe."},"Impaling Spine":{t:"Physical",d:"Empale joueur. Attraper épine et relancer au boss."},"Tidal Shield":{t:"Nature",d:"Boss immun + heal. Casser avec épine."},"Volcanic Geyser":{t:"Fire",d:"Spawn sur joueur. Érupte 30 sec. Éviter."},"Gaze":{t:"Physical",d:"Fixe joueur random. Si <30 yards = Charge knockback."},"Shadow of Death":{t:"Shadow",d:"Phase fantôme. Collecter ~5 orbes ou wipe raid."},"Aura of Suffering":{t:"Shadow",d:"-100% healing, -100% armure, pas de regen."},"Aura of Desire":{t:"Shadow",d:"Dégâts reçus quand on DPS. +100% healing."},"Aura of Anger":{t:"Shadow",d:"DoT Shadow stack. +DMG dealt over time."},"Bloodboil":{t:"Physical",d:"Debuff stack sur random. Dégâts augmentent."},"Fel Rage":{t:"Shadow",d:"Joueur random + boss buffés. +DMG, +speed."},"Fatal Attraction":{t:"Shadow",d:"3 joueurs téléportés ensemble. Spread immédiatement !"},"Saber Lash":{t:"Physical",d:"Cleave physique sur tank. CDs défensifs."},"Circle of Healing":{t:"Holy",d:"Heal 95k sur tout le conseil. INTERRUPT !"},"Shear":{t:"Physical",d:"-60% HP max. Tank 100% block/dodge/parry requis."},"Parasitic Shadowfiend":{t:"Shadow",d:"Adds spawn. Kill avant infection raid."},"Flame of Azzinoth":{t:"Fire",d:"2 adds Phase 2. Tanks Fire Resist cap requis."},"Burn":{t:"Fire",d:"-25% HP max. Survit jusqu'au prochain Stomp."},"Meteor Slash":{t:"Fire",d:"Cleave frontal massif. Split raid en 2 groupes."},"Encapsulate":{t:"Shadow",d:"Debuff explosion si mal géré. Spread camps."},"Demonic Vapor":{t:"Shadow",d:"Beam sur joueur random en Air Phase. Éviter."},"Conflagration":{t:"Fire",d:"Debuff feu. Split 10+ yards du groupe."},"Shadow Nova":{t:"Shadow",d:"Debuff shadow. Rester groupé pour drop Flame Touched."},"Negative Energy":{t:"Shadow",d:"Bounce sur 2 joueurs après hit initial."},"Singularity":{t:"Shadow",d:"Trou noir rotatif. Knockback + shadow DMG à 7 yards."},"Darkness of a Thousand Souls":{t:"Shadow",d:"47-52k Shadow raid-wide après 8 sec. Shield of Blue requis."}};
 
 function S(n){const s=SPELLS[n];if(!s)return'<span class="spell">'+n+'</span>';return'<span class="spell">'+n+'<span class="tt"><div class="tt-name">'+n+' <span class="tt-type">'+s.t+'</span></div><div class="tt-desc">'+s.d+'</div></span></span>';}
@@ -201,227 +201,313 @@ const IMG={
 const RAIDS={
 karazhan:{name:"Karazhan",bosses:[
 {name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",vi:2,sections:[
-{title:"Phase 1",tips:[{text:`Tank and spank sur ${M("Midnight")} (le cheval).`}]},
-{title:"Phase 2 \u2014 \u00C0 95% HP de Midnight",tips:[
-{text:`${M("Attumen")} spawn \u00E0 c\u00F4t\u00E9 de ${M("Midnight")}.`,role:"tank"},
-{text:`Un tank sur chaque mob, face oppos\u00E9e au raid pour \u00E9viter ${S("Shadow Cleave")}.`,role:"tank"},
-{text:`Tout le monde sauf tanks stack derri\u00E8re en melee range. Hunters \u00E0 port\u00E9e minimum.`,role:"melee"},
-{text:`Focus DPS sur ${M("Midnight")}, cleave passif sur ${M("Attumen")}.`},
-{text:`Mages et Druids d\u00E9curse ${S("Intangible Presence")} sur les tanks en priorit\u00E9.`,role:"ranged"}
+{title:"Phase 1 — Midnight seul",tips:[
+{text:`Le combat commence contre ${M("Midnight")}, le cheval d'Attumen. C'est une phase simple de tank and spank où le raid se positionne derrière le cheval pour éviter les dégâts frontaux.`}
 ]},
-{title:"Phase 3 \u2014 \u00C0 25% HP",tips:[
-{text:`Les deux fusionnent. Le boss a les HP du mob le plus haut en P2.`},
-{text:`D\u00E9curse ${S("Intangible Presence")} imm\u00E9diatement sur les tanks.`,role:"heal"},
-{text:`Tout le monde stack derri\u00E8re le boss en melee pour \u00E9viter ${S("Berserker Charge")}.`}
+{title:"Phase 2 — Attumen rejoint le combat (95% HP)",tips:[
+{text:`Lorsque Midnight atteint 95% de ses points de vie, ${M("Attumen")} apparaît à côté de son cheval et engage immédiatement le combat.`,role:"tank"},
+{text:`Deux tanks sont nécessaires : chacun prend un mob et le tourne face opposée au raid pour éviter que ${S("Shadow Cleave")} ne touche les autres joueurs.`,role:"tank"},
+{text:`Tous les DPS et healers doivent se placer derrière les mobs, en range melee. Les Hunters restent à portée minimum pour éviter les cléaves tout en maintenant leur DPS.`,role:"melee"},
+{text:`Concentrez vos dégâts sur ${M("Midnight")} en priorité, le cleave passif s'occupera d'Attumen. L'objectif est de les faire descendre à des HP similaires.`},
+{text:`Les Mages et Druides doivent immédiatement décurse ${S("Intangible Presence")} sur les tanks, car ce debuff réduit considérablement leur chance de toucher.`,role:"ranged"}
+]},
+{title:"Phase 3 — Fusion (25% HP)",tips:[
+{text:`Quand l'un des deux atteint 25% HP, Attumen monte sur Midnight et ils fusionnent. Le boss combiné conserve les HP du mob qui avait le plus de vie en Phase 2, d'où l'importance de les équilibrer.`},
+{text:`Continuez à décurse ${S("Intangible Presence")} sur le tank principal immédiatement après chaque application.`,role:"heal"},
+{text:`Tout le raid doit rester stacké derrière le boss en melee range pour éviter ${S("Berserker Charge")}, qui cible les joueurs éloignés et inflige de lourds dégâts.`}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Clear tout le trash cheval avant de pull.`},
-{text:`Reset possible en courant vers l'entr\u00E9e.`},
-{text:`Warriors : ${S("Spell Reflection")} sur ${S("Intangible Presence")} et ${S("Disarm")} sur Attumen.`,role:"tank"},
-{text:`L'aggro reset \u00E0 chaque d\u00E9but de phase. Hunters : ${S("Misdirection")} \u00E0 chaque transition.`,role:"ranged"},
-{text:`Vendeur r\u00E9paration dans la zone derri\u00E8re le boss.`}
+{text:`Assurez-vous de clear tout le trash dans la zone des écuries avant de pull, car les chevaux peuvent add pendant le combat.`},
+{text:`Si le pull se passe mal, il est possible de reset le combat en courant vers l'entrée de l'instance.`},
+{text:`Les Warriors tanks peuvent utiliser ${S("Spell Reflection")} pour renvoyer ${S("Intangible Presence")} et ${S("Disarm")} pour réduire les dégâts d'Attumen.`,role:"tank"},
+{text:`L'aggro est reset à chaque début de phase, donc les Hunters doivent prévoir un ${S("Misdirection")} pour chaque transition afin d'aider le tank à reprendre le contrôle.`,role:"ranged"},
+{text:`Un vendeur de réparation se trouve dans la zone derrière le boss, pratique après les wipes.`}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations clés</b> : Désignez clairement vos deux tanks (MT sur Midnight, OT sur Attumen) et vos décurseurs (2-3 Mages/Druides suffisent).`},
+{text:`<b>Timing des transitions</b> : Annoncez les transitions de phase à 95% et 25% pour que les tanks et les Hunters soient prêts avec leurs Misdirects.`},
+{text:`<b>Gestion des HP</b> : Surveillez les HP des deux mobs en P2. Si l'écart dépasse 10%, demandez aux DPS de switch temporairement.`},
+{text:`<b>Point de wipe courant</b> : La transition P2→P3 avec l'aggro reset. Assurez-vous que le MT est prêt à taunt immédiatement après la fusion.`}
 ]}
 ]},
 {name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",vi:3,sections:[
-{title:"Pre-Pull",tips:[
-{text:`Kill order : ${M("Lady Catriona Von'Indi")} et ${M("Lady Keira Berrybuck")} (heal) d'abord, puis ${M("Baroness Dorothea Millstipe")} (mana burn), ${M("Baron Rafe Dreuger")} (stun), ${M("Lord Robin Daris")}, ${M("Moroes")}, ${M("Lord Crispin Ference")}.`}
+{title:"Préparation et Kill Order",tips:[
+{text:`Moroes est accompagné de 4 adds aléatoires parmi 6 possibles. L'ordre de kill recommandé est : ${M("Lady Catriona Von'Indi")} et ${M("Lady Keira Berrybuck")} en priorité absolue car elles peuvent heal, puis ${M("Baroness Dorothea Millstipe")} qui utilise Mana Burn sur vos healers, ensuite ${M("Baron Rafe Dreuger")} qui stun, puis ${M("Lord Robin Daris")}, et enfin ${M("Moroes")} lui-même. ${M("Lord Crispin Ference")} peut être gardé CC pendant tout le combat.`}
 ]},
-{title:"Combat",tips:[
-{text:`S\u00E9parer les kill targets et les CC targets.`},
-{text:`Off-tank doit \u00EAtre 2nd en menace sur ${M("Moroes")} pour le ${S("Gouge")}.`,role:"tank"},
-{text:`DPS cleave kill targets et interrupt ${S("Mana Burn")} / ${S("Greater Heal")}.`,role:"melee"},
-{text:`Healers retirent le poison ${S("Blind")} et soignent les cibles avec ${S("Garrote")}.`,role:"heal"},
-{text:`${M("Moroes")} enrage \u00E0 30% HP.`}
+{title:"Déroulement du combat",tips:[
+{text:`Avant le pull, identifiez clairement quels adds seront CC et lesquels seront tués. Assignez un CC par add à contrôler et ne les mélangez jamais avec les kill targets.`},
+{text:`L'off-tank doit absolument maintenir la deuxième position sur la table de menace de ${M("Moroes")}, car son ${S("Gouge")} reset l'aggro du tank principal. Sans OT prêt, Moroes va one-shot un healer.`,role:"tank"},
+{text:`Les DPS doivent se concentrer sur les kill targets tout en maintenant des interrupts sur ${S("Mana Burn")} et ${S("Greater Heal")}. Un seul heal passé peut ruiner le combat.`,role:"melee"},
+{text:`Les healers doivent surveiller deux choses : retirer le poison ${S("Blind")} qui rend aveugle pendant 10 secondes, et maintenir les joueurs affectés par ${S("Garrote")} en vie, car ce DoT fait des dégâts significatifs pendant 5 minutes.`,role:"heal"},
+{text:`À 30% HP, ${M("Moroes")} entre en enrage et ses dégâts augmentent considérablement. Gardez vos cooldowns défensifs pour cette phase.`}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`${S("Stoneform")}, ${S("Divine Shield")}, ${S("Blessing of Protection")} et ${S("Ice Block")} retirent ${S("Garrote")}.`},
-{text:`Priests : ${S("Shackle Undead")} / Hunters : ${S("Freezing Trap")} pour CC adds.`},
-{text:`Paladins : ${S("Turn Evil")} possible mais attention au pathing.`},
-{text:`Shamans : ${S("Poison Cleansing Totem")} pour ${S("Blind")}.`,role:"heal"}
+{text:`Plusieurs abilities peuvent retirer ${S("Garrote")} : ${S("Stoneform")} des Nains, ${S("Divine Shield")} et ${S("Blessing of Protection")} des Paladins, et ${S("Ice Block")} des Mages. Gardez-les pour les moments critiques.`},
+{text:`Les Priests utilisent ${S("Shackle Undead")} et les Hunters ${S("Freezing Trap")} comme CC principaux. Assignez des backups en cas de resist.`,role:"heal"},
+{text:`Les Paladins peuvent utiliser ${S("Turn Evil")} mais attention au pathing erratique qui peut pull du trash.`},
+{text:`Un Shaman avec ${S("Poison Cleansing Totem")} dans le groupe melee simplifie grandement la gestion du ${S("Blind")}.`,role:"heal"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations pré-combat</b> : Établissez clairement les CC (Shackle, Trap) avec backups, les kill targets, et qui déclenche le pull.`},
+{text:`<b>Communication</b> : Annoncez quand un CC break pour que le backup prenne le relais immédiatement. Un add libre = wipe probable.`},
+{text:`<b>Gestion du Garrote</b> : Comptez combien de joueurs peuvent remove Garrote (Paladins, Mages Nains, etc.) et gardez ces cooldowns pour les healers en priorité.`},
+{text:`<b>Positionnement</b> : Gardez les CC loin de la zone de combat pour éviter les breaks accidentels par AoE.`},
+{text:`<b>Point de wipe courant</b> : Le Gouge sur le MT sans OT prêt. Rappelez à l'OT de toujours rester second en threat.`}
 ]}
 ]},
 {name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",vi:4,sections:[
-{title:"Strat\u00E9gie",tips:[
-{text:`Tank ${M("Maiden")} au centre de la salle.`,role:"tank"},
-{text:`Healers et Ranged spread autour de la salle pour \u00E9viter ${S("Holy Wrath")} chain.`,role:"ranged"},
-{text:`Dispel ${S("Holy Fire")} imm\u00E9diatement.`,role:"heal"},
-{text:`Ranged : rentrer dans ${S("Holy Ground")} avant le cast de ${S("Repentance")} pour break le stun.`,role:"ranged"},
-{text:`MT : CDs d\u00E9fensifs apr\u00E8s chaque ${S("Repentance")}.`,role:"tank"}
+{title:"Stratégie principale",tips:[
+{text:`Le tank positionne ${M("Maiden")} au centre exact de la salle circulaire. Ce positionnement est crucial car il permet au raid de se spreader uniformément autour d'elle.`,role:"tank"},
+{text:`Les healers et les ranged DPS doivent se répartir autour de la salle en maintenant une distance d'au moins 10 yards entre chaque joueur. Cela évite que ${S("Holy Wrath")} ne chain entre plusieurs personnes et cause des dégâts massifs.`,role:"ranged"},
+{text:`${S("Holy Fire")} est un DoT dévastateur qui doit être dispel immédiatement. Assignez plusieurs dispellers et établissez une priorité (tanks > healers > DPS).`,role:"heal"},
+{text:`Juste avant que ${S("Repentance")} soit cast (toutes les 30 secondes environ), les ranged peuvent volontairement entrer dans la zone ${S("Holy Ground")} au centre. Les dégâts du Holy Ground casseront le stun de Repentance, permettant de continuer à heal/DPS.`,role:"ranged"},
+{text:`Après chaque ${S("Repentance")}, le tank principal doit utiliser ses cooldowns défensifs car il aura reçu des dégâts sans heal pendant le stun.`,role:"tank"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Paladins : ${S("Blessing of Sacrifice")} + ${S("Divine Shield")} pour break ${S("Repentance")}.`,role:"heal"},
-{text:`Shamans : ${S("Grounding Totem")} absorbe ${S("Holy Fire")}.`,role:"heal"},
-{text:`Mages : ${S("Ice Block")} / Rogues : ${S("Cloak of Shadows")} retirent ${S("Holy Fire")}.`,role:"melee"}
+{text:`Les Paladins peuvent utiliser une combinaison de ${S("Blessing of Sacrifice")} sur un autre joueur puis ${S("Divine Shield")} pour casser leur propre Repentance et continuer à heal.`,role:"heal"},
+{text:`Les Shamans placent ${S("Grounding Totem")} qui absorbera un ${S("Holy Fire")}, réduisant la charge de dispel.`,role:"heal"},
+{text:`Les Mages peuvent ${S("Ice Block")} et les Rogues ${S("Cloak of Shadows")} pour retirer ${S("Holy Fire")} d'eux-mêmes si les dispels sont en retard.`,role:"melee"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Positionnement pré-pull</b> : Assignez des positions fixes autour de la salle (12h, 3h, 6h, 9h, etc.) pour garantir le spread.`},
+{text:`<b>Rotation de dispel</b> : Avec plusieurs Priests/Paladins, établissez qui dispel qui pour éviter le gaspillage de GCDs.`},
+{text:`<b>Timer Repentance</b> : Annoncez le Repentance 5 secondes avant pour que les ranged puissent se positionner dans Holy Ground s'ils le souhaitent.`},
+{text:`<b>Point de wipe courant</b> : Le tank meurt pendant Repentance car les healers sont tous stun. Solution : un healer reste toujours dans Holy Ground, ou utilisez des HoTs avant Repentance.`}
 ]}
 ]},
-{name:"Opera \u2014 Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:5,sections:[
-{title:"Strat\u00E9gie",tips:[
-{text:`Cibl\u00E9 par ${S("Little Red Riding Hood")} = kiter le long des bords de la salle.`},
-{text:`Tank and spank en dehors de ${S("Terrifying Howl")} et ${S("Wide Swipe")}.`,role:"tank"},
-{text:`Healers focus le joueur avec ${S("Little Red Riding Hood")}.`,role:"heal"}
+{name:"Opera — Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:5,sections:[
+{title:"Stratégie principale",tips:[
+{text:`Le Big Bad Wolf transforme périodiquement un joueur aléatoire en ${S("Little Red Riding Hood")} (Petit Chaperon Rouge). Ce joueur perd toutes ses abilities et doit immédiatement courir le long des bords de la salle pour kiter le boss qui le poursuit. Un seul coup du Wolf sur le Chaperon = mort instantanée.`},
+{text:`En dehors de cette mécanique, le combat est un simple tank and spank. Le tank doit cependant faire attention à ${S("Terrifying Howl")} qui fear tout le raid et ${S("Wide Swipe")} qui frappe en cône frontal.`,role:"tank"},
+{text:`Les healers doivent surveiller attentivement le joueur transformé en Chaperon Rouge. Même s'il court, il peut prendre des dégâts de chute ou de collision. Gardez-le topped en permanence jusqu'à la fin de la transformation.`,role:"heal"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Shamans : ${S("Tremor Totem")} contre ${S("Terrifying Howl")}.`,role:"heal"},
-{text:`Priests : ${S("Fear Ward")} pour pr\u00E9venir le fear.`,role:"heal"},
-{text:`Rogues : ${S("Vanish")}, Hunters : ${S("Feign Death")}, Paladins : BoP.`,role:"melee"}
+{text:`Les Shamans placent ${S("Tremor Totem")} pour annuler ${S("Terrifying Howl")}. Positionnez-les stratégiquement pour couvrir tout le raid.`,role:"heal"},
+{text:`Les Priests peuvent ${S("Fear Ward")} le tank ou les healers clés pour maintenir le contrôle pendant le fear.`,role:"heal"},
+{text:`Plusieurs classes peuvent éviter d'être ciblées par Little Red Riding Hood : les Rogues avec ${S("Vanish")}, les Hunters avec ${S("Feign Death")}, et les Paladins peuvent BoP un autre joueur pour annuler sa transformation.`,role:"melee"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Briefing pré-combat</b> : Expliquez le chemin de kite (le long des murs, en cercle) à tout le raid. Un joueur qui panique et court n'importe où = wipe.`},
+{text:`<b>Positionnement</b> : Gardez le raid près des murs pour que le Chaperon Rouge ait moins de distance à parcourir pour commencer son kite.`},
+{text:`<b>Cooldowns de survie</b> : Rappelez aux joueurs leurs options si transformés (Sprint, Blink après transformation, etc.).`},
+{text:`<b>Point de wipe courant</b> : Le healer principal est transformé et personne ne heal le tank. Solution : toujours avoir 2+ healers actifs.`}
 ]}
 ]},
-{name:"Opera \u2014 Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:7,sections:[
-{title:"Phase 1 \u2014 Les 4 adds",tips:[
-{text:`Kill ${M("Dorothee")} en premier (pas d'aggro table). Ne pas kill ${M("Tito")} avant elle.`},
-{text:`Puis ${M("Roar")} (tank\u00E9 par l'OT).`,role:"tank"},
-{text:`Puis ${M("Strawman")} \u2014 disorient par feu : ${S("Flame Shock")}, ${S("Fireball")}, ${S("Incinerate")}.`,role:"ranged"},
-{text:`Puis ${M("Tinhead")} (MT). Kitable avec stacks de ${S("Rust")}.`,role:"tank"}
+{name:"Opera — Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:7,sections:[
+{title:"Phase 1 — Les 4 personnages",tips:[
+{text:`Ce combat met en scène 4 personnages du Magicien d'Oz qui doivent être gérés simultanément. Commencez par tuer ${M("Dorothee")} car elle n'a pas de table d'aggro et attaque aléatoirement. Important : ne tuez pas ${M("Tito")} (son chien) avant elle, sinon elle enrage et wipe le raid.`},
+{text:`Ensuite, éliminez ${M("Roar")} le lion. L'off-tank le maintient à l'écart pendant que le raid finit Dorothee, puis tout le monde switch sur lui.`,role:"tank"},
+{text:`${M("Strawman")} (l'épouvantail) est vulnérable au feu et peut être disorient par n'importe quel sort de feu : ${S("Flame Shock")}, ${S("Fireball")}, ${S("Incinerate")}. Assignez un caster feu pour le maintenir CC pendant que vous tuez les autres.`,role:"ranged"},
+{text:`${M("Tinhead")} (l'homme de fer) est tanké par le MT. Il accumule des stacks de ${S("Rust")} qui le ralentissent progressivement, le rendant kitable en fin de combat.`,role:"tank"}
 ]},
-{title:"Phase 2 \u2014 The Crone",tips:[
-{text:`${M("The Crone")} spawn apr\u00E8s la mort des 4 bosses.`},
-{text:`\u00C9viter ${S("Cyclone")} et spread pour ${S("Chain Lightning")}.`}
+{title:"Phase 2 — The Crone",tips:[
+{text:`Une fois les 4 personnages morts, ${M("The Crone")} (la sorcière) apparaît sur scène. C'est un simple burn mais avec deux mécaniques à gérer.`},
+{text:`Évitez ${S("Cyclone")} qui vous fait tournoyer en l'air, et spreadez-vous pour minimiser les dégâts de ${S("Chain Lightning")} qui bounce entre les joueurs proches.`}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`${M("Roar")} peut \u00EAtre fear par Warlocks (${S("Fear")}) et Hunters.`}
+{text:`${M("Roar")} peut être fear par les Warlocks avec ${S("Fear")} et par les Hunters, ce qui simplifie grandement sa gestion pendant que vous tuez Dorothee.`}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations claires</b> : MT sur Tinhead, OT sur Roar, un caster feu dédié sur Strawman, tout le DPS sur Dorothee au pull.`},
+{text:`<b>Kill order strict</b> : Dorothee → Roar → Strawman → Tinhead → Crone. Ne déviez pas.`},
+{text:`<b>Warning Tito</b> : Rappelez plusieurs fois de NE PAS tuer Tito avant Dorothee. Les DoTs et le cleave peuvent le tuer accidentellement.`},
+{text:`<b>Point de wipe courant</b> : Tito meurt avant Dorothee par AoE accidentelle. Solution : gardez Tito loin du groupe, assignez quelqu'un pour le surveiller.`}
 ]}
 ]},
-{name:"Opera \u2014 Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:6,sections:[
-{title:"Phase 1 \u2014 Julianne",tips:[
-{text:`Interrupt ${M("Julianne")} : ${S("Eternal Affection")} = priorit\u00E9 max.`,role:"melee"},
-{text:`Dispel le buff ${S("Devotion")}.`,role:"heal"}
+{name:"Opera — Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:6,sections:[
+{title:"Phase 1 — Julianne seule",tips:[
+{text:`Le combat commence contre ${M("Julianne")} seule. Elle est une caster et doit être interrompue constamment. Sa priorité d'interrupt absolue est ${S("Eternal Affection")}, un heal massif qui peut reset tout votre progrès.`,role:"melee"},
+{text:`Elle se buff avec ${S("Devotion")} qui augmente sa vitesse de cast. Les healers/Priests doivent dispel ce buff, ou mieux encore, les Mages peuvent le ${S("Spellsteal")} pour un boost personnel significatif.`,role:"heal"}
 ]},
-{title:"Phase 2 \u2014 Romulo",tips:[
-{text:`Tank ${M("Romulo")} dos contre un mur.`,role:"tank"},
-{text:`Dispel le buff ${S("Daring")}.`,role:"heal"},
-{text:`Warriors : ${S("Disarm")} on cooldown.`,role:"tank"}
+{title:"Phase 2 — Romulo seul",tips:[
+{text:`Après la mort de Julianne, ${M("Romulo")} entre en scène. C'est un combattant melee qui doit être tanké dos contre un mur pour éviter les knockbacks.`,role:"tank"},
+{text:`Il se buff avec ${S("Daring")} qui augmente ses dégâts. Dispel ce buff dès qu'il apparaît pour protéger le tank.`,role:"heal"},
+{text:`Les Warriors tanks utilisent ${S("Disarm")} on cooldown pour réduire significativement les dégâts entrants.`,role:"tank"}
 ]},
-{title:"Phase 3 \u2014 Les deux",tips:[
-{text:`Doivent mourir \u00E0 max 10 sec d'intervalle.`},
-{text:`Melee focus ${M("Julianne")} (interrupts), Ranged focus ${M("Romulo")}.`,role:"melee"}
+{title:"Phase 3 — Le duo tragique",tips:[
+{text:`Les deux ressuscitent et combattent ensemble. La mécanique clé : ils doivent mourir à maximum 10 secondes d'intervalle, sinon le survivant ressuscite l'autre à pleine vie.`},
+{text:`La stratégie optimale : les melee focus ${M("Julianne")} pour maintenir les interrupts, tandis que les ranged DPS équilibrent les HP de ${M("Romulo")}. Communiquez les pourcentages et synchronisez le kill.`,role:"melee"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Mages : ${S("Spellsteal")} le buff ${S("Devotion")} = gros boost cast speed.`,role:"ranged"}
+{text:`Les Mages qui ${S("Spellsteal")} ${S("Devotion")} gagnent un boost de cast speed considérable. C'est à la fois utile pour le raid et fun pour le Mage.`,role:"ranged"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Rotation d'interrupt</b> : Assignez 2-3 interrupters sur Julianne avec un ordre défini pour ne jamais laisser passer Eternal Affection.`},
+{text:`<b>Split DPS en P3</b> : Désignez clairement qui DPS qui. Melee sur Julianne, Ranged sur Romulo fonctionne bien.`},
+{text:`<b>Communication HP</b> : Demandez des callouts réguliers des HP ("Julianne 30%, Romulo 35%") pour synchroniser le kill.`},
+{text:`<b>Point de wipe courant</b> : Un des deux meurt trop tôt et ressuscite l'autre. Solution : arrêtez le DPS sur la cible basse et équilibrez.`}
 ]}
 ]},
 {name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",vi:8,sections:[
-{title:"Flare Phase",tips:[
-{text:`Kill les ${M("Flares")} ASAP. Spawn toutes les 10 sec.`},
-{text:`Ranged \u00E0 10 yards les uns des autres.`,role:"ranged"},
-{text:`2nd en menace (OT) prend ${S("Hateful Bolt")}. Healers top off.`,role:"heal"}
+{title:"Phase Flares — Gestion des adds",tips:[
+{text:`Le Curator invoque une ${M("Astral Flare")} toutes les 10 secondes. Ces adds explosent au contact et doivent être tuées immédiatement par les ranged DPS. Une Flare non contrôlée peut facilement one-shot un caster.`},
+{text:`Les ranged DPS et healers doivent maintenir une distance d'au moins 10 yards entre eux pour éviter les dégâts en chaîne si une Flare atteint quelqu'un.`,role:"ranged"},
+{text:`${S("Hateful Bolt")} cible le joueur avec la deuxième plus haute menace et inflige de lourds dégâts Arcane. Un off-tank ou un DPS plate doit maintenir cette position pour l'absorber. Les healers doivent être prêts à le remonter immédiatement.`,role:"heal"}
 ]},
-{title:"Evocation Phase",tips:[
-{text:`Apr\u00E8s le 10\u00E8me Flare, 20 sec. Kill derni\u00E8re Flare puis switch boss.`},
-{text:`Pop CDs offensifs \u2014 le boss prend le triple de d\u00E9g\u00E2ts pendant ${S("Evocation")}.`}
+{title:"Phase Evocation — Fenêtre de burst",tips:[
+{text:`Après avoir invoqué 10 Flares, le Curator entre en phase ${S("Evocation")} pendant 20 secondes. Pendant cette phase, il ne fait rien mais prend le TRIPLE des dégâts normaux.`},
+{text:`Tuez rapidement la dernière Flare puis concentrez absolument tout votre DPS sur le boss. Utilisez Bloodlust/Heroism, trinkets, et tous vos cooldowns offensifs pendant cette fenêtre. C'est là que vous faites la majorité de vos dégâts.`}
 ]},
-{title:"Enrage \u2014 15% HP",tips:[
-{text:`Plus de Flares. Burn.`},
-{text:`${S("Hateful Bolt")} plus fr\u00E9quent.`,role:"heal"}
+{title:"Enrage — Sous 15% HP",tips:[
+{text:`À 15% HP, le Curator enrage et arrête de spawn des Flares. C'est une course contre la montre car ses dégâts augmentent.`},
+{text:`${S("Hateful Bolt")} devient plus fréquent pendant cette phase. Les healers doivent être particulièrement vigilants sur l'OT qui absorbe ces coups.`,role:"heal"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Warlocks : ${S("Curse of Doom")} apr\u00E8s le 4\u00E8me Flare pour pop en Evocation (x3 DMG).`,role:"ranged"}
+{text:`Astuce Warlock : lancez ${S("Curse of Doom")} après la 4ème Flare. Le DoT expirera pendant la phase Evocation et infligera le triple des dégâts.`,role:"ranged"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignation Hateful Bolt</b> : Désignez clairement qui maintient la 2ème position en threat (souvent un Fury Warrior ou un Feral Druid en DPS gear).`},
+{text:`<b>Timing Bloodlust</b> : Gardez Bloodlust/Heroism pour la première Evocation. C'est votre meilleure fenêtre de DPS.`},
+{text:`<b>Comptage des Flares</b> : Annoncez le compte des Flares (7... 8... 9... Evocation incoming!) pour que le raid soit prêt.`},
+{text:`<b>Point de wipe courant</b> : Une Flare non tuée explose dans le groupe ranged. Solution : assignez des DPS dédiés aux Flares avec priorité absolue.`}
 ]}
 ]},
 {name:"Chess Event",img:IMG["Chess"],icon:"\u265F",vi:12,sections:[
-{title:"Strat\u00E9gie",tips:[
-{text:`Bouger les Pions pour laisser passer les pi\u00E8ces puissantes.`},
-{text:`Kill Bishops d'abord (heal), puis Queen, puis King.`},
-{text:`Esquiver le Fire AoE de Medivh (triches).`},
-{text:`Utiliser le King offensivement.`}
+{title:"Stratégie de base",tips:[
+{text:`L'event Chess est une partie d'échecs géante où chaque joueur contrôle une pièce. Commencez par avancer les Pions pour créer des ouvertures et permettre aux pièces puissantes (Tours, Cavaliers, Roi) d'avancer.`},
+{text:`Priorisez l'élimination des Bishops (Fous) ennemis en premier car ils peuvent heal les autres pièces. Ensuite, concentrez-vous sur la Queen (Dame) puis le King (Roi) pour terminer l'event.`},
+{text:`Medivh triche périodiquement en lançant des AoE de feu sur l'échiquier. Surveillez le sol et déplacez vos pièces hors des zones enflammées pour éviter des dégâts inutiles.`},
+{text:`N'hésitez pas à utiliser votre King offensivement. Il a de bonnes abilities et peut faire des dégâts significatifs tout en restant tanky.`}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`On peut rel\u00E2cher une pi\u00E8ce pour en prendre une autre.`}
+{text:`Vous pouvez relâcher une pièce à tout moment pour en prendre une autre. Si votre pièce est mal positionnée ou mourante, switchez vers une pièce plus utile.`}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations simples</b> : Désignez qui prend le King, la Queen, et les Tours. Les autres peuvent prendre ce qui reste.`},
+{text:`<b>Communication</b> : Appelez les triches de Medivh pour que tout le monde bouge ses pièces en même temps.`},
+{text:`<b>Relaxez</b> : C'est l'event le plus facile de Karazhan. Même avec une stratégie chaotique, vous gagnerez probablement.`}
 ]}
 ]},
 {name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",vi:9,sections:[
-{title:"Strat\u00E9gie",tips:[
-{text:`Tank ${M("Illhoof")} et ${M("Kil'rek")} pr\u00E8s du cercle vert.`,role:"tank"},
-{text:`${S("Sacrifice")} : kill cha\u00EEnes ASAP et heal la cible.`,role:"heal"},
-{text:`Kill ${M("Kil'rek")} pour ${S("Broken Pact")} sur ${M("Illhoof")}.`},
-{text:`AoE les Imps des deux portails.`,role:"ranged"}
+{title:"Stratégie principale",tips:[
+{text:`Positionnez le combat près du cercle rituel vert au centre de la salle. Le tank maintient ${M("Illhoof")} et son démon ${M("Kil'rek")} ensemble pour faciliter le cleave et le contrôle.`,role:"tank"},
+{text:`La mécanique principale est ${S("Sacrifice")} : Illhoof enchaîne un joueur aléatoire au-dessus du cercle et commence à drainer sa vie. Tout le raid doit immédiatement switcher sur les chaînes (Demon Chains) pour libérer la victime, pendant que les healers la maintiennent en vie. C'est une course contre la montre.`,role:"heal"},
+{text:`Tuer ${M("Kil'rek")} applique ${S("Broken Pact")} sur Illhoof, le rendant plus vulnérable aux dégâts. Cependant, Kil'rek respawn après un certain temps, donc équilibrez entre tuer Kil'rek pour le debuff et DPS le boss.`},
+{text:`Deux portails de chaque côté de la salle spawn continuellement des Imps. Assignez des AoE (Seed of Corruption, Blizzard, Consecration) pour les contrôler et éviter qu'ils submergent les healers.`,role:"ranged"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`${S("Ice Block")} / ${S("Divine Shield")} retirent ${S("Sacrifice")}.`},
-{text:`${M("Illhoof")} target le joueur avant ${S("Sacrifice")} \u2014 pre-HoT possible.`,role:"heal"}
+{text:`Les Mages peuvent ${S("Ice Block")} et les Paladins ${S("Divine Shield")} pour se libérer instantanément de ${S("Sacrifice")} sans avoir besoin de casser les chaînes.`},
+{text:`Illhoof cible visiblement un joueur quelques secondes avant de lancer ${S("Sacrifice")}. Les healers attentifs peuvent pré-HoT cette cible pour faciliter sa survie.`,role:"heal"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Positionnement AoE</b> : Placez vos AoEers (Warlocks, Mages) près des portails pour qu'ils puissent spam Seed/Blizzard en continu.`},
+{text:`<b>Priorité absolue Sacrifice</b> : Dès qu'un Sacrifice est annoncé, TOUT LE MONDE switch sur les chaînes. Un joueur mort à Sacrifice = healer en moins ou DPS critique perdu.`},
+{text:`<b>Gestion Kil'rek</b> : Tuez Kil'rek une fois au début pour le debuff, puis ignorez-le et focus Illhoof jusqu'à la mort.`},
+{text:`<b>Point de wipe courant</b> : La cible de Sacrifice meurt car les DPS sont trop lents à switch. Solution : assignez des DPS dédiés aux chaînes.`}
 ]}
 ]},
 {name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",vi:10,sections:[
-{title:"Strat\u00E9gie",tips:[
-{text:`Casters \u00E0 10+ yards d'Aran pour \u00E9viter ${S("Counterspell")}.`,role:"ranged"},
-{text:`Rotation d'interrupt : ${S("Fireball")} et ${S("Frostbolt")}. Laisser ${S("Arcane Missiles")}.`,role:"melee"},
-{text:`Healers attention aux joueurs touch\u00E9s par ${S("Arcane Explosion")}.`,role:"heal"},
-{text:`${S("Flame Wreath")} : <strong>STOP. Ne bougez pas.</strong>`},
-{text:`${S("Circular Blizzard")} : esquiver vers le centre ou l'autre c\u00F4t\u00E9.`},
-{text:`Apr\u00E8s ${S("Magnetic Pull")} \u2192 ${S("Arcane Explosion")} \u2014 courir loin.`,role:"melee"},
-{text:`\u00C0 40% HP : 4 ${M("Water Elementals")} spawn. Kill ou CC.`,role:"tank"},
-{text:`\u00C0 20% mana : ${S("Polymorph")} raid + ${S("Pyroblast")}. Top off apr\u00E8s.`,role:"heal"}
+{title:"Mécanique de base",tips:[
+{text:`Aran n'a pas de table d'aggro et ne peut pas être tanké traditionnellement. Il attaque des cibles aléatoires avec ses sorts. Les tanks peuvent porter du stuff DPS pour ce combat.`,role:"tank"},
+{text:`Les casters doivent rester à plus de 10 yards d'Aran pour éviter son ${S("Counterspell")} qui silence et lock votre école de magie pendant plusieurs secondes.`,role:"ranged"},
+{text:`Établissez une rotation d'interrupt sur ${S("Fireball")} et ${S("Frostbolt")} qui infligent de lourds dégâts single-target. Par contre, laissez passer ${S("Arcane Missiles")} car il est moins dangereux et interruptible par le mouvement de la cible.`,role:"melee"},
+{text:`Les healers surveillent les joueurs touchés par ${S("Arcane Explosion")} instantanée qui frappe tous les joueurs proches d'Aran.`,role:"heal"}
+]},
+{title:"Abilities spéciales",tips:[
+{text:`<b>${S("Flame Wreath")}</b> : Aran place des cercles de feu autour de plusieurs joueurs. Si QUICONQUE bouge (même la personne dans le cercle), TOUT LE RAID explose. <strong>STOP. NE BOUGEZ PAS.</strong> Attendez que les cercles disparaissent.`},
+{text:`<b>${S("Circular Blizzard")}</b> : Un blizzard tourne autour de la salle dans le sens horaire. Esquivez vers le centre de la pièce ou passez de l'autre côté du blizzard. Ne courez pas dans le même sens que lui.`},
+{text:`<b>${S("Magnetic Pull")} + ${S("Arcane Explosion")}</b> : Aran tire tout le raid vers lui puis commence à caster une énorme Arcane Explosion. Dès que vous êtes pull, courez immédiatement vers les bords de la salle pour sortir de la zone d'effet.`,role:"melee"}
+]},
+{title:"Phases spéciales",tips:[
+{text:`À 40% HP, Aran invoque 4 ${M("Water Elementals")}. Ils peuvent être tués rapidement, CC par les Warlocks avec ${S("Fear")} ou ${S("Banish")}, ou simplement ignorés si votre DPS est suffisant pour finir le boss.`,role:"tank"},
+{text:`À 20% de mana (pas HP), Aran ${S("Polymorph")} tout le raid en moutons et cast ${S("Pyroblast")} sur tout le monde. Chaque joueur prend environ 6-7k dégâts. Les healers doivent top off le raid dès que le sheep se termine.`,role:"heal"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Warlocks : ${S("Fear")} ou ${S("Banish")} sur Water Elementals.`},
-{text:`Pas d'aggro table \u2014 tanks en stuff DPS.`,role:"tank"}
+{text:`Les Warlocks sont excellents sur ce combat : ${S("Fear")} ou ${S("Banish")} les Water Elementals, et leur DPS n'est pas affecté par le Counterspell.`},
+{text:`Comme il n'y a pas d'aggro, les tanks portent du stuff DPS et contribuent aux dégâts plutôt qu'à tanker.`,role:"tank"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Briefing Flame Wreath</b> : Insistez lourdement sur cette mécanique. Un seul joueur qui bouge = wipe. Même les pets et totems comptent!`},
+{text:`<b>Macro d'avertissement</b> : Utilisez un addon ou macro pour annoncer Flame Wreath immédiatement. "FLAME WREATH - STOP MOVING".`},
+{text:`<b>Rotation d'interrupt</b> : Assignez 3-4 interrupters avec un ordre défini pour couvrir tous les Fireballs et Frostbolts.`},
+{text:`<b>Préparation Mass Polymorph</b> : Demandez aux healers de pré-HoT le raid quand Aran approche de 20% mana pour survivre au Pyroblast.`},
+{text:`<b>Point de wipe courant</b> : Quelqu'un bouge pendant Flame Wreath. Solution : criez "FREEZE" dans vocal et faites confiance au raid.`}
 ]}
 ]},
 {name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",vi:11,sections:[
-{title:"Portal Phase \u2014 1 min",tips:[
-{text:`3 portails (rouge, vert, bleu). 2 tanks + 2 DPS pour soak.`,role:"tank"},
-{text:`Apr\u00E8s soak : ${S("Nether Exhaustion")} (1m30, bloque m\u00EAme couleur).`},
-{text:`<b>Tank #1</b> : <b style="color:#ef4444">Red Beam</b>, in/out toutes les 5 stacks.`,role:"tank"},
-{text:`<b>Tank #2</b> : <b style="color:#22c55e">Green Beam</b> toute la phase.`,role:"tank"},
-{text:`<b>DPS #1</b> : <b style="color:#3b82f6">Blue Beam</b> 20 stacks, puis <b>DPS #2</b> relais.`,role:"ranged"},
-{text:`Healers focus DPS Blue Beam (d\u00E9g\u00E2ts accrus, heal r\u00E9duit).`,role:"heal"},
-{text:`Bouger hors ${S("Void Zone")}.`,role:"heal"}
+{title:"Portal Phase — 1 min",tips:[
+{text:`Trois portails apparaissent et envoient des faisceaux colorés vers le boss : <b style="color:#ef4444">rouge</b> (puissance d'attaque), <b style="color:#22c55e">vert</b> (régénération), et <b style="color:#3b82f6">bleu</b> (mana mais dégâts accrus). Les joueurs doivent intercepter ces faisceaux pour empêcher le boss de se renforcer.`},
+{text:`Après avoir absorbé un faisceau, vous recevez ${S("Nether Exhaustion")} pendant 1m30, ce qui vous empêche de reprendre la même couleur. Prévoyez des rotations entre joueurs.`},
+{text:`Le <b style="color:#ef4444">Red Beam</b> augmente les dégâts subis. Le tank doit entrer et sortir du faisceau toutes les 5 stacks pour éviter de se faire one-shot. Un second tank peut assurer le relais si nécessaire.`,role:"tank"},
+{text:`Le <b style="color:#22c55e">Green Beam</b> fournit une régénération massive. Le tank assigné reste dessus toute la phase pour maintenir sa santé et celle du raid à proximité.`,role:"tank"},
+{text:`Le <b style="color:#3b82f6">Blue Beam</b> donne du mana mais augmente les dégâts subis et réduit les soins reçus. Deux DPS se relaient autour de 20 stacks chacun.`,role:"ranged"},
+{text:`Concentrez vos soins sur les joueurs qui absorbent le Blue Beam, car ils subissent des dégâts amplifiés tout en étant plus difficiles à soigner.`,role:"heal"},
+{text:`Des ${S("Void Zone")} apparaissent régulièrement au sol. Sortez-en immédiatement tout en maintenant votre position sur les faisceaux si possible.`,role:"heal"}
 ]},
-{title:"Banish Phase \u2014 30 sec",tips:[
-{text:`Netherspite banish. Plus de ${S("Void Zone")}.`},
-{text:`Courir au fond de la salle. ${S("Netherbreath")} sur joueurs al\u00E9atoires.`},
-{text:`Aggro reset \u00E0 la fin. Tank reprend imm\u00E9diatement.`,role:"tank"}
+{title:"Banish Phase — 30 sec",tips:[
+{text:`Netherspite devient intangible et les portails disparaissent. Profitez de cette pause pour vous repositionner et régénérer. Plus de ${S("Void Zone")} pendant cette phase.`},
+{text:`Courez vers le fond de la salle pour vous éloigner du boss. Il lance ${S("Netherbreath")} sur des joueurs aléatoires, infligeant des dégâts de zone coniques.`},
+{text:`L'aggro est complètement reset à la fin de la Banish Phase. Le tank doit reprendre le boss immédiatement dès que les portails réapparaissent.`,role:"tank"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Portails m\u00EAme position, couleurs al\u00E9atoires chaque phase.`},
-{text:`Pas de cleave ni tail swipe.`,role:"melee"},
-{text:`Paladins : ${S("Shadow Resistance Aura")}. Priests : ${S("Shadow Protection")}.`,role:"heal"},
-{text:`Hunters : ${S("Misdirection")} \u00E0 chaque Portal Phase.`,role:"ranged"}
+{text:`Les portails apparaissent toujours aux mêmes emplacements, mais leurs couleurs sont redistribuées aléatoirement à chaque Portal Phase. Adaptez vos assignations rapidement.`},
+{text:`Netherspite n'a pas de cleave ni de tail swipe. Les mélées peuvent se positionner librement autour du boss, ce qui facilite l'interception des faisceaux.`,role:"melee"},
+{text:`Les Paladins devraient maintenir ${S("Shadow Resistance Aura")} et les Prêtres ${S("Shadow Protection")} pour réduire les dégâts du ${S("Netherbreath")}.`,role:"heal"},
+{text:`Les Chasseurs utilisent ${S("Misdirection")} sur le tank à chaque début de Portal Phase pour sécuriser la reprise d'aggro.`,role:"ranged"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations clés</b> : Créez une feuille claire avec les rotations pour chaque couleur de faisceau. Minimum 2 joueurs par couleur pour gérer le ${S("Nether Exhaustion")}. Assignez des backups en cas de mort.`},
+{text:`<b>Point de wipe courant</b> : Un faisceau non intercepté pendant quelques secondes buff énormément le boss. Si un joueur meurt sur un beam, son backup doit réagir instantanément.`},
+{text:`<b>Communication</b> : Annoncez les transitions de phase à voix haute. "Banish dans 5 secondes" et "Portails up, tout le monde en position" sont essentiels pour éviter la confusion.`},
+{text:`<b>Conseil de progression</b> : Ce combat demande de la coordination, pas du DPS. En progression, privilégiez des joueurs fiables sur les beams plutôt que vos meilleurs DPS. La survie prime sur les parses.`}
 ]}
 ]},
 {name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",vi:13,sections:[
-{title:"Phase 1 \u2014 100% \u00E0 60%",tips:[
-{text:`Tank dos au mur pour ${S("Shadow Nova")} knockback.`,role:"tank"},
-{text:`${M("Infernal")} spawn toutes les 45 sec (Hellfire permanent).`},
-{text:`Ranged \u00E0 30+ yards pour ${S("Shadow Nova")}.`,role:"ranged"},
-{text:`Melee : sortir pour ${S("Shadow Nova")}.`,role:"melee"},
-{text:`Dispel ${S("Shadow Word: Pain")}.`,role:"heal"}
+{title:"Phase 1 — 100% à 60%",tips:[
+{text:`Le tank doit se positionner dos au mur pour éviter d'être projeté par le knockback de ${S("Shadow Nova")}. Cette position reste critique tout au long du combat.`,role:"tank"},
+{text:`Un ${M("Infernal")} tombe du ciel toutes les 45 secondes environ et reste sur place, irradiant des dégâts de feu permanents (Hellfire). Ces Infernals limitent progressivement l'espace disponible dans la salle.`},
+{text:`Restez à 30 yards ou plus du boss pour éviter ${S("Shadow Nova")}. Positionnez-vous en arc de cercle pour faciliter les déplacements si un Infernal tombe près de vous.`,role:"ranged"},
+{text:`Quittez la mêlée quelques secondes avant chaque ${S("Shadow Nova")} (environ toutes les 30 sec), puis revenez immédiatement après.`,role:"melee"},
+{text:`Dispellez rapidement ${S("Shadow Word: Pain")} sur les membres du raid. Le DoT peut devenir problématique si plusieurs joueurs sont affectés en même temps.`,role:"heal"}
 ]},
-{title:"Phase 2 \u2014 60% \u00E0 30%",tips:[
-{text:`Gagne ${S("Thrash")} et ${S("Sunder Armor")}. Phase la plus dangereuse.`,role:"tank"},
-{text:`Healers focus le tank.`,role:"heal"},
-{text:`Plus de SWP. Infernals, ${S("Enfeeble")}, ${S("Shadow Nova")} continuent.`}
+{title:"Phase 2 — 60% à 30%",tips:[
+{text:`Le Prince équipe deux armes et gagne ${S("Thrash")} (attaques supplémentaires) ainsi que ${S("Sunder Armor")} (réduction d'armure cumulative). C'est la phase la plus dangereuse pour le tank.`,role:"tank"},
+{text:`Concentrez vos soins sur le tank pendant toute cette phase. Les dégâts entrants sont imprévisibles à cause de ${S("Thrash")}. Gardez le tank à pleine vie en permanence.`,role:"heal"},
+{text:`Le ${S("Shadow Word: Pain")} disparaît en Phase 2, mais les Infernals, ${S("Enfeeble")} et ${S("Shadow Nova")} continuent. Restez vigilants sur votre positionnement.`}
 ]},
-{title:"Phase 3 \u2014 30% \u00E0 0%",tips:[
-{text:`Retour P1 + ${S("Amplify Damage")} et Flying Axes.`},
-{text:`Infernals spawn plus souvent. ~2 min de place.`},
-{text:`Healers focus cibles Flying Axes.`,role:"heal"}
+{title:"Phase 3 — 30% à 0%",tips:[
+{text:`Le Prince revient au style de combat de la Phase 1, mais ajoute ${S("Amplify Damage")} (double les dégâts subis sur une cible) et des Flying Axes qui rebondissent entre les joueurs.`},
+{text:`Les Infernals spawent plus fréquemment. À ce stade, l'espace devient très limité. Vous avez environ 2 minutes avant que la salle ne soit complètement envahie.`},
+{text:`Surveillez les cibles des Flying Axes et soignez-les immédiatement. Ces haches infligent des dégâts significatifs, surtout combinées avec ${S("Amplify Damage")}.`,role:"heal"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Ajuster position selon Infernals.`},
-{text:`En P3, mieux vaut ${S("Shadow Nova")} que les Infernals.`},
-{text:`NE PAS utiliser ${S("Shadow Word: Death")} / ${S("Seal of Blood")} sous ${S("Enfeeble")}.`,role:"ranged"}
+{text:`Soyez prêts à ajuster votre position constamment en fonction des Infernals. Ne restez jamais dans une zone où un Infernal pourrait vous coincer.`},
+{text:`En Phase 3, si vous devez choisir entre prendre une ${S("Shadow Nova")} ou vous rapprocher d'un Infernal, prenez la Nova — les dégâts sont plus gérables.`},
+{text:`N'utilisez JAMAIS ${S("Shadow Word: Death")} ou ${S("Seal of Blood")} si vous avez ${S("Enfeeble")}. Ce debuff réduit vos HP à 1 pendant 8 secondes — tout auto-dégât vous tue instantanément.`,role:"ranged"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations clés</b> : Pas d'assignation complexe, mais désignez un joueur pour annoncer les ${S("Shadow Nova")} imminentes et les chutes d'Infernals.`},
+{text:`<b>Point de wipe courant</b> : La Phase 2 tue les tanks mal soignés. Assurez-vous d'avoir au moins 2-3 healers dédiés au tank et gardez les CDs défensifs (Shield Wall, Pain Suppression) pour cette phase.`},
+{text:`<b>Gestion de l'espace</b> : Le combat est une course contre les Infernals. Si le combat dure plus de 8-9 minutes, l'espace sera trop réduit. Préparez Bloodlust/Heroism pour la Phase 3 afin de finir rapidement.`},
+{text:`<b>Conseil de progression</b> : La RNG des Infernals peut ruiner un pull parfait. Si un Infernal tombe sur le tank ou au milieu du raid en début de combat, n'hésitez pas à wipe et recommencer — c'est souvent plus efficace que de s'entêter.`}
 ]}
 ]},
 {name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",vi:14,sections:[
 {title:"Ground Phase",tips:[
-{text:`Tank dos au mur, face ext\u00E9rieure.`,role:"tank"},
-{text:`Melee sur le c\u00F4t\u00E9 : \u00E9viter ${S("Smoldering Breath")} et ${S("Tail Sweep")}.`,role:"melee"},
-{text:`Ranged max range pour ${S("Bellowing Roar")}.`,role:"ranged"},
-{text:`Bouger hors ${S("Charred Earth")}.`},
-{text:`Dispel ${S("Distracting Ash")} imm\u00E9diatement.`,role:"heal"}
+{text:`Positionnez-vous dos au mur avec le boss face à l'extérieur de la terrasse. Cette position vous protège des knockbacks et donne au raid de l'espace pour éviter les mécaniques.`,role:"tank"},
+{text:`Restez sur les flancs du dragon, jamais devant ni derrière. ${S("Smoldering Breath")} inflige des dégâts massifs en cône frontal, et ${S("Tail Sweep")} projette et étourdit ceux qui sont derrière.`,role:"melee"},
+{text:`Éloignez-vous au maximum du boss pour minimiser l'impact de ${S("Bellowing Roar")}, un fear de zone qui peut désorganiser le raid. Plus vous êtes loin, moins vous risquez d'être touché.`,role:"ranged"},
+{text:`Des zones de ${S("Charred Earth")} apparaissent sous les joueurs et persistent au sol. Déplacez-vous dès qu'elles apparaissent et évitez de les traverser.`},
+{text:`Dispellez ${S("Distracting Ash")} immédiatement — ce debuff réduit drastiquement la chance de toucher du joueur affecté, ce qui cripple les DPS et peut empêcher le tank de maintenir son aggro.`,role:"heal"}
 ]},
-{title:"Air Phase \u2014 75%, 50%, 25%",tips:[
-{text:`Focus squelettes de ${S("Rain of Bones")}.`},
-{text:`Heal cible de ${S("Smoking Blast")} (~1200/sec, 15 sec, cible al\u00E9atoire).`,role:"heal"},
-{text:`Se rapprocher du boss pour \u00E9viter fireballs raid-wide.`},
-{text:`Nightbane atterrit apr\u00E8s Rain of Bones + Smoking Blast. Non tauntable.`,role:"tank"}
+{title:"Air Phase — 75%, 50%, 25%",tips:[
+{text:`À 75%, 50% et 25% de vie, Nightbane s'envole et bombarde le raid. Pendant ce temps, des squelettes surgissent via ${S("Rain of Bones")}. Tuez-les rapidement pour éviter d'être submergés.`},
+{text:`Un joueur aléatoire reçoit ${S("Smoking Blast")}, infligeant environ 1200 dégâts par seconde pendant 15 secondes. Identifiez cette cible et assignez des soins dédiés pour la maintenir en vie.`,role:"heal"},
+{text:`Rapprochez-vous de la position du boss en vol pour éviter les fireballs qu'il lance sur les joueurs éloignés. Restez groupés au centre de la terrasse.`},
+{text:`Nightbane atterrit après avoir terminé Rain of Bones et Smoking Blast. Il n'est PAS tauntable pendant quelques secondes après l'atterrissage — le tank doit être en position et avoir déjà généré de l'aggro avant le décollage.`,role:"tank"}
 ]},
 {title:"Notes",isNote:true,tips:[
-{text:`Shamans : ${S("Tremor Totem")} contre ${S("Bellowing Roar")}.`,role:"heal"},
-{text:`Priests : ${S("Fear Ward")}.`,role:"heal"},
-{text:`Warriors : ${S("Berserker Stance")} + ${S("Berserker Rage")} si bien tim\u00E9.`,role:"tank"},
-{text:`Tank fear\u00E9 : attention ${S("Tail Sweep")} / ${S("Smoldering Breath")}.`,role:"melee"},
-{text:`Hunters : ${S("Misdirection")} \u00E0 chaque atterrissage.`,role:"ranged"}
+{text:`Les Shamans placent ${S("Tremor Totem")} pour contrer ${S("Bellowing Roar")}. Positionnez-le stratégiquement pour couvrir le maximum de joueurs.`,role:"heal"},
+{text:`Les Prêtres utilisent ${S("Fear Ward")} sur le tank en priorité pour éviter qu'il ne perde le positionnement du boss pendant un fear.`,role:"heal"},
+{text:`Les Warriors tanks peuvent utiliser ${S("Berserker Stance")} suivi de ${S("Berserker Rage")} juste avant le fear pour s'immuniser, puis revenir en Defensive Stance.`,role:"tank"},
+{text:`Si le tank est fear, surveillez le boss — il peut se retourner et frapper le raid avec ${S("Tail Sweep")} ou ${S("Smoldering Breath")}. Éloignez-vous préventivement.`,role:"melee"},
+{text:`Les Chasseurs utilisent ${S("Misdirection")} sur le tank à chaque atterrissage pour sécuriser l'aggro, surtout que le boss n'est pas tauntable immédiatement.`,role:"ranged"}
+]},
+{title:"RL Takeaway",isNote:true,tips:[
+{text:`<b>Assignations clés</b> : Désignez 2-3 healers pour surveiller spécifiquement la cible de ${S("Smoking Blast")} pendant les Air Phases. Assignez également des DPS prioritaires sur les squelettes.`},
+{text:`<b>Point de wipe courant</b> : Le tank qui se fait fear dans une mauvaise direction expose le raid au breath ou au tail swipe. Priorisez ${S("Fear Ward")} et ${S("Tremor Totem")} sur le tank.`},
+{text:`<b>Gestion des phases</b> : Évitez de pousser le boss à 75%/50%/25% pile quand le ${S("Charred Earth")} vient d'apparaître partout. Ralentissez le DPS si nécessaire pour avoir un sol propre avant l'Air Phase.`},
+{text:`<b>Conseil de progression</b> : Nightbane est un boss optionnel qui demande de la coordination. Si le raid a du mal, concentrez-vous d'abord sur Prince Malchezaar — il drop du meilleur loot et est souvent plus simple une fois le positionnement maîtrisé.`}
 ]}
 ]}
 ]},
