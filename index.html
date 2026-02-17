@@ -48,6 +48,8 @@
   .boss-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
   .boss-number { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; }
   .boss-chevron { color: var(--text-muted); font-size: 1.1rem; transition: transform 0.3s; flex-shrink: 0; }
+  .boss-video-btn { padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-section); color: var(--text-secondary); font-size: 0.75rem; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
+  .boss-video-btn:hover { background: var(--accent-gold); color: #000; border-color: var(--accent-gold); }
   .boss-card.open .boss-chevron { transform: rotate(180deg); }
   .boss-body { display: none; padding: 0 1.25rem 1.25rem; }
   .boss-card.open .boss-body { display: block; }
@@ -157,7 +159,7 @@ const IMG={
 
 const RAIDS={
 karazhan:{name:"Karazhan",bosses:[
-{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",sections:[
+{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",vi:1,sections:[
 {title:"Phase 1",tips:[{text:`Tank and spank sur ${M("Midnight")} (le cheval).`}]},
 {title:"Phase 2 \u2014 \u00C0 95% HP de Midnight",tips:[
 {text:`${M("Attumen")} spawn \u00E0 c\u00F4t\u00E9 de ${M("Midnight")}.`,role:"tank"},
@@ -179,7 +181,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Vendeur r\u00E9paration dans la zone derri\u00E8re le boss.`}
 ]}
 ]},
-{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",sections:[
+{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",vi:2,sections:[
 {title:"Pre-Pull",tips:[
 {text:`Kill order : ${M("Lady Catriona Von'Indi")} et ${M("Lady Keira Berrybuck")} (heal) d'abord, puis ${M("Baroness Dorothea Millstipe")} (mana burn), ${M("Baron Rafe Dreuger")} (stun), ${M("Lord Robin Daris")}, ${M("Moroes")}, ${M("Lord Crispin Ference")}.`}
 ]},
@@ -197,7 +199,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Shamans : ${S("Poison Cleansing Totem")} pour ${S("Blind")}.`,role:"heal"}
 ]}
 ]},
-{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",sections:[
+{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",vi:3,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Tank ${M("Maiden")} au centre de la salle.`,role:"tank"},
 {text:`Healers et Ranged spread autour de la salle pour \u00E9viter ${S("Holy Wrath")} chain.`,role:"ranged"},
@@ -211,7 +213,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Mages : ${S("Ice Block")} / Rogues : ${S("Cloak of Shadows")} retirent ${S("Holy Fire")}.`,role:"melee"}
 ]}
 ]},
-{name:"Opera \u2014 Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",sections:[
+{name:"Opera \u2014 Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",vi:4,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Cibl\u00E9 par ${S("Little Red Riding Hood")} = kiter le long des bords de la salle.`},
 {text:`Tank and spank en dehors de ${S("Terrifying Howl")} et ${S("Wide Swipe")}.`,role:"tank"},
@@ -223,7 +225,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Rogues : ${S("Vanish")}, Hunters : ${S("Feign Death")}, Paladins : BoP.`,role:"melee"}
 ]}
 ]},
-{name:"Opera \u2014 Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",sections:[
+{name:"Opera \u2014 Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",vi:6,sections:[
 {title:"Phase 1 \u2014 Les 4 adds",tips:[
 {text:`Kill ${M("Dorothee")} en premier (pas d'aggro table). Ne pas kill ${M("Tito")} avant elle.`},
 {text:`Puis ${M("Roar")} (tank\u00E9 par l'OT).`,role:"tank"},
@@ -238,7 +240,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`${M("Roar")} peut \u00EAtre fear par Warlocks (${S("Fear")}) et Hunters.`}
 ]}
 ]},
-{name:"Opera \u2014 Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",sections:[
+{name:"Opera \u2014 Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",vi:5,sections:[
 {title:"Phase 1 \u2014 Julianne",tips:[
 {text:`Interrupt ${M("Julianne")} : ${S("Eternal Affection")} = priorit\u00E9 max.`,role:"melee"},
 {text:`Dispel le buff ${S("Devotion")}.`,role:"heal"}
@@ -256,7 +258,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Mages : ${S("Spellsteal")} le buff ${S("Devotion")} = gros boost cast speed.`,role:"ranged"}
 ]}
 ]},
-{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",sections:[
+{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",vi:7,sections:[
 {title:"Flare Phase",tips:[
 {text:`Kill les ${M("Flares")} ASAP. Spawn toutes les 10 sec.`},
 {text:`Ranged \u00E0 10 yards les uns des autres.`,role:"ranged"},
@@ -274,7 +276,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Warlocks : ${S("Curse of Doom")} apr\u00E8s le 4\u00E8me Flare pour pop en Evocation (x3 DMG).`,role:"ranged"}
 ]}
 ]},
-{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",sections:[
+{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",vi:11,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Bouger les Pions pour laisser passer les pi\u00E8ces puissantes.`},
 {text:`Kill Bishops d'abord (heal), puis Queen, puis King.`},
@@ -285,7 +287,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`On peut rel\u00E2cher une pi\u00E8ce pour en prendre une autre.`}
 ]}
 ]},
-{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",sections:[
+{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",vi:8,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Tank ${M("Illhoof")} et ${M("Kil'rek")} pr\u00E8s du cercle vert.`,role:"tank"},
 {text:`${S("Sacrifice")} : kill cha\u00EEnes ASAP et heal la cible.`,role:"heal"},
@@ -297,7 +299,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`${M("Illhoof")} target le joueur avant ${S("Sacrifice")} \u2014 pre-HoT possible.`,role:"heal"}
 ]}
 ]},
-{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",sections:[
+{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",vi:9,sections:[
 {title:"Strat\u00E9gie",tips:[
 {text:`Casters \u00E0 10+ yards d'Aran pour \u00E9viter ${S("Counterspell")}.`,role:"ranged"},
 {text:`Rotation d'interrupt : ${S("Fireball")} et ${S("Frostbolt")}. Laisser ${S("Arcane Missiles")}.`,role:"melee"},
@@ -313,7 +315,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Pas d'aggro table \u2014 tanks en stuff DPS.`,role:"tank"}
 ]}
 ]},
-{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",sections:[
+{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",vi:10,sections:[
 {title:"Portal Phase \u2014 1 min",tips:[
 {text:`3 portails (rouge, vert, bleu). 2 tanks + 2 DPS pour soak.`,role:"tank"},
 {text:`Apr\u00E8s soak : ${S("Nether Exhaustion")} (1m30, bloque m\u00EAme couleur).`},
@@ -335,7 +337,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`Hunters : ${S("Misdirection")} \u00E0 chaque Portal Phase.`,role:"ranged"}
 ]}
 ]},
-{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",sections:[
+{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",vi:12,sections:[
 {title:"Phase 1 \u2014 100% \u00E0 60%",tips:[
 {text:`Tank dos au mur pour ${S("Shadow Nova")} knockback.`,role:"tank"},
 {text:`${M("Infernal")} spawn toutes les 45 sec (Hellfire permanent).`},
@@ -359,7 +361,7 @@ karazhan:{name:"Karazhan",bosses:[
 {text:`NE PAS utiliser ${S("Shadow Word: Death")} / ${S("Seal of Blood")} sous ${S("Enfeeble")}.`,role:"ranged"}
 ]}
 ]},
-{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",sections:[
+{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",vi:13,sections:[
 {title:"Ground Phase",tips:[
 {text:`Tank dos au mur, face ext\u00E9rieure.`,role:"tank"},
 {text:`Melee sur le c\u00F4t\u00E9 : \u00E9viter ${S("Smoldering Breath")} et ${S("Tail Sweep")}.`,role:"melee"},
@@ -392,10 +394,11 @@ function render(){
   if(!raid.bosses.length){app.innerHTML=`<div class="empty-state"><div class="icon">\u{1F4DC}</div><p>Les strats pour <strong>${raid.name}</strong> arrivent bient\u00F4t !</p></div>`;return;}
   let h=`<div class="raid-section-header"><h2>${raid.name}</h2><span class="boss-count">${raid.bosses.length} boss</span></div>`;
   const playlistId=PLAYLISTS[currentRaid];
-  if(playlistId){h+=`<div class="video-banner" id="video-banner"><div class="video-banner-header" onclick="toggleVideo()"><span class="video-banner-title">📺 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span><span class="video-banner-chevron">▾</span></div><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;}
+  if(playlistId){h+=`<div class="video-banner" id="video-banner"><div class="video-banner-header" onclick="toggleVideo()"><span class="video-banner-title">📺 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span><span class="video-banner-chevron">▾</span></div><div class="video-container"><iframe id="video-iframe" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;}
   raid.bosses.forEach((b,i)=>{
     const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
-    h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">BOSS ${i+1}</div><div class="boss-name">${b.name}</div></div><div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
+    const videoBtn=(b.vi!==undefined&&playlistId)?`<button class="boss-video-btn" onclick="event.stopPropagation();playVideo(${b.vi})">▶ Vidéo</button>`:'';
+    h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">BOSS ${i+1}</div><div class="boss-name">${b.name}</div></div>${videoBtn}<div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
     b.sections.forEach(s=>{
       const n=s.isNote,wc=n?'notes-section':'phase-section',tc=n?'notes-title':'phase-title';
       h+=`<div class="${wc}"><div class="${tc}">${n?'\u{1F4A1} ':''}${s.title}</div><ul class="strat-list">`;
@@ -412,6 +415,7 @@ function render(){
 
 function toggleBoss(i){document.querySelector(`.boss-card[data-boss="${i}"]`).classList.toggle('open');}
 function toggleVideo(){document.getElementById('video-banner').classList.toggle('open');}
+function playVideo(index){const banner=document.getElementById('video-banner'),iframe=document.getElementById('video-iframe'),playlistId=PLAYLISTS[currentRaid];if(!banner||!iframe||!playlistId)return;banner.classList.add('open');iframe.src=`https://www.youtube.com/embed/videoseries?list=${playlistId}&index=${index}&autoplay=1`;banner.scrollIntoView({behavior:'smooth',block:'start'});}
 function applyRoleFilter(){document.querySelectorAll('.strat-list li[data-role]').forEach(l=>{const r=l.getAttribute('data-role');l.classList.toggle('hidden-role',activeRole!=='all'&&r!==activeRole);});}
 
 document.querySelectorAll('.raid-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.raid-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentRaid=b.dataset.raid;render();});});
