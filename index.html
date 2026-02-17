@@ -77,6 +77,12 @@
   .raid-section-header .boss-count { font-size: 0.8rem; color: var(--text-muted); background: var(--bg-section); padding: 0.2rem 0.6rem; border-radius: 12px; border: 1px solid var(--border); }
   .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
   .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+  .video-banner { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; }
+  .video-banner-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .video-banner-title { font-size: 0.8rem; font-weight: 600; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.05em; }
+  .video-banner-subtitle { font-size: 0.7rem; color: var(--text-muted); }
+  .video-container { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 8px; overflow: hidden; background: var(--bg-section); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg-primary); }
   ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; }
@@ -119,6 +125,17 @@ const SPELLS={"Shadow Cleave":{t:"Melee",d:"Cleave frontale ~4000 Shadow DMG. CÃ
 
 function S(n){const s=SPELLS[n];if(!s)return'<span class="spell">'+n+'</span>';return'<span class="spell">'+n+'<span class="tt"><div class="tt-name">'+n+' <span class="tt-type">'+s.t+'</span></div><div class="tt-desc">'+s.d+'</div></span></span>';}
 function M(n){return'<span class="mob">'+n+'</span>';}
+
+const PLAYLISTS={
+  karazhan:"PL3-I8C6InNxl9dm6qBNfKU1A9ToHoRA47",
+  gruul:null,
+  magtheridon:null,
+  ssc:null,
+  tk:null,
+  hyjal:null,
+  bt:null,
+  sunwell:null
+};
 
 const IMG={
   "Attumen the Huntsman":"https://sunderarmor.com/WOW/Raids/attumen-the-huntsman.png",
@@ -370,6 +387,8 @@ function render(){
   const app=document.getElementById('app'),raid=RAIDS[currentRaid];
   if(!raid.bosses.length){app.innerHTML=`<div class="empty-state"><div class="icon">\u{1F4DC}</div><p>Les strats pour <strong>${raid.name}</strong> arrivent bient\u00F4t !</p></div>`;return;}
   let h=`<div class="raid-section-header"><h2>${raid.name}</h2><span class="boss-count">${raid.bosses.length} boss</span></div>`;
+  const playlistId=PLAYLISTS[currentRaid];
+  if(playlistId){h+=`<div class="video-banner"><div class="video-banner-header"><span class="video-banner-title">ðŸ“º 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span></div><div class="video-container"><iframe src="https://www.youtube.com/embed/videoseries?list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>`;}
   raid.bosses.forEach((b,i)=>{
     const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
     h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">BOSS ${i+1}</div><div class="boss-name">${b.name}</div></div><div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
