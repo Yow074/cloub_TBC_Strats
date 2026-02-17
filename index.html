@@ -134,8 +134,8 @@
   <p>Données issues de guides communautaires. Non affilié à Blizzard Entertainment.</p>
 </footer>
 <script>
-const VERSION = "1.0.3";
-const SPELLS={"Shadow Cleave":{t:"Melee",d:"Cleave frontale ~4000 Shadow DMG. Cône devant le boss."},"Intangible Presence":{t:"Curse",d:"Malédiction AoE : -50% hit chance (mêlée, distance, sorts) pendant 12 sec. Décursable."},"Berserker Charge":{t:"Physical",d:"Charge un ennemi à 8-40 yards, dégâts + knockdown. Portée min : 8 yards."},"Spell Reflection":{t:"Warrior",d:"Renvoie le prochain sort ciblé pendant 5 sec."},"Disarm":{t:"Warrior",d:"Désarme la cible 10 sec, réduisant ses dégâts de ~65%."},"Misdirection":{t:"Hunter",d:"Redirige les 3 prochaines attaques vers le tank ciblé."},"Gouge":{t:"Physical",d:"Incapacite la cible 6 sec. Le boss frappe le 2nd en menace."},"Blind":{t:"Poison",d:"Désoriente 10 sec. Retiré par Poison Cleansing / Cleanse."},"Garrote":{t:"Bleed",d:"Saignement 5 min après Vanish. Retiré par : Ice Block, Divine Shield, BoP, Stoneform."},"Greater Heal":{t:"Holy",d:"Gros soin des adds healers. Interrupt prioritaire."},"Mana Burn":{t:"Shadow",d:"Brûle le mana. Interrompre si possible."},"Stoneform":{t:"Racial",d:"Racial Nain : retire poisons, saignements, maladies."},"Divine Shield":{t:"Paladin",d:"Immunité totale 12 sec. Retire tous les debuffs."},"Blessing of Protection":{t:"Paladin",d:"Immunité physique 10 sec. Retire Garrote."},"Ice Block":{t:"Mage",d:"Invulnérable + immobile 10 sec. Retire tous les debuffs."},"Shackle Undead":{t:"Priest",d:"CC mort-vivant 50 sec. Réappliquable."},"Freezing Trap":{t:"Hunter",d:"Piège de givre : CC 20 sec au contact."},"Turn Evil":{t:"Paladin",d:"Fear un mort-vivant. Attention au pathing (risk de reset)."},"Poison Cleansing Totem":{t:"Shaman",d:"Retire un poison sur les alliés proches toutes les 5 sec."},"Holy Wrath":{t:"Holy",d:"Dégâts Holy chaînés. ~2000 1ère cible, doublés à chaque rebond. SPREAD."},"Holy Fire":{t:"Holy",d:"~3500 DMG + DoT 1750/2sec pendant 12 sec. Dispel magique IMMÉDIAT."},"Holy Ground":{t:"Holy",d:"Consécration permanente : 240-360 Holy/3sec + silence. Rayon 12y. Casse Repentance."},"Repentance":{t:"Holy",d:"Incapacite TOUT le raid 12 sec. ~2000 Holy DMG. Cassé par les dégâts. CD ~30 sec."},"Blessing of Sacrifice":{t:"Paladin",d:"Transfère 10% dégâts au Paladin. Le dégât casse Repentance."},"Grounding Totem":{t:"Shaman",d:"Absorbe le prochain sort hostile ciblé. Absorbe Holy Fire."},"Cloak of Shadows":{t:"Rogue",d:"Retire debuffs magiques + 90% résistance sorts 5 sec."},"Fear Ward":{t:"Priest",d:"Protège du prochain effet de peur."},"Little Red Riding Hood":{t:"Debuff",d:"Transforme en Petit Chaperon Rouge : désarmé, pacifié, slow. Kiter le long des bords !"},"Terrifying Howl":{t:"Fear",d:"Fear AoE. Contré par Tremor Totem, Fear Ward, Berserker Rage."},"Wide Swipe":{t:"Physical",d:"Attaque frontale en cône, lourds dégâts."},"Tremor Totem":{t:"Shaman",d:"Retire Fear, Charm, Sleep toutes les 3 sec sur alliés proches."},"Vanish":{t:"Rogue",d:"Moroes stealth puis Garrote une cible aléatoire."},"Feign Death":{t:"Hunter",d:"Simule la mort, drop toute aggro."},"Eternal Affection":{t:"Holy",d:"Gros heal de Julianne. Interrupt PRIORITAIRE."},"Devotion":{t:"Buff",d:"Buff cast speed sur Julianne. Dispel / Spellsteal."},"Daring":{t:"Buff",d:"Buff dégâts sur Romulo. Dispel."},"Spellsteal":{t:"Mage",d:"Vole un buff magique. Steal Devotion = gros boost cast speed."},"Hateful Bolt":{t:"Shadow",d:"Bolt sur le 2nd en menace, ~7-8k Shadow DMG. OT doit soak."},"Evocation":{t:"Arcane",d:"Curator régénère mana 20 sec. Prend le TRIPLE de dégâts !"},"Curse of Doom":{t:"Warlock",d:"Dégâts massifs après 60 sec. Placer après 4ème Flare pour pop en Evocation (x3)."},"Sacrifice":{t:"Shadow",d:"Enchaîne un joueur au centre, dégâts/tick. Kill chaînes ASAP. Ice Block/DS retire."},"Broken Pact":{t:"Debuff",d:"Debuff sur Illhoof quand Kil'rek meurt : +25% dégâts reçus."},"Counterspell":{t:"Arcane",d:"Silence tous casters dans 10 yards pendant 10 sec."},"Fireball":{t:"Fire",d:"Cast d'Aran. ~5000 Fire DMG. Doit être interrompu."},"Frostbolt":{t:"Frost",d:"Cast d'Aran. ~5000 Frost DMG + slow. Doit être interrompu."},"Arcane Missiles":{t:"Arcane",d:"Canal d'Aran, dégâts modérés. Laisser passer."},"Flame Wreath":{t:"Fire",d:"Cercles de feu sous 3 joueurs. NE PAS BOUGER. Explose ~5000 DMG raid-wide."},"Circular Blizzard":{t:"Frost",d:"Blizzard tournante. Esquiver vers le centre ou l'autre côté."},"Magnetic Pull":{t:"Arcane",d:"Pull tout le raid au centre, suivi d'Arcane Explosion. Courir loin !"},"Arcane Explosion":{t:"Arcane",d:"AoE après Magnetic Pull. ~8000+ DMG. Courir loin du centre."},"Polymorph":{t:"Arcane",d:"À 20% mana, Polymorph tout le raid + Pyroblast. Top off après."},"Pyroblast":{t:"Fire",d:"Gros cast après Polymorph global. ~6-7k Fire DMG raid-wide."},"Fear":{t:"Warlock",d:"Fear un Water Elemental 20 sec."},"Banish":{t:"Warlock",d:"Banit un démon/élémentaire 30 sec. Immunisé mais intouchable."},"Nether Exhaustion":{t:"Debuff",d:"Empêche de soak le même portail pendant 1m30."},"Void Zone":{t:"Shadow",d:"Zone au sol ~1000 Shadow/sec. Bouger immédiatement."},"Netherbreath":{t:"Shadow",d:"Souffle d'ombre sur joueurs aléatoires en Banish Phase."},"Shadow Resistance Aura":{t:"Paladin",d:"Aura +70 Shadow Resistance pour le groupe."},"Shadow Protection":{t:"Priest",d:"Buff +70 Shadow Resistance 10 min."},"Shadow Nova":{t:"Shadow",d:"AoE massive ~3000 Shadow + knockback. Ranged 30+ yards. Melee sortir."},"Enfeeble":{t:"Shadow",d:"HP de 5 joueurs réduits à 1 pendant 7 sec. MORTEL avec Shadow Nova."},"Shadow Word: Pain":{t:"Shadow",d:"DoT Ombre sur joueur aléatoire. Dispel magique."},"Thrash":{t:"Physical",d:"2 attaques supplémentaires. Énorme pression sur le tank."},"Sunder Armor":{t:"Physical",d:"-2600 armure/stack. Très dangereux avec Thrash."},"Amplify Damage":{t:"Shadow",d:"Double les dégâts reçus par la cible."},"Shadow Word: Death":{t:"Priest",d:"Backlash si cible survit. MORTEL sous Enfeeble (1 HP) !"},"Seal of Blood":{t:"Paladin",d:"Self-damage à chaque frappe. MORTEL sous Enfeeble (1 HP) !"},"Smoldering Breath":{t:"Fire",d:"Souffle frontal de feu. Tank face au mur."},"Tail Sweep":{t:"Physical",d:"Balayage arrière. Melee sur les côtés, pas derrière."},"Bellowing Roar":{t:"Fear",d:"Fear AoE ~40 yards. Tremor Totem / Fear Ward / Berserker Rage."},"Charred Earth":{t:"Fire",d:"Zone de feu au sol. Bouger immédiatement."},"Distracting Ash":{t:"Debuff",d:"-30% hit chance. Dispel magique immédiat."},"Rain of Bones":{t:"Physical",d:"Invoque des squelettes en Air Phase. Focus DPS adds."},"Smoking Blast":{t:"Fire",d:"~1200 DMG/sec pendant 15 sec sur une cible aléatoire."},"Berserker Stance":{t:"Warrior",d:"Posture pour utiliser Berserker Rage."},"Berserker Rage":{t:"Warrior",d:"Immunise aux Fear 10 sec. Nécessite Berserker Stance."},"Flame Shock":{t:"Shaman",d:"Sort de feu instantané. Disorient Strawman."},"Incinerate":{t:"Warlock",d:"Sort de feu. Disorient Strawman."},"Rust":{t:"Debuff",d:"Stacks ralentissant Tinhead. Kitable à haut stacks."},"Cyclone":{t:"Nature",d:"Tourbillon mobile. Esquiver. Cible invulnérable + incapacitée."},"Chain Lightning":{t:"Nature",d:"Dégâts Nature chaînés. Spread pour minimiser."},"Growth":{t:"Buff",d:"+15% DMG et +10% taille par stack. Appliqué toutes les 30 sec. Non-dispellable."},"Ground Slam":{t:"Physical",d:"Knockback tout le raid. Suivi de Gronn Lord's Grasp."},"Gronn Lord's Grasp":{t:"Debuff",d:"-20% vitesse/stack, jusqu'à 5 stacks. À 5 stacks → Stoned."},"Shatter":{t:"Physical",d:"Dégâts basés sur proximité. ~9000 si stackés, 70-100 si 20+ yards."},"Hurtful Strike":{t:"Physical",d:"Frappe le 2nd en menace toutes les ~20 sec. OT doit soak."},"Reverberation":{t:"Silence",d:"Silence tout le raid pendant 4 sec."},"Dark Mending":{t:"Holy",d:"Heal les autres adds. Interrupt prioritaire."},"Dark Decay":{t:"Shadow",d:"DoT sur le tank. Swap à 4 stacks."},"Spell Shield":{t:"Buff",d:"Bouclier magique de Krosh. Mage doit Spellsteal."},"Greater Polymorph":{t:"Arcane",d:"Transforme un joueur. Druide tank immunisé en forme."},"Arcing Smash":{t:"Physical",d:"Frappe en arc devant Maulgar. Éviter le cône."},"Flurry":{t:"Buff",d:"Augmente vitesse d'attaque et dégâts de Maulgar."},"Intimidating Roar":{t:"Fear",d:"Stun le tank + fear joueurs proches."},"Whirlwind":{t:"Physical",d:"Tourbillon de Maulgar. Melee s'éloigner 15+ yards."},"Mighty Blow":{t:"Physical",d:"Knockback sur le tank. Dos au mur pour éviter."},"Blast Nova":{t:"Fire",d:"Cast de 2 sec. Raid wipe si non interrompu par 5 cubes."},"Conflagration":{t:"Fire",d:"Feu sur joueur aléatoire. Se spread."},"Mind Exhaustion":{t:"Debuff",d:"3 min debuff après cube click. Empêche nouveau click."},"Quake":{t:"Physical",d:"À 30% HP : 5250-6750 DMG + stun 2 sec raid-wide."},"Cleave":{t:"Physical",d:"Attaque en cône frontale. Tank face au mur."}};
+const VERSION = "1.0.4";
+const SPELLS={"Shadow Cleave":{t:"Melee",d:"Cleave frontale ~4000 Shadow DMG. Cône devant le boss."},"Intangible Presence":{t:"Curse",d:"Malédiction AoE : -50% hit chance (mêlée, distance, sorts) pendant 12 sec. Décursable."},"Berserker Charge":{t:"Physical",d:"Charge un ennemi à 8-40 yards, dégâts + knockdown. Portée min : 8 yards."},"Spell Reflection":{t:"Warrior",d:"Renvoie le prochain sort ciblé pendant 5 sec."},"Disarm":{t:"Warrior",d:"Désarme la cible 10 sec, réduisant ses dégâts de ~65%."},"Misdirection":{t:"Hunter",d:"Redirige les 3 prochaines attaques vers le tank ciblé."},"Gouge":{t:"Physical",d:"Incapacite la cible 6 sec. Le boss frappe le 2nd en menace."},"Blind":{t:"Poison",d:"Désoriente 10 sec. Retiré par Poison Cleansing / Cleanse."},"Garrote":{t:"Bleed",d:"Saignement 5 min après Vanish. Retiré par : Ice Block, Divine Shield, BoP, Stoneform."},"Greater Heal":{t:"Holy",d:"Gros soin des adds healers. Interrupt prioritaire."},"Mana Burn":{t:"Shadow",d:"Brûle le mana. Interrompre si possible."},"Stoneform":{t:"Racial",d:"Racial Nain : retire poisons, saignements, maladies."},"Divine Shield":{t:"Paladin",d:"Immunité totale 12 sec. Retire tous les debuffs."},"Blessing of Protection":{t:"Paladin",d:"Immunité physique 10 sec. Retire Garrote."},"Ice Block":{t:"Mage",d:"Invulnérable + immobile 10 sec. Retire tous les debuffs."},"Shackle Undead":{t:"Priest",d:"CC mort-vivant 50 sec. Réappliquable."},"Freezing Trap":{t:"Hunter",d:"Piège de givre : CC 20 sec au contact."},"Turn Evil":{t:"Paladin",d:"Fear un mort-vivant. Attention au pathing (risk de reset)."},"Poison Cleansing Totem":{t:"Shaman",d:"Retire un poison sur les alliés proches toutes les 5 sec."},"Holy Wrath":{t:"Holy",d:"Dégâts Holy chaînés. ~2000 1ère cible, doublés à chaque rebond. SPREAD."},"Holy Fire":{t:"Holy",d:"~3500 DMG + DoT 1750/2sec pendant 12 sec. Dispel magique IMMÉDIAT."},"Holy Ground":{t:"Holy",d:"Consécration permanente : 240-360 Holy/3sec + silence. Rayon 12y. Casse Repentance."},"Repentance":{t:"Holy",d:"Incapacite TOUT le raid 12 sec. ~2000 Holy DMG. Cassé par les dégâts. CD ~30 sec."},"Blessing of Sacrifice":{t:"Paladin",d:"Transfère 10% dégâts au Paladin. Le dégât casse Repentance."},"Grounding Totem":{t:"Shaman",d:"Absorbe le prochain sort hostile ciblé. Absorbe Holy Fire."},"Cloak of Shadows":{t:"Rogue",d:"Retire debuffs magiques + 90% résistance sorts 5 sec."},"Fear Ward":{t:"Priest",d:"Protège du prochain effet de peur."},"Little Red Riding Hood":{t:"Debuff",d:"Transforme en Petit Chaperon Rouge : désarmé, pacifié, slow. Kiter le long des bords !"},"Terrifying Howl":{t:"Fear",d:"Fear AoE. Contré par Tremor Totem, Fear Ward, Berserker Rage."},"Wide Swipe":{t:"Physical",d:"Attaque frontale en cône, lourds dégâts."},"Tremor Totem":{t:"Shaman",d:"Retire Fear, Charm, Sleep toutes les 3 sec sur alliés proches."},"Vanish":{t:"Rogue",d:"Moroes stealth puis Garrote une cible aléatoire."},"Feign Death":{t:"Hunter",d:"Simule la mort, drop toute aggro."},"Eternal Affection":{t:"Holy",d:"Gros heal de Julianne. Interrupt PRIORITAIRE."},"Devotion":{t:"Buff",d:"Buff cast speed sur Julianne. Dispel / Spellsteal."},"Daring":{t:"Buff",d:"Buff dégâts sur Romulo. Dispel."},"Spellsteal":{t:"Mage",d:"Vole un buff magique. Steal Devotion = gros boost cast speed."},"Hateful Bolt":{t:"Shadow",d:"Bolt sur le 2nd en menace, ~7-8k Shadow DMG. OT doit soak."},"Evocation":{t:"Arcane",d:"Curator régénère mana 20 sec. Prend le TRIPLE de dégâts !"},"Curse of Doom":{t:"Warlock",d:"Dégâts massifs après 60 sec. Placer après 4ème Flare pour pop en Evocation (x3)."},"Sacrifice":{t:"Shadow",d:"Enchaîne un joueur au centre, dégâts/tick. Kill chaînes ASAP. Ice Block/DS retire."},"Broken Pact":{t:"Debuff",d:"Debuff sur Illhoof quand Kil'rek meurt : +25% dégâts reçus."},"Counterspell":{t:"Arcane",d:"Silence tous casters dans 10 yards pendant 10 sec."},"Fireball":{t:"Fire",d:"Cast d'Aran. ~5000 Fire DMG. Doit être interrompu."},"Frostbolt":{t:"Frost",d:"Cast d'Aran. ~5000 Frost DMG + slow. Doit être interrompu."},"Arcane Missiles":{t:"Arcane",d:"Canal d'Aran, dégâts modérés. Laisser passer."},"Flame Wreath":{t:"Fire",d:"Cercles de feu sous 3 joueurs. NE PAS BOUGER. Explose ~5000 DMG raid-wide."},"Circular Blizzard":{t:"Frost",d:"Blizzard tournante. Esquiver vers le centre ou l'autre côté."},"Magnetic Pull":{t:"Arcane",d:"Pull tout le raid au centre, suivi d'Arcane Explosion. Courir loin !"},"Arcane Explosion":{t:"Arcane",d:"AoE après Magnetic Pull. ~8000+ DMG. Courir loin du centre."},"Polymorph":{t:"Arcane",d:"À 20% mana, Polymorph tout le raid + Pyroblast. Top off après."},"Pyroblast":{t:"Fire",d:"Gros cast après Polymorph global. ~6-7k Fire DMG raid-wide."},"Fear":{t:"Warlock",d:"Fear un Water Elemental 20 sec."},"Banish":{t:"Warlock",d:"Banit un démon/élémentaire 30 sec. Immunisé mais intouchable."},"Nether Exhaustion":{t:"Debuff",d:"Empêche de soak le même portail pendant 1m30."},"Void Zone":{t:"Shadow",d:"Zone au sol ~1000 Shadow/sec. Bouger immédiatement."},"Netherbreath":{t:"Shadow",d:"Souffle d'ombre sur joueurs aléatoires en Banish Phase."},"Shadow Resistance Aura":{t:"Paladin",d:"Aura +70 Shadow Resistance pour le groupe."},"Shadow Protection":{t:"Priest",d:"Buff +70 Shadow Resistance 10 min."},"Shadow Nova":{t:"Shadow",d:"AoE massive ~3000 Shadow + knockback. Ranged 30+ yards. Melee sortir."},"Enfeeble":{t:"Shadow",d:"HP de 5 joueurs réduits à 1 pendant 7 sec. MORTEL avec Shadow Nova."},"Shadow Word: Pain":{t:"Shadow",d:"DoT Ombre sur joueur aléatoire. Dispel magique."},"Thrash":{t:"Physical",d:"2 attaques supplémentaires. Énorme pression sur le tank."},"Sunder Armor":{t:"Physical",d:"-2600 armure/stack. Très dangereux avec Thrash."},"Amplify Damage":{t:"Shadow",d:"Double les dégâts reçus par la cible."},"Shadow Word: Death":{t:"Priest",d:"Backlash si cible survit. MORTEL sous Enfeeble (1 HP) !"},"Seal of Blood":{t:"Paladin",d:"Self-damage à chaque frappe. MORTEL sous Enfeeble (1 HP) !"},"Smoldering Breath":{t:"Fire",d:"Souffle frontal de feu. Tank face au mur."},"Tail Sweep":{t:"Physical",d:"Balayage arrière. Melee sur les côtés, pas derrière."},"Bellowing Roar":{t:"Fear",d:"Fear AoE ~40 yards. Tremor Totem / Fear Ward / Berserker Rage."},"Charred Earth":{t:"Fire",d:"Zone de feu au sol. Bouger immédiatement."},"Distracting Ash":{t:"Debuff",d:"-30% hit chance. Dispel magique immédiat."},"Rain of Bones":{t:"Physical",d:"Invoque des squelettes en Air Phase. Focus DPS adds."},"Smoking Blast":{t:"Fire",d:"~1200 DMG/sec pendant 15 sec sur une cible aléatoire."},"Berserker Stance":{t:"Warrior",d:"Posture pour utiliser Berserker Rage."},"Berserker Rage":{t:"Warrior",d:"Immunise aux Fear 10 sec. Nécessite Berserker Stance."},"Flame Shock":{t:"Shaman",d:"Sort de feu instantané. Disorient Strawman."},"Incinerate":{t:"Warlock",d:"Sort de feu. Disorient Strawman."},"Rust":{t:"Debuff",d:"Stacks ralentissant Tinhead. Kitable à haut stacks."},"Cyclone":{t:"Nature",d:"Tourbillon mobile. Esquiver. Cible invulnérable + incapacitée."},"Chain Lightning":{t:"Nature",d:"Dégâts Nature chaînés. Spread pour minimiser."},"Growth":{t:"Buff",d:"+15% DMG et +10% taille par stack. Appliqué toutes les 30 sec. Non-dispellable."},"Ground Slam":{t:"Physical",d:"Knockback tout le raid. Suivi de Gronn Lord's Grasp."},"Gronn Lord's Grasp":{t:"Debuff",d:"-20% vitesse/stack, jusqu'à 5 stacks. À 5 stacks → Stoned."},"Shatter":{t:"Physical",d:"Dégâts basés sur proximité. ~9000 si stackés, 70-100 si 20+ yards."},"Hurtful Strike":{t:"Physical",d:"Frappe le 2nd en menace toutes les ~20 sec. OT doit soak."},"Reverberation":{t:"Silence",d:"Silence tout le raid pendant 4 sec."},"Dark Mending":{t:"Holy",d:"Heal les autres adds. Interrupt prioritaire."},"Dark Decay":{t:"Shadow",d:"DoT sur le tank. Swap à 4 stacks."},"Spell Shield":{t:"Buff",d:"Bouclier magique de Krosh. Mage doit Spellsteal."},"Greater Polymorph":{t:"Arcane",d:"Transforme un joueur. Druide tank immunisé en forme."},"Arcing Smash":{t:"Physical",d:"Frappe en arc devant Maulgar. Éviter le cône."},"Flurry":{t:"Buff",d:"Augmente vitesse d'attaque et dégâts de Maulgar."},"Intimidating Roar":{t:"Fear",d:"Stun le tank + fear joueurs proches."},"Whirlwind":{t:"Physical",d:"Tourbillon de Maulgar. Melee s'éloigner 15+ yards."},"Mighty Blow":{t:"Physical",d:"Knockback sur le tank. Dos au mur pour éviter."},"Blast Nova":{t:"Fire",d:"Cast de 2 sec. Raid wipe si non interrompu par 5 cubes."},"Conflagration":{t:"Fire",d:"Feu sur joueur aléatoire. Se spread."},"Mind Exhaustion":{t:"Debuff",d:"3 min debuff après cube click. Empêche nouveau click."},"Quake":{t:"Physical",d:"À 30% HP : 5250-6750 DMG + stun 2 sec raid-wide."},"Cleave":{t:"Physical",d:"Attaque en cône frontale. Tank face au mur."},"Mark of Hydross":{t:"Debuff",d:"Debuff raid stack toutes les 15 sec. Reset à chaque transition."},"Water Tomb":{t:"Frost",d:"Emprisonne un joueur. Spread 8+ yards pour éviter."},"Spout":{t:"Frost",d:"Jet d'eau rotatif ~3500 Frost DMG + knockback 60 yards. Sauter dans l'eau ou suivre la rotation."},"Inner Demon":{t:"Shadow",d:"Démon personnel à tuer soi-même ou MC 10 min. Pets ne doivent PAS kill."},"Chaos Blast":{t:"Shadow",d:"Nuke sur le tank Warlock en phase démon."},"Spitfire Totem":{t:"Fire",d:"Totem de Tidalvess. Focus DPS immédiat."},"The Beast Within":{t:"Buff",d:"Buff de Sharkkis. Gros dégâts sur tank."},"Watery Grave":{t:"Frost",d:"Piège sur un joueur. Coordonner avec Earthquake."},"Tainted Core":{t:"Shadow",d:"Drop par Tainted Elemental. Passer aux alliés vers le générateur."},"Spore Bat":{t:"Nature",d:"Adds spawn en continu. Priorité ranged AoE."},"Knock Away":{t:"Physical",d:"3-4k DMG + knockback 25 yards + -25% threat."},"Pounding":{t:"Arcane",d:"1350-2250 Arcane/sec pendant 3 sec. AoE 20 yards."},"Arcane Orb":{t:"Arcane",d:"Projectile lent sur ranged. 6 sec silence si touché. Éviter."},"Flame Buffet":{t:"Fire",d:"Debuff +fire DMG si aucun melee en range."},"Flame Quills":{t:"Fire",d:"Tirs sur plateformes. Se repositionner."},"Ember of Al'ar":{t:"Fire",d:"Add spawn quand Al'ar change de plateforme. Burn à 10-20%."},"Wrath of the Astromancer":{t:"Arcane",d:"Bombe arcane sur joueur. 7-8k DMG + explosion AoE. Soakers 365 AR."},"Void Bolt":{t:"Shadow",d:"4-5k Shadow sur tank toutes les 8-15 sec."},"Psychic Scream":{t:"Fear",d:"Fear 8 yards. Tremor Totem / Fear Ward."},"Flamestrike":{t:"Fire",d:"AoE au sol. Bouger immédiatement."},"Phaseshift Bulwark":{t:"Shield",d:"Arme légendaire. Bouclier 100k absorb vs Pyroblast."},"Infinity Blade":{t:"Physical",d:"Arme légendaire. Thrash auto-attacks pour melee."}};
 
 function S(n){const s=SPELLS[n];if(!s)return'<span class="spell">'+n+'</span>';return'<span class="spell">'+n+'<span class="tt"><div class="tt-name">'+n+' <span class="tt-type">'+s.t+'</span></div><div class="tt-desc">'+s.d+'</div></span></span>';}
 function M(n){return'<span class="mob">'+n+'</span>';}
@@ -165,7 +165,17 @@ const IMG={
   "Nightbane":"https://sunderarmor.com/WOW/Raids/nightbane.png",
   "High King Maulgar":"https://sunderarmor.com/WOW/Raids/high-king-maulgar.png",
   "Gruul the Dragonkiller":"https://sunderarmor.com/WOW/Raids/gruul-the-dragonkiller.png",
-  "Magtheridon":"https://sunderarmor.com/WOW/Raids/magtheridon.png"
+  "Magtheridon":"https://sunderarmor.com/WOW/Raids/magtheridon.png",
+  "Hydross the Unstable":"https://sunderarmor.com/WOW/Raids/hydross-the-unstable.png",
+  "The Lurker Below":"https://sunderarmor.com/WOW/Raids/the-lurker-below.png",
+  "Leotheras the Blind":"https://sunderarmor.com/WOW/Raids/leotheras-the-blind.png",
+  "Fathom-Lord Karathress":"https://sunderarmor.com/WOW/Raids/fathom-lord-karathress.png",
+  "Morogrim Tidewalker":"https://sunderarmor.com/WOW/Raids/morogrim-tidewalker.png",
+  "Lady Vashj":"https://sunderarmor.com/WOW/Raids/lady-vashj.png",
+  "Void Reaver":"https://sunderarmor.com/WOW/Raids/void-reaver.png",
+  "Al'ar":"https://sunderarmor.com/WOW/Raids/alar.png",
+  "High Astromancer Solarian":"https://sunderarmor.com/WOW/Raids/high-astromancer-solarian.png",
+  "Kael'thas Sunstrider":"https://sunderarmor.com/WOW/Raids/kaelthas-sunstrider.png"
 };
 
 const RAIDS={
@@ -465,7 +475,176 @@ magtheridon:{name:"Magtheridon's Lair",bosses:[
 {text:`Coordination > DPS. Ne pas rush le fight.`}
 ]}
 ]}
-]},ssc:{name:"Serpentshrine Cavern",bosses:[]},tk:{name:"Tempest Keep \u2014 The Eye",bosses:[]},hyjal:{name:"Battle for Mount Hyjal",bosses:[]},bt:{name:"Black Temple",bosses:[]},sunwell:{name:"Sunwell Plateau",bosses:[]}
+]},ssc:{name:"Serpentshrine Cavern",bosses:[
+{name:"Hydross the Unstable",img:IMG["Hydross the Unstable"],icon:"\u{1F4A7}",sections:[
+{title:"Phases Frost/Nature",tips:[
+{text:`2 tanks : un Frost Resist, un Nature Resist (365 cap chacun).`,role:"tank"},
+{text:`${S("Mark of Hydross")} : Debuff stack toutes les 15 sec. Reset à transition.`},
+{text:`Transition = 4 adds élémentaires spawn + threat wipe.`,role:"tank"},
+{text:`${S("Water Tomb")} : Spread 8+ yards minimum.`,role:"ranged"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`STOP DPS avant transitions pour éviter aggro sur adds.`},
+{text:`Healers : Focus tank pendant transition (spike damage).`,role:"heal"},
+{text:`Melee : Prêts à swap sur adds rapidement.`,role:"melee"}
+]}
+]},
+{name:"The Lurker Below",img:IMG["The Lurker Below"],icon:"\u{1F41F}",sections:[
+{title:"Stratégie",tips:[
+{text:`Boss le plus simple de SSC. Un seul tank.`,role:"tank"},
+{text:`${S("Spout")} : Jet rotatif toutes les 20-25 sec. ~3500 Frost + knockback.`},
+{text:`Melee : Suivre la rotation du Spout autour du boss.`,role:"melee"},
+{text:`Ranged : Sauter dans l'eau pour éviter (plus safe).`,role:"ranged"},
+{text:`Healers : Pré-HoT avant le warning de Spout.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Boss mod timer = 3 sec avant Spout. Réagir immédiatement.`},
+{text:`Nager dans l'eau ne casse pas les casts si bien positionné.`,role:"ranged"}
+]}
+]},
+{name:"Leotheras the Blind",img:IMG["Leotheras the Blind"],icon:"\u{1F608}",sections:[
+{title:"Phase Humanoïde/Démon",tips:[
+{text:`2 tanks : Main tank + Warlock pour phase démon.`,role:"tank"},
+{text:`Warlock tank avec Searing Pain spam pour aggro démon.`,role:"ranged"},
+{text:`${S("Chaos Blast")} : Nuke sur Warlock tank. CDs défensifs.`,role:"heal"},
+{text:`Threat wipe à chaque transition de forme.`,role:"tank"}
+]},
+{title:"Inner Demons",tips:[
+{text:`${S("Inner Demon")} : Tuer VOUS-MÊME votre démon ou MC 10 min !`},
+{text:`Pets NE DOIVENT PAS tuer votre Inner Demon.`,role:"ranged"},
+{text:`Priorité absolue : Kill votre démon avant de DPS le boss.`}
+]},
+{title:"Phase 3 — 15%",tips:[
+{text:`Démon et Humain se séparent. 2 cibles actives.`},
+{text:`Plus d'Inner Demons. Burn final.`}
+]}
+]},
+{name:"Fathom-Lord Karathress",img:IMG["Fathom-Lord Karathress"],icon:"\u{1F419}",sections:[
+{title:"Conseil — Kill Order",tips:[
+{text:`<b>Kill order</b> : ${M("Tidalvess")} → ${M("Sharkkis")} → ${M("Caribdis")} → ${M("Karathress")}.`},
+{text:`3-4 tanks. Un par add + boss.`,role:"tank"},
+{text:`${M("Tidalvess")} : ${S("Spitfire Totem")} = STOP tout, focus totem.`},
+{text:`${M("Sharkkis")} : ${S("The Beast Within")} = gros spike sur tank.`,role:"heal"},
+{text:`Chaque add mort = Karathress gagne +20% attack/cast speed.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Healers : Abandonner tout pour DPS le Spitfire Totem.`,role:"heal"},
+{text:`Damage sur tank scale avec chaque kill. CDs prêts.`,role:"tank"}
+]}
+]},
+{name:"Morogrim Tidewalker",img:IMG["Morogrim Tidewalker"],icon:"\u{1F40B}",sections:[
+{title:"Stratégie",tips:[
+{text:`2 tanks : Boss + Murlocs (Paladin préféré).`,role:"tank"},
+{text:`${S("Watery Grave")} : Piège sur un joueur.`},
+{text:`Earthquake : 2 vagues de 6 murlocs (~17k HP chacun).`},
+{text:`Paladin tank : AoE threat avec Consecration. Divine Shield si overlap.`,role:"tank"}
+]},
+{title:"Murlocs",tips:[
+{text:`ATTENDRE que le Paladin build threat avant de heal !`,role:"heal"},
+{text:`Ranged AoE une fois threat établi : Blizzard, Seed of Corruption.`,role:"ranged"},
+{text:`Melee : Stack sur groupe murlocs, cleave.`,role:"melee"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Post-nerf : HP et dégâts des murlocs réduits.`},
+{text:`Discipline > Réaction. Laisser le tank build aggro.`}
+]}
+]},
+{name:"Lady Vashj",img:IMG["Lady Vashj"],icon:"\u{1F40D}",sections:[
+{title:"Phase 1 — 100% à 70%",tips:[
+{text:`Boss shielded. Tuer élémentaires pour loot (pas de DMG boss).`},
+{text:`${S("Spore Bat")} : Adds spawn. Stack pour AoE.`,role:"ranged"},
+{text:`Healer : Pression légère. Sauver CDs pour Phase 2.`,role:"heal"}
+]},
+{title:"Phase 2 — Tainted Cores",tips:[
+{text:`${S("Tainted Core")} : Tainted Elemental drop (15 sec avant despawn).`},
+{text:`Porteur ne peut pas bouger. Passer le Core entre alliés vers générateur.`},
+{text:`4 générateurs = 20% DMG boss. Burn après désactivation.`},
+{text:`${S("Spore Bat")} : Spawn continu. Ranged priorité absolue.`,role:"ranged"}
+]},
+{title:"Phase 3 — Burn",tips:[
+{text:`Shield down. Threat wipe. Tank grab aggro immédiatement.`,role:"tank"},
+{text:`BURN avec tous les CDs.`},
+{text:`Healers : Spike damage sur tank. Coordonner CDs.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Core passing : Pré-assigner ordre de throw (Joueur 1 → 2 → 3 → Générateur).`},
+{text:`Boss le plus dur de SSC. Coordination > DPS.`}
+]}
+]}
+]},
+tk:{name:"Tempest Keep \u2014 The Eye",bosses:[
+{name:"Void Reaver",img:IMG["Void Reaver"],icon:"\u{1F916}",sections:[
+{title:"Stratégie",tips:[
+{text:`Boss le plus simple de TK. "Loot Piñata".`},
+{text:`3 tanks recommandés (2 minimum). Feral Druids idéaux.`,role:"tank"},
+{text:`${S("Knock Away")} : 3-4k DMG + knockback + -25% threat.`,role:"tank"},
+{text:`${S("Pounding")} : 4-7k Arcane AoE. Healers ready.`,role:"heal"},
+{text:`${S("Arcane Orb")} : Projectile lent sur ranged. 6 sec silence. ÉVITER.`,role:"ranged"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Pure course DPS. Maximiser output.`},
+{text:`Ranged : Max range pour réduire ciblage Arcane Orb.`,role:"ranged"}
+]}
+]},
+{name:"Al'ar",img:IMG["Al'ar"],icon:"\u{1F426}\u200D\u{1F525}",sections:[
+{title:"Phase 1 — Plateformes",tips:[
+{text:`3 tanks sur 3 plateformes. Rotation toutes les 30 sec.`,role:"tank"},
+{text:`${S("Flame Buffet")} : Debuff si aucun melee en range. Suivre le boss.`,role:"melee"},
+{text:`${S("Flame Quills")} : Al'ar au centre, tirs sur plateformes. Se repositionner.`},
+{text:`${S("Ember of Al'ar")} : Add spawn au sol. Burn à 10-20%, stop DPS.`}
+]},
+{title:"Phase 2 — Au Sol",tips:[
+{text:`Rebirth : Knockback + Fire DMG AoE.`},
+{text:`Boss stationnaire au centre. Dégâts augmentés.`},
+{text:`Tank face away du raid (cleave).`,role:"tank"},
+{text:`Healers : Phase intensive. Coordonner CDs.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Melee : Suivre le boss entre plateformes religieusement.`,role:"melee"},
+{text:`Ranged : Spread, éviter Flame Quills, max range.`,role:"ranged"}
+]}
+]},
+{name:"High Astromancer Solarian",img:IMG["High Astromancer Solarian"],icon:"\u2728",sections:[
+{title:"Phase 1 — Arcane (100-20%)",tips:[
+{text:`${S("Wrath of the Astromancer")} : Bombe sur joueur. 7-8k + explosion AoE.`},
+{text:`2-3 Soakers avec 365 Arcane Resist absorbent les bombes.`,role:"tank"},
+{text:`Soakers spread 20+ yards du raid.`},
+{text:`Solarium Agents : Adds spawn. Prot Paladin idéal.`,role:"tank"}
+]},
+{title:"Phase 2 — Voidwalker (20-0%)",tips:[
+{text:`${S("Void Bolt")} : 4-5k Shadow sur tank toutes les 8-15 sec.`,role:"tank"},
+{text:`${S("Psychic Scream")} : Fear 8 yards. Tremor Totem / Fear Ward.`,role:"heal"},
+{text:`Phase défensive. Survie > DPS.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Phase 1 light si soakers fonctionnent. Phase 2 intensive.`,role:"heal"},
+{text:`Shadow Resist aide en Phase 2.`}
+]}
+]},
+{name:"Kael'thas Sunstrider",img:IMG["Kael'thas Sunstrider"],icon:"\u{1F451}",sections:[
+{title:"Phase 1 — Advisors",tips:[
+{text:`4 Advisors à tuer : ${M("Thaladred")} → ${M("Sanguinar")} → ${M("Capernian")} → ${M("Telonicus")}.`},
+{text:`Un tank par advisor. Coordonner positioning.`,role:"tank"},
+{text:`Multi-tank healing. Sauver CDs pour Phase 3.`,role:"heal"}
+]},
+{title:"Phase 2 — Legendary Weapons",tips:[
+{text:`7 armes spawn. Kill rapide → pickup pour abilities.`},
+{text:`${S("Phaseshift Bulwark")} : Tank pickup. Bouclier 100k vs Pyroblast.`,role:"tank"},
+{text:`${S("Infinity Blade")} : Melee pickup. Buff DPS.`,role:"melee"},
+{text:`Course DPS. Burn les armes.`}
+]},
+{title:"Phase 3-5 — Boss Direct",tips:[
+{text:`Phase 3+4 : Survie intensive. ${S("Pyroblast")} avec Bulwark.`},
+{text:`${S("Flamestrike")} : AoE au sol. Bouger.`},
+{text:`Phase 5 : Burn final avec tous les CDs.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Boss le plus dur de TK. 6M HP, 15-17M DMG total raid.`},
+{text:`Survivabilité > DPS dans les phases early.`},
+{text:`Coordination des armes légendaires = clé du succès.`}
+]}
+]}
+]},hyjal:{name:"Battle for Mount Hyjal",bosses:[]},bt:{name:"Black Temple",bosses:[]},sunwell:{name:"Sunwell Plateau",bosses:[]}
 };
 
 let currentRaid='karazhan',activeRole='all';
