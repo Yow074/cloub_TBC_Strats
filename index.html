@@ -394,7 +394,7 @@ function render(){
   if(!raid.bosses.length){app.innerHTML=`<div class="empty-state"><div class="icon">\u{1F4DC}</div><p>Les strats pour <strong>${raid.name}</strong> arrivent bient\u00F4t !</p></div>`;return;}
   let h=`<div class="raid-section-header"><h2>${raid.name}</h2><span class="boss-count">${raid.bosses.length} boss</span></div>`;
   const playlistId=PLAYLISTS[currentRaid];
-  if(playlistId){h+=`<div class="video-banner" id="video-banner"><div class="video-banner-header" onclick="toggleVideo()"><span class="video-banner-title">📺 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span><span class="video-banner-chevron">▾</span></div><div class="video-container"><iframe id="video-iframe" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;}
+  if(playlistId){h+=`<div class="video-banner" id="video-banner"><div class="video-banner-header" onclick="toggleVideo()"><span class="video-banner-title">📺 30 Second Guides</span><span class="video-banner-subtitle">par Farts Gaming</span><span class="video-banner-chevron">▾</span></div><div class="video-container"><iframe id="video-iframe" src="https://www.youtube.com/embed?listType=playlist&list=${playlistId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;}
   raid.bosses.forEach((b,i)=>{
     const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
     const videoBtn=(b.vi!==undefined&&playlistId)?`<button class="boss-video-btn" onclick="event.stopPropagation();playVideo(${b.vi})">▶ Vidéo</button>`:'';
@@ -415,7 +415,7 @@ function render(){
 
 function toggleBoss(i){document.querySelector(`.boss-card[data-boss="${i}"]`).classList.toggle('open');}
 function toggleVideo(){document.getElementById('video-banner').classList.toggle('open');}
-function playVideo(index){const banner=document.getElementById('video-banner'),iframe=document.getElementById('video-iframe'),playlistId=PLAYLISTS[currentRaid];if(!banner||!iframe||!playlistId)return;banner.classList.add('open');iframe.src=`https://www.youtube.com/embed/videoseries?list=${playlistId}&index=${index}&autoplay=1`;banner.scrollIntoView({behavior:'smooth',block:'start'});}
+function playVideo(index){const banner=document.getElementById('video-banner'),iframe=document.getElementById('video-iframe'),playlistId=PLAYLISTS[currentRaid];if(!banner||!iframe||!playlistId)return;banner.classList.add('open');iframe.src=`https://www.youtube.com/embed?listType=playlist&list=${playlistId}&index=${index}&autoplay=1`;banner.scrollIntoView({behavior:'smooth',block:'start'});}
 function applyRoleFilter(){document.querySelectorAll('.strat-list li[data-role]').forEach(l=>{const r=l.getAttribute('data-role');l.classList.toggle('hidden-role',activeRole!=='all'&&r!==activeRole);});}
 
 document.querySelectorAll('.raid-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.raid-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentRaid=b.dataset.raid;render();});});
