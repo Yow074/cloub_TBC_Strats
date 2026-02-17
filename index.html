@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBC Strat Library</title>
+<script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: false};</script>
+<script src="https://wow.zamimg.com/widgets/power.js" async></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+  :root {
+    --bg-primary: #0d0f14; --bg-secondary: #13161d; --bg-card: #181c25;
+    --bg-card-hover: #1e2330; --bg-section: #1a1e28; --border: #2a2f3d;
+    --border-accent: #3d4455; --text-primary: #e8e6e3; --text-secondary: #9b9da2;
+    --text-muted: #6b6e75; --accent-gold: #d4a843; --accent-gold-dim: #a07e30;
+    --accent-purple: #8b5cf6; --accent-purple-dim: #6d3fd4;
+    --role-tank: #3b82f6; --role-heal: #22c55e; --role-melee: #ef4444; --role-ranged: #f59e0b;
+    --phase-bg: #1f2433; --note-bg: #1c2029; --spell-color: #fbbf24; --mob-color: #a78bfa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; min-height: 100vh; }
+  .site-header { background: linear-gradient(180deg, #14171f 0%, var(--bg-primary) 100%); border-bottom: 1px solid var(--border); padding: 1rem 0; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .site-title { font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 0.04em; white-space: nowrap; }
+  .site-title span { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; margin-left: 0.5rem; }
+  .raid-selector { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: center; }
+  .raid-btn { padding: 0.4rem 0.85rem; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .raid-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); border-color: var(--border-accent); }
+  .raid-btn.active { background: linear-gradient(135deg, var(--accent-gold-dim), var(--accent-gold)); color: #000; border-color: var(--accent-gold); font-weight: 600; }
+  .role-filter-bar { max-width: 1100px; margin: 1.25rem auto 0; padding: 0 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .role-filter-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 0.25rem; font-weight: 600; }
+  .role-btn { padding: 0.35rem 0.75rem; border-radius: 20px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+  .role-btn .icon { font-size: 0.9rem; }
+  .role-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  .role-btn.active-all { background: var(--text-muted); color: #fff; border-color: var(--text-muted); }
+  .role-btn.active-tank { background: var(--role-tank); color: #fff; border-color: var(--role-tank); }
+  .role-btn.active-heal { background: var(--role-heal); color: #fff; border-color: var(--role-heal); }
+  .role-btn.active-melee { background: var(--role-melee); color: #fff; border-color: var(--role-melee); }
+  .role-btn.active-ranged { background: var(--role-ranged); color: #fff; border-color: var(--role-ranged); }
+  .main-content { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.5rem 3rem; }
+  .boss-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+  .boss-card:hover { border-color: var(--border-accent); }
+  .boss-header { padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 0.85rem; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .boss-header:hover { background: var(--bg-card-hover); }
+  .boss-img { width: 50px; height: 50px; border-radius: 8px; background: var(--bg-section); border: 2px solid var(--border); object-fit: cover; flex-shrink: 0; }
+  .boss-img-fallback { width: 50px; height: 50px; border-radius: 8px; background: var(--bg-section); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+  .boss-info { flex: 1; min-width: 0; }
+  .boss-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
+  .boss-number { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.05em; }
+  .boss-chevron { color: var(--text-muted); font-size: 1.1rem; transition: transform 0.3s; flex-shrink: 0; }
+  .boss-card.open .boss-chevron { transform: rotate(180deg); }
+  .boss-body { display: none; padding: 0 1.25rem 1.25rem; }
+  .boss-card.open .boss-body { display: block; }
+  .phase-section { background: var(--phase-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.15rem; margin-bottom: 0.65rem; }
+  .phase-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent-gold); margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+  .phase-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .strat-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+  .strat-list li { padding: 0.35rem 0 0.35rem 1.1rem; position: relative; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; }
+  .strat-list li::before { content: '\203A'; position: absolute; left: 0; color: var(--accent-gold-dim); font-weight: 700; font-size: 1rem; }
+  .spell { color: var(--spell-color); font-weight: 500; font-size: 0.84rem; position: relative; cursor: help; border-bottom: 1px dotted rgba(251,191,36,0.3); display: inline; }
+  .spell .tt { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: linear-gradient(180deg, #1a1025 0%, #120a1a 100%); border: 1px solid #6d3fd4; border-radius: 6px; padding: 0.6rem 0.75rem; width: max-content; max-width: 320px; z-index: 999; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+  .spell:hover .tt { display: block; }
+  .tt-name { font-weight: 700; color: var(--spell-color); font-size: 0.82rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.4rem; }
+  .tt-type { font-size: 0.65rem; color: var(--text-muted); background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 3px; font-weight: 500; }
+  .tt-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45; font-weight: 400; }
+  .mob { color: var(--mob-color); font-weight: 500; }
+  .notes-section { background: var(--note-bg); border: 1px solid var(--border); border-left: 3px solid var(--accent-purple-dim); border-radius: 0 8px 8px 0; padding: 0.85rem 1.15rem; margin-top: 0.65rem; }
+  .notes-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent-purple); margin-bottom: 0.5rem; }
+  .role-tip { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.12rem 0.4rem; border-radius: 3px; margin-right: 0.3rem; vertical-align: middle; }
+  .role-tip.tank { background: rgba(59,130,246,0.15); color: var(--role-tank); border: 1px solid rgba(59,130,246,0.25); }
+  .role-tip.heal { background: rgba(34,197,94,0.15); color: var(--role-heal); border: 1px solid rgba(34,197,94,0.25); }
+  .role-tip.melee { background: rgba(239,68,68,0.15); color: var(--role-melee); border: 1px solid rgba(239,68,68,0.25); }
+  .role-tip.ranged { background: rgba(245,158,11,0.15); color: var(--role-ranged); border: 1px solid rgba(245,158,11,0.25); }
+  .strat-list li[data-role].hidden-role { display: none; }
+  .raid-section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .raid-section-header h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+  .raid-section-header .boss-count { font-size: 0.8rem; color: var(--text-muted); background: var(--bg-section); padding: 0.2rem 0.6rem; border-radius: 12px; border: 1px solid var(--border); }
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; }
+  @media (max-width: 700px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .raid-selector { justify-content: flex-start; }
+    .boss-img, .boss-img-fallback { width: 40px; height: 40px; }
+    .boss-name { font-size: 0.95rem; }
+    .spell .tt { left: 0; transform: none; max-width: 260px; }
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="site-title">TBC Strat Library <span>· Burning Crusade Classic</span></div>
+    <nav class="raid-selector">
+      <button class="raid-btn active" data-raid="karazhan">Karazhan</button>
+      <button class="raid-btn" data-raid="gruul">Gruul's Lair</button>
+      <button class="raid-btn" data-raid="magtheridon">Magtheridon</button>
+      <button class="raid-btn" data-raid="ssc">SSC</button>
+      <button class="raid-btn" data-raid="tk">The Eye</button>
+      <button class="raid-btn" data-raid="hyjal">Hyjal</button>
+      <button class="raid-btn" data-raid="bt">Black Temple</button>
+      <button class="raid-btn" data-raid="sunwell">Sunwell</button>
+    </nav>
+  </div>
+</header>
+<div class="role-filter-bar">
+  <span class="role-filter-label">Filtrer par rôle :</span>
+  <button class="role-btn active-all" data-role="all"><span class="icon">👁</span> Tout</button>
+  <button class="role-btn" data-role="tank"><span class="icon">🛡</span> Tank</button>
+  <button class="role-btn" data-role="heal"><span class="icon">💚</span> Heal</button>
+  <button class="role-btn" data-role="melee"><span class="icon">⚔️</span> Melee DPS</button>
+  <button class="role-btn" data-role="ranged"><span class="icon">🎯</span> Ranged DPS</button>
+</div>
+<main class="main-content" id="app"></main>
+<script>
+const SPELLS={"Shadow Cleave":{t:"Melee",d:"Cleave frontale ~4000 Shadow DMG. Cône devant le boss."},"Intangible Presence":{t:"Curse",d:"Malédiction AoE : -50% hit chance (mêlée, distance, sorts) pendant 12 sec. Décursable."},"Berserker Charge":{t:"Physical",d:"Charge un ennemi à 8-40 yards, dégâts + knockdown. Portée min : 8 yards."},"Spell Reflection":{t:"Warrior",d:"Renvoie le prochain sort ciblé pendant 5 sec."},"Disarm":{t:"Warrior",d:"Désarme la cible 10 sec, réduisant ses dégâts de ~65%."},"Misdirection":{t:"Hunter",d:"Redirige les 3 prochaines attaques vers le tank ciblé."},"Gouge":{t:"Physical",d:"Incapacite la cible 6 sec. Le boss frappe le 2nd en menace."},"Blind":{t:"Poison",d:"Désoriente 10 sec. Retiré par Poison Cleansing / Cleanse."},"Garrote":{t:"Bleed",d:"Saignement 5 min après Vanish. Retiré par : Ice Block, Divine Shield, BoP, Stoneform."},"Greater Heal":{t:"Holy",d:"Gros soin des adds healers. Interrupt prioritaire."},"Mana Burn":{t:"Shadow",d:"Brûle le mana. Interrompre si possible."},"Stoneform":{t:"Racial",d:"Racial Nain : retire poisons, saignements, maladies."},"Divine Shield":{t:"Paladin",d:"Immunité totale 12 sec. Retire tous les debuffs."},"Blessing of Protection":{t:"Paladin",d:"Immunité physique 10 sec. Retire Garrote."},"Ice Block":{t:"Mage",d:"Invulnérable + immobile 10 sec. Retire tous les debuffs."},"Shackle Undead":{t:"Priest",d:"CC mort-vivant 50 sec. Réappliquable."},"Freezing Trap":{t:"Hunter",d:"Piège de givre : CC 20 sec au contact."},"Turn Evil":{t:"Paladin",d:"Fear un mort-vivant. Attention au pathing (risk de reset)."},"Poison Cleansing Totem":{t:"Shaman",d:"Retire un poison sur les alliés proches toutes les 5 sec."},"Holy Wrath":{t:"Holy",d:"Dégâts Holy chaînés. ~2000 1ère cible, doublés à chaque rebond. SPREAD."},"Holy Fire":{t:"Holy",d:"~3500 DMG + DoT 1750/2sec pendant 12 sec. Dispel magique IMMÉDIAT."},"Holy Ground":{t:"Holy",d:"Consécration permanente : 240-360 Holy/3sec + silence. Rayon 12y. Casse Repentance."},"Repentance":{t:"Holy",d:"Incapacite TOUT le raid 12 sec. ~2000 Holy DMG. Cassé par les dégâts. CD ~30 sec."},"Blessing of Sacrifice":{t:"Paladin",d:"Transfère 10% dégâts au Paladin. Le dégât casse Repentance."},"Grounding Totem":{t:"Shaman",d:"Absorbe le prochain sort hostile ciblé. Absorbe Holy Fire."},"Cloak of Shadows":{t:"Rogue",d:"Retire debuffs magiques + 90% résistance sorts 5 sec."},"Fear Ward":{t:"Priest",d:"Protège du prochain effet de peur."},"Little Red Riding Hood":{t:"Debuff",d:"Transforme en Petit Chaperon Rouge : désarmé, pacifié, slow. Kiter le long des bords !"},"Terrifying Howl":{t:"Fear",d:"Fear AoE. Contré par Tremor Totem, Fear Ward, Berserker Rage."},"Wide Swipe":{t:"Physical",d:"Attaque frontale en cône, lourds dégâts."},"Tremor Totem":{t:"Shaman",d:"Retire Fear, Charm, Sleep toutes les 3 sec sur alliés proches."},"Vanish":{t:"Rogue",d:"Moroes stealth puis Garrote une cible aléatoire."},"Feign Death":{t:"Hunter",d:"Simule la mort, drop toute aggro."},"Eternal Affection":{t:"Holy",d:"Gros heal de Julianne. Interrupt PRIORITAIRE."},"Devotion":{t:"Buff",d:"Buff cast speed sur Julianne. Dispel / Spellsteal."},"Daring":{t:"Buff",d:"Buff dégâts sur Romulo. Dispel."},"Spellsteal":{t:"Mage",d:"Vole un buff magique. Steal Devotion = gros boost cast speed."},"Hateful Bolt":{t:"Shadow",d:"Bolt sur le 2nd en menace, ~7-8k Shadow DMG. OT doit soak."},"Evocation":{t:"Arcane",d:"Curator régénère mana 20 sec. Prend le TRIPLE de dégâts !"},"Curse of Doom":{t:"Warlock",d:"Dégâts massifs après 60 sec. Placer après 4ème Flare pour pop en Evocation (x3)."},"Sacrifice":{t:"Shadow",d:"Enchaîne un joueur au centre, dégâts/tick. Kill chaînes ASAP. Ice Block/DS retire."},"Broken Pact":{t:"Debuff",d:"Debuff sur Illhoof quand Kil'rek meurt : +25% dégâts reçus."},"Counterspell":{t:"Arcane",d:"Silence tous casters dans 10 yards pendant 10 sec."},"Fireball":{t:"Fire",d:"Cast d'Aran. ~5000 Fire DMG. Doit être interrompu."},"Frostbolt":{t:"Frost",d:"Cast d'Aran. ~5000 Frost DMG + slow. Doit être interrompu."},"Arcane Missiles":{t:"Arcane",d:"Canal d'Aran, dégâts modérés. Laisser passer."},"Dragon's Breath":{t:"Fire",d:"AoE feu : dégâts + disorient."},"Flame Wreath":{t:"Fire",d:"Cercles de feu sous 3 joueurs. NE PAS BOUGER. Explose ~5000 DMG raid-wide."},"Circular Blizzard":{t:"Frost",d:"Blizzard tournante. Esquiver vers le centre ou l'autre côté."},"Magnetic Pull":{t:"Arcane",d:"Pull tout le raid au centre, suivi d'Arcane Explosion. Courir loin !"},"Arcane Explosion":{t:"Arcane",d:"AoE après Magnetic Pull. ~8000+ DMG. Courir loin du centre."},"Polymorph":{t:"Arcane",d:"À 20% mana, Polymorph tout le raid + Pyroblast. Top off après."},"Pyroblast":{t:"Fire",d:"Gros cast après Polymorph global. ~6-7k Fire DMG raid-wide."},"Fear":{t:"Warlock",d:"Fear un Water Elemental 20 sec."},"Banish":{t:"Warlock",d:"Banit un démon/élémentaire 30 sec. Immunisé mais intouchable."},"Nether Exhaustion":{t:"Debuff",d:"Empêche de soak le même portail pendant 1m30."},"Nether Burn":{t:"Shadow",d:"AoE Shadow constante sur tout le raid pendant Portal Phase."},"Void Zone":{t:"Shadow",d:"Zone au sol ~1000 Shadow/sec. Bouger immédiatement."},"Netherbreath":{t:"Shadow",d:"Souffle d'ombre sur joueurs aléatoires en Banish Phase."},"Shadow Resistance Aura":{t:"Paladin",d:"Aura +70 Shadow Resistance pour le groupe."},"Shadow Protection":{t:"Priest",d:"Buff +70 Shadow Resistance 10 min."},"Shadow Nova":{t:"Shadow",d:"AoE massive ~3000 Shadow + knockback. Ranged 30+ yards. Melee sortir."},"Enfeeble":{t:"Shadow",d:"HP de 5 joueurs réduits à 1 pendant 7 sec. MORTEL avec Shadow Nova."},"Shadow Word: Pain":{t:"Shadow",d:"DoT Ombre sur joueur aléatoire. Dispel magique."},"Thrash":{t:"Physical",d:"2 attaques supplémentaires. Énorme pression sur le tank."},"Sunder Armor":{t:"Physical",d:"-2600 armure/stack. Très dangereux avec Thrash."},"Amplify Damage":{t:"Shadow",d:"Double les dégâts reçus par la cible."},"Shadow Word: Death":{t:"Priest",d:"Backlash si cible survit. MORTEL sous Enfeeble (1 HP) !"},"Seal of Blood":{t:"Paladin",d:"Self-damage à chaque frappe. MORTEL sous Enfeeble (1 HP) !"},"Smoldering Breath":{t:"Fire",d:"Souffle frontal de feu. Tank face au mur."},"Tail Sweep":{t:"Physical",d:"Balayage arrière. Melee sur les côtés, pas derrière."},"Bellowing Roar":{t:"Fear",d:"Fear AoE ~40 yards. Tremor Totem / Fear Ward / Berserker Rage."},"Charred Earth":{t:"Fire",d:"Zone de feu au sol. Bouger immédiatement."},"Distracting Ash":{t:"Debuff",d:"-30% hit chance. Dispel magique immédiat."},"Rain of Bones":{t:"Physical",d:"Invoque des squelettes en Air Phase. Focus DPS adds."},"Smoking Blast":{t:"Fire",d:"~1800 DMG/sec pendant 15 sec sur le plus haut en menace."},"Berserker Stance":{t:"Warrior",d:"Posture pour utiliser Berserker Rage."},"Berserker Rage":{t:"Warrior",d:"Immunise aux Fear 10 sec. Nécessite Berserker Stance."},"Flame Shock":{t:"Shaman",d:"Sort de feu instantané. Disorient Strawman."},"Incinerate":{t:"Warlock",d:"Sort de feu. Disorient Strawman."},"Rust":{t:"Debuff",d:"Stacks ralentissant Tinhead. Kitable à haut stacks."},"Cyclone":{t:"Nature",d:"Tourbillon mobile. Esquiver. Cible invulnérable + incapacitée."},"Chain Lightning":{t:"Nature",d:"Dégâts Nature chaînés. Spread pour minimiser."}};
+
+function S(n){const s=SPELLS[n];if(!s)return'<span class="spell">'+n+'</span>';return'<span class="spell">'+n+'<span class="tt"><div class="tt-name">'+n+' <span class="tt-type">'+s.t+'</span></div><div class="tt-desc">'+s.d+'</div></span></span>';}
+function M(n){return'<span class="mob">'+n+'</span>';}
+
+const IMG={
+  "Attumen the Huntsman":"https://sunderarmor.com/WOW/Raids/attumen-the-huntsman.png",
+  "Moroes":"https://sunderarmor.com/WOW/Raids/moroes.png",
+  "Maiden of Virtue":"https://sunderarmor.com/WOW/Raids/maiden-of-virtue.png",
+  "Opera":"https://sunderarmor.com/WOW/Raids/the-crone.png",
+  "The Curator":"https://sunderarmor.com/WOW/Raids/the-curator.png",
+  "Chess":"https://sunderarmor.com/WOW/Raids/chess-event.png",
+  "Terestian Illhoof":"https://sunderarmor.com/WOW/Raids/terestian-illhoof.png",
+  "Shade of Aran":"https://sunderarmor.com/WOW/Raids/shade-of-aran.png",
+  "Netherspite":"https://sunderarmor.com/WOW/Raids/netherspite.png",
+  "Prince Malchezaar":"https://sunderarmor.com/WOW/Raids/prince-malchezaar.png",
+  "Nightbane":"https://sunderarmor.com/WOW/Raids/nightbane.png"
+};
+
+const RAIDS={
+karazhan:{name:"Karazhan",bosses:[
+{name:"Attumen the Huntsman",img:IMG["Attumen the Huntsman"],icon:"\u{1F434}",sections:[
+{title:"Phase 1",tips:[{text:`Tank and spank sur ${M("Midnight")} (le cheval).`}]},
+{title:"Phase 2 \u2014 \u00C0 95% HP de Midnight",tips:[
+{text:`${M("Attumen")} spawn \u00E0 c\u00F4t\u00E9 de ${M("Midnight")}.`,role:"tank"},
+{text:`Un tank sur chaque mob, face oppos\u00E9e au raid pour \u00E9viter ${S("Shadow Cleave")}.`,role:"tank"},
+{text:`Tout le monde sauf tanks stack derri\u00E8re en melee range. Hunters \u00E0 port\u00E9e minimum.`,role:"melee"},
+{text:`Focus DPS sur ${M("Midnight")}, cleave passif sur ${M("Attumen")}.`},
+{text:`Mages et Druids d\u00E9curse ${S("Intangible Presence")} sur les tanks en priorit\u00E9.`,role:"ranged"}
+]},
+{title:"Phase 3 \u2014 \u00C0 25% HP",tips:[
+{text:`Les deux fusionnent. Le boss a les HP du mob le plus haut en P2.`},
+{text:`D\u00E9curse ${S("Intangible Presence")} imm\u00E9diatement sur les tanks.`,role:"heal"},
+{text:`Tout le monde stack derri\u00E8re le boss en melee pour \u00E9viter ${S("Berserker Charge")}.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Clear tout le trash cheval avant de pull.`},
+{text:`Reset possible en courant vers l'entr\u00E9e.`},
+{text:`Warriors : ${S("Spell Reflection")} sur ${S("Intangible Presence")} et ${S("Disarm")} sur Attumen.`,role:"tank"},
+{text:`L'aggro reset \u00E0 chaque d\u00E9but de phase. Hunters : ${S("Misdirection")} \u00E0 chaque transition.`,role:"ranged"},
+{text:`Vendeur r\u00E9paration dans la zone derri\u00E8re le boss.`}
+]}
+]},
+{name:"Moroes",img:IMG["Moroes"],icon:"\u{1F5E1}",sections:[
+{title:"Pre-Pull",tips:[
+{text:`Kill order : ${M("Lady Catriona Von'Indi")} et ${M("Lady Keira Berrybuck")} (heal) d'abord, puis ${M("Baroness Dorothea Millstipe")} (mana burn), ${M("Baron Rafe Dreuger")} (stun), ${M("Lord Robin Daris")}, ${M("Moroes")}, ${M("Lord Crispin Ference")}.`}
+]},
+{title:"Combat",tips:[
+{text:`S\u00E9parer les kill targets et les CC targets.`},
+{text:`Off-tank doit \u00EAtre 2nd en menace sur ${M("Moroes")} pour le ${S("Gouge")}.`,role:"tank"},
+{text:`DPS cleave kill targets et interrupt ${S("Mana Burn")} / ${S("Greater Heal")}.`,role:"melee"},
+{text:`Healers retirent le poison ${S("Blind")} et soignent les cibles avec ${S("Garrote")}.`,role:"heal"},
+{text:`${M("Moroes")} enrage \u00E0 30% HP.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`${S("Stoneform")}, ${S("Divine Shield")}, ${S("Blessing of Protection")} et ${S("Ice Block")} retirent ${S("Garrote")}.`},
+{text:`Priests : ${S("Shackle Undead")} / Hunters : ${S("Freezing Trap")} pour CC adds.`},
+{text:`Paladins : ${S("Turn Evil")} possible mais attention au pathing.`},
+{text:`Shamans : ${S("Poison Cleansing Totem")} pour ${S("Blind")}.`,role:"heal"}
+]}
+]},
+{name:"Maiden of Virtue",img:IMG["Maiden of Virtue"],icon:"\u2728",sections:[
+{title:"Strat\u00E9gie",tips:[
+{text:`Tank ${M("Maiden")} au centre de la salle.`,role:"tank"},
+{text:`Healers et Ranged spread autour de la salle pour \u00E9viter ${S("Holy Wrath")} chain.`,role:"ranged"},
+{text:`Dispel ${S("Holy Fire")} imm\u00E9diatement.`,role:"heal"},
+{text:`Ranged : rentrer dans ${S("Holy Ground")} avant le cast de ${S("Repentance")} pour break le stun.`,role:"ranged"},
+{text:`MT : CDs d\u00E9fensifs apr\u00E8s chaque ${S("Repentance")}.`,role:"tank"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Paladins : ${S("Blessing of Sacrifice")} + ${S("Divine Shield")} pour break ${S("Repentance")}.`,role:"heal"},
+{text:`Shamans : ${S("Grounding Totem")} absorbe ${S("Holy Fire")}.`,role:"heal"},
+{text:`Mages : ${S("Ice Block")} / Rogues : ${S("Cloak of Shadows")} retirent ${S("Holy Fire")}.`,role:"melee"}
+]}
+]},
+{name:"Opera \u2014 Big Bad Wolf",img:IMG["Opera"],icon:"\u{1F43A}",sections:[
+{title:"Strat\u00E9gie",tips:[
+{text:`Cibl\u00E9 par ${S("Little Red Riding Hood")} = kiter le long des bords de la salle.`},
+{text:`Tank and spank en dehors de ${S("Terrifying Howl")} et ${S("Wide Swipe")}.`,role:"tank"},
+{text:`Healers focus le joueur avec ${S("Little Red Riding Hood")}.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Shamans : ${S("Tremor Totem")} contre ${S("Terrifying Howl")}.`,role:"heal"},
+{text:`Priests : ${S("Fear Ward")} pour pr\u00E9venir le fear.`,role:"heal"},
+{text:`Rogues : ${S("Vanish")}, Hunters : ${S("Feign Death")}, Paladins : BoP.`,role:"melee"}
+]}
+]},
+{name:"Opera \u2014 Wizard of Oz",img:IMG["Opera"],icon:"\u{1F32A}",sections:[
+{title:"Phase 1 \u2014 Les 4 adds",tips:[
+{text:`Kill ${M("Dorothee")} en premier (pas d'aggro table). Ne pas kill ${M("Tito")} avant elle.`},
+{text:`Puis ${M("Roar")} (tank\u00E9 par l'OT).`,role:"tank"},
+{text:`Puis ${M("Strawman")} \u2014 disorient par feu : ${S("Flame Shock")}, ${S("Fireball")}, ${S("Incinerate")}.`,role:"ranged"},
+{text:`Puis ${M("Tinhead")} (MT). Kitable avec stacks de ${S("Rust")}.`,role:"tank"}
+]},
+{title:"Phase 2 \u2014 The Crone",tips:[
+{text:`${M("The Crone")} spawn apr\u00E8s la mort des 4 bosses.`},
+{text:`\u00C9viter ${S("Cyclone")} et spread pour ${S("Chain Lightning")}.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`${M("Roar")} peut \u00EAtre fear par Warlocks (${S("Fear")}) et Hunters.`}
+]}
+]},
+{name:"Opera \u2014 Romulo & Julianne",img:IMG["Opera"],icon:"\u{1F494}",sections:[
+{title:"Phase 1 \u2014 Julianne",tips:[
+{text:`Interrupt ${M("Julianne")} : ${S("Eternal Affection")} = priorit\u00E9 max.`,role:"melee"},
+{text:`Dispel le buff ${S("Devotion")}.`,role:"heal"}
+]},
+{title:"Phase 2 \u2014 Romulo",tips:[
+{text:`Tank ${M("Romulo")} dos contre un mur.`,role:"tank"},
+{text:`Dispel le buff ${S("Daring")}.`,role:"heal"},
+{text:`Warriors : ${S("Disarm")} on cooldown.`,role:"tank"}
+]},
+{title:"Phase 3 \u2014 Les deux",tips:[
+{text:`Doivent mourir \u00E0 max 10 sec d'intervalle.`},
+{text:`Melee focus ${M("Julianne")} (interrupts), Ranged focus ${M("Romulo")}.`,role:"melee"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Mages : ${S("Spellsteal")} le buff ${S("Devotion")} = gros boost cast speed.`,role:"ranged"}
+]}
+]},
+{name:"The Curator",img:IMG["The Curator"],icon:"\u26A1",sections:[
+{title:"Flare Phase",tips:[
+{text:`Kill les ${M("Flares")} ASAP. Spawn toutes les 10 sec.`},
+{text:`Ranged \u00E0 10 yards les uns des autres.`,role:"ranged"},
+{text:`2nd en menace (OT) prend ${S("Hateful Bolt")}. Healers top off.`,role:"heal"}
+]},
+{title:"Evocation Phase",tips:[
+{text:`Apr\u00E8s le 10\u00E8me Flare, 20 sec. Kill derni\u00E8re Flare puis switch boss.`},
+{text:`Pop CDs offensifs \u2014 le boss prend le triple de d\u00E9g\u00E2ts pendant ${S("Evocation")}.`}
+]},
+{title:"Enrage \u2014 15% HP",tips:[
+{text:`Plus de Flares. Burn.`},
+{text:`${S("Hateful Bolt")} plus fr\u00E9quent.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Warlocks : ${S("Curse of Doom")} apr\u00E8s le 4\u00E8me Flare pour pop en Evocation (x3 DMG).`,role:"ranged"}
+]}
+]},
+{name:"Chess Event",img:IMG["Chess"],icon:"\u265F",sections:[
+{title:"Strat\u00E9gie",tips:[
+{text:`Bouger les Pions pour laisser passer les pi\u00E8ces puissantes.`},
+{text:`Kill Bishops d'abord (heal), puis Queen, puis King.`},
+{text:`Esquiver le Fire AoE de Medivh (triches).`},
+{text:`Utiliser le King offensivement.`}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`On peut rel\u00E2cher une pi\u00E8ce pour en prendre une autre.`}
+]}
+]},
+{name:"Terestian Illhoof",img:IMG["Terestian Illhoof"],icon:"\u{1F608}",sections:[
+{title:"Strat\u00E9gie",tips:[
+{text:`Tank ${M("Illhoof")} et ${M("Kil'rek")} pr\u00E8s du cercle vert.`,role:"tank"},
+{text:`${S("Sacrifice")} : kill cha\u00EEnes ASAP et heal la cible.`,role:"heal"},
+{text:`Kill ${M("Kil'rek")} pour ${S("Broken Pact")} sur ${M("Illhoof")}.`},
+{text:`AoE les Imps des deux portails.`,role:"ranged"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`${S("Ice Block")} / ${S("Divine Shield")} retirent ${S("Sacrifice")}.`},
+{text:`${M("Illhoof")} target le joueur avant ${S("Sacrifice")} \u2014 pre-HoT possible.`,role:"heal"}
+]}
+]},
+{name:"Shade of Aran",img:IMG["Shade of Aran"],icon:"\u{1F52E}",sections:[
+{title:"Strat\u00E9gie",tips:[
+{text:`Casters \u00E0 10+ yards d'Aran pour \u00E9viter ${S("Counterspell")}.`,role:"ranged"},
+{text:`Rotation d'interrupt : ${S("Fireball")} et ${S("Frostbolt")}. Laisser ${S("Arcane Missiles")}.`,role:"melee"},
+{text:`Healers attention aux joueurs touch\u00E9s par ${S("Dragon's Breath")}.`,role:"heal"},
+{text:`${S("Flame Wreath")} : <strong>STOP. Ne bougez pas.</strong>`},
+{text:`${S("Circular Blizzard")} : esquiver vers le centre ou l'autre c\u00F4t\u00E9.`},
+{text:`Apr\u00E8s ${S("Magnetic Pull")} \u2192 ${S("Arcane Explosion")} \u2014 courir loin.`,role:"melee"},
+{text:`\u00C0 40% HP : 4 ${M("Water Elementals")} spawn. Kill ou CC.`,role:"tank"},
+{text:`\u00C0 20% mana : ${S("Polymorph")} raid + ${S("Pyroblast")}. Top off apr\u00E8s.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Warlocks : ${S("Fear")} ou ${S("Banish")} sur Water Elementals.`},
+{text:`Pas d'aggro table \u2014 tanks en stuff DPS.`,role:"tank"}
+]}
+]},
+{name:"Netherspite",img:IMG["Netherspite"],icon:"\u{1F409}",sections:[
+{title:"Portal Phase \u2014 1 min",tips:[
+{text:`3 portails (rouge, vert, bleu). 2 tanks + 2 DPS pour soak.`,role:"tank"},
+{text:`Apr\u00E8s soak : ${S("Nether Exhaustion")} (1m30, bloque m\u00EAme couleur).`},
+{text:`<b>Tank #1</b> : <b style="color:#ef4444">Red Beam</b>, in/out toutes les 5 stacks.`,role:"tank"},
+{text:`<b>Tank #2</b> : <b style="color:#22c55e">Green Beam</b> toute la phase.`,role:"tank"},
+{text:`<b>DPS #1</b> : <b style="color:#3b82f6">Blue Beam</b> 20 stacks, puis <b>DPS #2</b> relais.`,role:"ranged"},
+{text:`Healers focus DPS Blue Beam (d\u00E9g\u00E2ts accrus, heal r\u00E9duit).`,role:"heal"},
+{text:`AoE de ${S("Nether Burn")}. Bouger hors ${S("Void Zone")}.`,role:"heal"}
+]},
+{title:"Banish Phase \u2014 30 sec",tips:[
+{text:`Netherspite banish. Plus de ${S("Nether Burn")} / ${S("Void Zone")}.`},
+{text:`Courir au fond de la salle. ${S("Netherbreath")} sur joueurs al\u00E9atoires.`},
+{text:`Aggro reset \u00E0 la fin. Tank reprend imm\u00E9diatement.`,role:"tank"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Portails m\u00EAme position, couleurs al\u00E9atoires chaque phase.`},
+{text:`Pas de cleave ni tail swipe.`,role:"melee"},
+{text:`Paladins : ${S("Shadow Resistance Aura")}. Priests : ${S("Shadow Protection")}.`,role:"heal"},
+{text:`Hunters : ${S("Misdirection")} \u00E0 chaque Portal Phase.`,role:"ranged"}
+]}
+]},
+{name:"Prince Malchezaar",img:IMG["Prince Malchezaar"],icon:"\u{1F451}",sections:[
+{title:"Phase 1 \u2014 100% \u00E0 60%",tips:[
+{text:`Tank dos au mur pour ${S("Shadow Nova")} knockback.`,role:"tank"},
+{text:`${M("Infernal")} spawn toutes les 45 sec (Hellfire permanent).`},
+{text:`Ranged \u00E0 30+ yards pour ${S("Shadow Nova")}.`,role:"ranged"},
+{text:`Melee : sortir pour ${S("Shadow Nova")}.`,role:"melee"},
+{text:`Dispel ${S("Shadow Word: Pain")}.`,role:"heal"}
+]},
+{title:"Phase 2 \u2014 60% \u00E0 30%",tips:[
+{text:`Gagne ${S("Thrash")} et ${S("Sunder Armor")}. Phase la plus dangereuse.`,role:"tank"},
+{text:`Healers focus le tank.`,role:"heal"},
+{text:`Plus de SWP. Infernals, ${S("Enfeeble")}, ${S("Shadow Nova")} continuent.`}
+]},
+{title:"Phase 3 \u2014 30% \u00E0 0%",tips:[
+{text:`Retour P1 + ${S("Amplify Damage")} et Flying Axes.`},
+{text:`Infernals spawn plus souvent. ~2 min de place.`},
+{text:`Healers focus cibles Flying Axes.`,role:"heal"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Ajuster position selon Infernals.`},
+{text:`En P3, mieux vaut ${S("Shadow Nova")} que les Infernals.`},
+{text:`NE PAS utiliser ${S("Shadow Word: Death")} / ${S("Seal of Blood")} sous ${S("Enfeeble")}.`,role:"ranged"}
+]}
+]},
+{name:"Nightbane",img:IMG["Nightbane"],icon:"\u{1F987}",sections:[
+{title:"Ground Phase",tips:[
+{text:`Tank dos au mur, face ext\u00E9rieure.`,role:"tank"},
+{text:`Melee sur le c\u00F4t\u00E9 : \u00E9viter ${S("Smoldering Breath")} et ${S("Tail Sweep")}.`,role:"melee"},
+{text:`Ranged max range pour ${S("Bellowing Roar")}.`,role:"ranged"},
+{text:`Bouger hors ${S("Charred Earth")}.`},
+{text:`Dispel ${S("Distracting Ash")} imm\u00E9diatement.`,role:"heal"}
+]},
+{title:"Air Phase \u2014 75%, 50%, 25%",tips:[
+{text:`Focus squelettes de ${S("Rain of Bones")}.`},
+{text:`Heal cible de ${S("Smoking Blast")} (~1800/sec, 15 sec, bas\u00E9 menace).`,role:"heal"},
+{text:`Se rapprocher du boss pour \u00E9viter fireballs raid-wide.`},
+{text:`Nightbane atterrit apr\u00E8s Rain of Bones + Smoking Blast. Non tauntable.`,role:"tank"}
+]},
+{title:"Notes",isNote:true,tips:[
+{text:`Shamans : ${S("Tremor Totem")} contre ${S("Bellowing Roar")}.`,role:"heal"},
+{text:`Priests : ${S("Fear Ward")}.`,role:"heal"},
+{text:`Warriors : ${S("Berserker Stance")} + ${S("Berserker Rage")} si bien tim\u00E9.`,role:"tank"},
+{text:`Tank fear\u00E9 : attention ${S("Tail Sweep")} / ${S("Smoldering Breath")}.`,role:"melee"},
+{text:`Hunters : ${S("Misdirection")} \u00E0 chaque atterrissage.`,role:"ranged"}
+]}
+]}
+]},
+gruul:{name:"Gruul's Lair",bosses:[]},magtheridon:{name:"Magtheridon's Lair",bosses:[]},ssc:{name:"Serpentshrine Cavern",bosses:[]},tk:{name:"Tempest Keep \u2014 The Eye",bosses:[]},hyjal:{name:"Battle for Mount Hyjal",bosses:[]},bt:{name:"Black Temple",bosses:[]},sunwell:{name:"Sunwell Plateau",bosses:[]}
+};
+
+let currentRaid='karazhan',activeRole='all';
+
+function render(){
+  const app=document.getElementById('app'),raid=RAIDS[currentRaid];
+  if(!raid.bosses.length){app.innerHTML=`<div class="empty-state"><div class="icon">\u{1F4DC}</div><p>Les strats pour <strong>${raid.name}</strong> arrivent bient\u00F4t !</p></div>`;return;}
+  let h=`<div class="raid-section-header"><h2>${raid.name}</h2><span class="boss-count">${raid.bosses.length} boss</span></div>`;
+  raid.bosses.forEach((b,i)=>{
+    const img=b.img?`<img class="boss-img" src="${b.img}" alt="${b.name}" onerror="this.outerHTML='<div class=\\'boss-img-fallback\\'>${b.icon}</div>'">`:`<div class="boss-img-fallback">${b.icon}</div>`;
+    h+=`<div class="boss-card" data-boss="${i}"><div class="boss-header" onclick="toggleBoss(${i})">${img}<div class="boss-info"><div class="boss-number">BOSS ${i+1}</div><div class="boss-name">${b.name}</div></div><div class="boss-chevron">\u25BE</div></div><div class="boss-body">`;
+    b.sections.forEach(s=>{
+      const n=s.isNote,wc=n?'notes-section':'phase-section',tc=n?'notes-title':'phase-title';
+      h+=`<div class="${wc}"><div class="${tc}">${n?'\u{1F4A1} ':''}${s.title}</div><ul class="strat-list">`;
+      s.tips.forEach(t=>{
+        const ra=t.role?` data-role="${t.role}"`:'',rt=t.role?`<span class="role-tip ${t.role}">${t.role}</span>`:'',hc=(activeRole!=='all'&&t.role&&t.role!==activeRole)?' hidden-role':'';
+        h+=`<li${ra} class="${hc}">${rt}${t.text}</li>`;
+      });
+      h+=`</ul></div>`;
+    });
+    h+=`</div></div>`;
+  });
+  app.innerHTML=h;
+}
+
+function toggleBoss(i){document.querySelector(`.boss-card[data-boss="${i}"]`).classList.toggle('open');}
+function applyRoleFilter(){document.querySelectorAll('.strat-list li[data-role]').forEach(l=>{const r=l.getAttribute('data-role');l.classList.toggle('hidden-role',activeRole!=='all'&&r!==activeRole);});}
+
+document.querySelectorAll('.raid-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.raid-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentRaid=b.dataset.raid;render();});});
+document.querySelectorAll('.role-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.role-btn').forEach(x=>{x.classList.remove('active-all','active-tank','active-heal','active-melee','active-ranged');});const r=b.dataset.role;activeRole=r;b.classList.add(r==='all'?'active-all':`active-${r}`);applyRoleFilter();});});
+
+render();
+</script>
+</body>
+</html>
